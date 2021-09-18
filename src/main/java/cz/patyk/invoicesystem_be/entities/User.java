@@ -2,6 +2,8 @@ package cz.patyk.invoicesystem_be.entities;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,14 +17,18 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class User implements Serializable {
 
+    public enum Role {ADMIN, USER}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "employee_of_company_id")
     @ToString.Exclude
-    private Company employeeOfId;
+    private Company employeeOfCompanyId;
+
     private String email;
     private String password;
     private String firstName;
@@ -30,7 +36,9 @@ public class User implements Serializable {
     private Date lastLogin;
     private Date created;
     private Date passwordChanged;
-    private RolesEnum roles;
+
+    @Enumerated(EnumType.STRING)
+    private Role roles;
 
     @Override
     public boolean equals(Object o) {
