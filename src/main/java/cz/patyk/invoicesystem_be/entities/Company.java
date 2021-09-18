@@ -5,7 +5,9 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +20,16 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "country_id", nullable = false)
+    @ToString.Exclude
+    private Country country;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeOfCompanyId")
+    @ToString.Exclude
+    private List<User> userList = new ArrayList<>();
+
     private String name;
     private String description;
     private String companyId;
@@ -27,11 +39,6 @@ public class Company implements Serializable {
     private String street;
     private String city;
     private String zipCode;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "country_id", nullable = false)
-    @ToString.Exclude
-    private Country country;
     private String accountNumber;
     private String iban;
 
