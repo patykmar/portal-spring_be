@@ -5,7 +5,9 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,7 +32,7 @@ public class Invoice implements Serializable {
     private Company subscriber;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "paymenttype_id", nullable = false)
+    @JoinColumn(name = "payment_type_id", nullable = false)
     @ToString.Exclude
     private PaymentType paymentType;
 
@@ -38,6 +40,14 @@ public class Invoice implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     @ToString.Exclude
     private User userCreated;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice")
+    @ToString.Exclude
+    private List<WorkInventory> workInventoryList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "invoice")
+    @ToString.Exclude
+    private List<InvoiceItem> invoiceItemList = new ArrayList<>();
 
     private String name;
     private int due;
