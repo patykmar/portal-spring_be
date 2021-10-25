@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/invoice_system_dev?useSSL=false&serverTimezone=UTC
+    username: root
+    password: vertrigo
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      # Hibernate generates schema for your entity based on it?s mapping.
+      # Values can be set: ddl-auto, create or create-drop
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: mysql
+    open-in-view: false
+    generate-ddl: false
+    properties:
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: true
+  main:
+    log-startup-info: false
+  data:
+    rest:
+      base-path: "/api"
