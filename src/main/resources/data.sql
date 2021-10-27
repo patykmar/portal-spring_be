@@ -667,3 +667,9 @@ INSERT INTO `invoice_item` (`invoice_id`, `vat_id`, `name`, `price`, `margin`, `
 (12, 5, 'In laoreet libero orci, sed tincidunt sapien viverra eget.', 6256, 75, 4692, 10948, 49, 5365, 5583, 5862, 11495, 3014200, 75171943, 147407282),
 (24, 4, 'Curabitur ut sodales ante.', 951336, 56, 532748, 1484084, 74, 1098222, 385862, 385862, 1484084, 3809100, 6343224004, 24397005284),
 (17, 5, 'Nunc laoreet, quam sit amet pretium ultricies, justo nisi placerat libero, a molestie dolor odio vel nisl.', 73110, 172, 125749, 198859, 88, 174996, 23863, 28636, 238631, 2454200, 1862233443, 15518460287);
+
+
+INSERT INTO `ticket_type` (`name`, `abbreviation`, `is_disable`, `coefficient_price`, `coefficient_time`) VALUES
+('Order', 'ORD', FALSE, 1, 1),
+('Incident', 'INC', FALSE, 1, 1),
+('Incident task', 'ITASK', FALSE, 0,9, 0,8);
