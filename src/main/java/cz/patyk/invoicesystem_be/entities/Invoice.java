@@ -22,12 +22,12 @@ public class Invoice implements Serializable {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "supplier", nullable = false)
+    @JoinColumn(name = "supplier_id", nullable = false)
     @ToString.Exclude
     private Company supplier;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "subscriber", nullable = false)
+    @JoinColumn(name = "subscriber_id", nullable = false)
     @ToString.Exclude
     private Company subscriber;
 
