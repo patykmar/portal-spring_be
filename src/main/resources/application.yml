@@ -1,0 +1,68 @@
+spring:
+  main:
+    log-startup-info: false
+  data:
+    rest:
+      base-path: "/api"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod-mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/invoice_system_dev?useSSL=false&serverTimezone=UTC
+    username: root
+    password: vertrigo
+  jpa:
+    hibernate:
+      # Hibernate generates schema for your entity based on it?s mapping.
+      # Values can be set: ddl-auto, create or create-drop
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: mysql
+server:
+  port: 80
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev-h2
+  datasource:
+    url: jdbc:h2:mem:testdb
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    open-in-view: false
+    generate-ddl: false
+    properties:
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: true
+    hibernate:
+      # Hibernate generates schema for your entity based on it?s mapping.
+      # Values can be set: ddl-auto, create or create-drop
+      ddl-auto: update
+    database: h2
+  sql:
+    init:
+      # For other Relational databases like MySql, PostgreSql etc.. you
+      # need to set spring.datasource.initialization-mode property in Spring Boot
+      # configuration file. The default value is embedded. Have to set always to
+      # load sql script files, automatically loads schema.sql and data.sql from
+      # classpath. You can switch this value to never to not initialize.
+      mode: always
+server:
+  port: 8080
+logging:
+  level:
+    org:
+      springframework:
+        web=DEBUG:
