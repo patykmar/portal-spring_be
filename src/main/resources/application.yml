@@ -59,6 +59,9 @@ spring:
       # load sql script files, automatically loads schema.sql and data.sql from
       # classpath. You can switch this value to never to not initialize.
       mode: always
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 server:
   port: 8080
 logging:
