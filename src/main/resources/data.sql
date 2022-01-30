@@ -133,7 +133,7 @@ INSERT INTO `work_inventory` (`tarrif_id`, `company_id`, `user_id`, `invoice_id`
 (4,7,4,null,'Curabitur ut sodales ante.','2021-07-07 11:40:11','2021-07-05 18:09:40',41.5);
 
 
-INSERT INTO `invoice` (`supplier`, `subscriber`, `payment_type_id`, `user_id`, `due`, `invoice_created`, `due_date`, `payment_date`, `vs`) VALUES
+INSERT INTO `invoice` (`supplier_id`, `subscriber_id`, `payment_type_id`, `user_id`, `due`, `invoice_created`, `due_date`, `payment_date`, `vs`) VALUES
 (1,5,1,4,14,'2021-07-07 9:37:10','2021-07-21','2021-07-23',2021370342),
 (2,6,2,3,14,'2021-07-07 9:37:11','2021-07-21','2021-07-17',2021489971),
 (3,7,1,2,14,'2021-07-07 9:37:11','2021-07-21','2021-07-25',2021343353),
@@ -672,4 +672,4 @@ INSERT INTO `invoice_item` (`invoice_id`, `vat_id`, `name`, `price`, `margin`, `
 INSERT INTO `ticket_type` (`name`, `abbreviation`, `is_disable`, `coefficient_price`, `coefficient_time`) VALUES
 ('Order', 'ORD', FALSE, 1, 1),
 ('Incident', 'INC', FALSE, 1, 1),
-('Incident task', 'ITASK', FALSE, 0,9, 0,8);
+('Incident task', 'ITASK', FALSE, 0.9, 0.8);
