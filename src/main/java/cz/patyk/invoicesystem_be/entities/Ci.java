@@ -1,18 +1,22 @@
 package cz.patyk.invoicesystem_be.entities;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Ci implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "parent_ci")
@@ -58,4 +62,17 @@ public class Ci implements Serializable {
     @JoinColumn(name = "queue_tier3_id")
     @ToString.Exclude
     private Queue queueTier3;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Ci ci = (Ci) o;
+        return id != null && Objects.equals(id, ci.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
