@@ -18,7 +18,7 @@ public class Country implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -28,7 +28,7 @@ public class Country implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "country")
     @ToString.Exclude
-    private List<Company> companyList = new ArrayList<>();
+    private List<Address> companyList = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
