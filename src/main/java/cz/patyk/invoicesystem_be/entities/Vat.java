@@ -1,6 +1,9 @@
 package cz.patyk.invoicesystem_be.entities;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
@@ -19,7 +22,7 @@ public class Vat implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private boolean isDefault;
     private String name;
     private int percent;
