@@ -5,8 +5,6 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,32 +12,29 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Country implements Serializable {
-
+public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String street;
+    private String city;
+    private String zipCode;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(name = "iso3166alpha3", nullable = false)
-    private String iso3166alpha3;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "country")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "country_id", nullable = false)
     @ToString.Exclude
-    private List<Address> companyList = new ArrayList<>();
+    private Country country;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Country country = (Country) o;
-        return Objects.equals(id, country.id);
+        Address address = (Address) o;
+        return id != null && Objects.equals(id, address.id);
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return getClass().hashCode();
     }
 }

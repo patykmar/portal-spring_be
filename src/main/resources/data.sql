@@ -1,14 +1,17 @@
-SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE `country`;
-TRUNCATE TABLE `company`;
-TRUNCATE TABLE `vat`;
-TRUNCATE TABLE `tariff`;
-TRUNCATE TABLE `payment_type`;
-TRUNCATE TABLE `user`;
-TRUNCATE TABLE `work_inventory`;
-TRUNCATE TABLE `invoice`;
-TRUNCATE TABLE `invoice_item`;
-SET FOREIGN_KEY_CHECKS = 1;
+--SET FOREIGN_KEY_CHECKS = 0;
+--TRUNCATE TABLE `country`;
+--TRUNCATE TABLE `company`;
+--TRUNCATE TABLE `vat`;
+--TRUNCATE TABLE `tariff`;
+--TRUNCATE TABLE `payment_type`;
+--TRUNCATE TABLE `user`;
+--TRUNCATE TABLE `work_inventory`;
+--TRUNCATE TABLE `invoice`;
+--TRUNCATE TABLE `invoice_item`;
+--TRUNCATE TABLE `service_catalog`;
+--TRUNCATE TABLE `influencing_ticket`;
+--TRUNCATE TABLE `general_state`;
+--SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO `country` (`name`, `iso3166alpha3`) VALUES
 ('Česká republika', 'CZE'),
@@ -17,20 +20,33 @@ INSERT INTO `country` (`name`, `iso3166alpha3`) VALUES
 ('Republika Rakousko', 'AUT'),
 ('Spolková republika Německo', 'DEU');
 
-INSERT INTO `company` (`name`,`description`,`company_id`,`vat_number`,`created`,`modify`,`street`,`city`,`zip_code`,`account_number`,`iban`,`country_id`) VALUES
-('Ing. Martin Patyk','Ing. Martin Patyk - Cerna','88230104','CZ8707145876','2014-01-13 22:17:20','2021-07-07 09:37:10','Černá 1416/5','Opava - Kateřinky','74705','670100-2209225998/6210','',1),
-('Vodafone Czech Republic a. s.','Vodafone Czech Republic a. s.','25788001','CZ25788001','2003-11-18 19:53:39','2021-07-07 09:37:10','náměstí Junkových 2','Praha 5','15500','','',2),
-('T-Mobile Czech Republic a.s.','T-Mobile Czech Republic a.s.','64949681','CZ64949681','2016-01-31 17:30:43','2021-07-07 09:37:10','Tomíčkova 2144/1','Praha 4','14800','','',3),
-('O2 Czech Republic a.s.','O2 Czech Republic a.s.','60193336','CZ60193336','2018-12-07 20:23:31','2021-07-07 09:37:10','Za Brumlovkou 266/2','Praha 4, Michle','14022','','',4),
-('RD Rýmařov s.r.o.','RD Rýmařov s.r.o.','18953581','CZ18953581','2006-06-26 19:14:04','2021-07-07 09:37:10','8. května 1191/45','Rýmařov','79501','','',5),
-('CETIN a.s.','CETIN a.s.','4084063','CZ04084063','2010-05-26 19:32:10','2021-07-07 09:37:10','Českomoravská 2510/19','Praha 9','19000','','',1),
-('Maxxnet.cz s.r.o.','Maxxnet.cz s.r.o.','29459711','CZ29459711','2015-08-22 18:49:44','2021-07-07 09:37:10','Nákladní 4','Opava','74601','256256296/0300','',1),
-('GAPPAY s.r.o.','GAPPAY s.r.o.','47151960','CZ47151960','2012-01-15 08:45:14','2021-07-07 09:37:10','Olomoucká 134','Slavkov u Opavy','74757','825242821/0100','',1),
-('ČEZ, a. s.','ČEZ, a. s.','45274649','CZ45274649','2021-06-18 05:24:08','2021-07-07 09:37:10','Duhová 1444/2','Praha - Michle','14000','2701577960/2010','',1),
-('ŠKODA AUTO a.s.','ŠKODA AUTO a.s.','177041','CZ00177041','2018-02-21 20:44:59','2021-07-07 09:37:10','tř. Václava Klementa 869','Mladá Boleslav II','29301','001-8336621-32','BE90001833662132',1),
-('Innovation Advisors s.r.o.','Innovation Advisors s.r.o.','40763200','CZ40763200','2021-03-03 18:01:39','2021-07-07 09:37:10','Boženy Němcové 1604/24','Opava','74601','','',1),
-('Czech Green Energy s.r.o.','Czech Green Energy s.r.o.','9703667','CZ09703667','2001-11-25 10:22:09','2021-07-07 09:37:10','Vinařská 460/3','Brno - Pisárky','60300','','',1);
+INSERT INTO `address` (`country_id`, `street`, `city`, `zip_code`) VALUES
+(1, 'Černá 1416/5', 'Opava - Kateřinky', '74705'),
+(1, 'náměstí Junkových 2', 'Praha 5', '15500'),
+(1, 'Tomíčkova 2144/1','Praha 4','14800'),
+(1, 'Za Brumlovkou 266/2','Praha 4, Michle','14022'),
+(1, '8. května 1191/45','Rýmařov','79501'),
+(1, 'Českomoravská 2510/19','Praha 9','19000'),
+(1, 'Nákladní 4','Opava','74601'),
+(1, 'Olomoucká 134','Slavkov u Opavy','74757'),
+(1, 'Duhová 1444/2','Praha - Michle','14000'),
+(1, 'tř. Václava Klementa 869','Mladá Boleslav II','29301'),
+(1, 'Boženy Němcové 1604/24','Opava','74601'),
+(1, 'Vinařská 460/3','Brno - Pisárky','60300');
 
+INSERT INTO `company` (`name`,`description`,`company_id`,`vat_number`,`created`,`modify`,`address_id` ,`account_number`,`iban`) VALUES
+('Ing. Martin Patyk','Ing. Martin Patyk - Cerna','88230104','CZ8707145876', 1389647840, 1625643430, 1,'670100-2209225998/6210',''),
+('Vodafone Czech Republic a. s.','Vodafone Czech Republic a. s.','25788001','CZ25788001', 1069181619, 1625643430, 2 ,'',''),
+('T-Mobile Czech Republic a.s.','T-Mobile Czech Republic a.s.','64949681','CZ64949681', 1454257843, 1625643430, 3 ,'',''),
+('O2 Czech Republic a.s.','O2 Czech Republic a.s.','60193336','CZ60193336', 1544210611, 1625643430, 4 ,'',''),
+('RD Rýmařov s.r.o.','RD Rýmařov s.r.o.','18953581','CZ18953581', 1151342044, 1625643430, 5,'',''),
+('CETIN a.s.','CETIN a.s.','4084063','CZ04084063', 1274895130, 1625643430, 6,'',''),
+('Maxxnet.cz s.r.o.','Maxxnet.cz s.r.o.','29459711','CZ29459711', 1440262184, 1625643430, 7,'256256296/0300',''),
+('GAPPAY s.r.o.','GAPPAY s.r.o.','47151960','CZ47151960', 1326613514, 1625643430, 8,'825242821/0100',''),
+('ČEZ, a. s.','ČEZ, a. s.','45274649','CZ45274649', 1623986648, 1625643430,9,'2701577960/2010',''),
+('ŠKODA AUTO a.s.','ŠKODA AUTO a.s.','177041','CZ00177041', 1519242299, 1625643430, 10,'001-8336621-32','BE90001833662132'),
+('Innovation Advisors s.r.o.','Innovation Advisors s.r.o.','40763200','CZ40763200', 1614790899, 1625643430, 11,'',''),
+('Czech Green Energy s.r.o.','Czech Green Energy s.r.o.','9703667','CZ09703667', 1006680129, 1625643431, 12,'','');
 
 INSERT INTO `vat` (`name`, `is_default`, `percent`, `multiplier`) VALUES
 ('No VAT', 1, 0, 100),
@@ -673,3 +689,55 @@ INSERT INTO `ticket_type` (`name`, `abbreviation`, `is_disable`, `coefficient_pr
 ('Order', 'ORD', FALSE, 1, 1),
 ('Incident', 'INC', FALSE, 1, 1),
 ('Incident task', 'ITASK', FALSE, 0.9, 0.8);
+
+INSERT INTO `service_catalog` (`vat_id`, `name`, `description`, `price`, `estimate_time_delivery`, `estimate_time_reaction`, `is_disable`) VALUES
+(1,'Web alarm','Web alarm',10000,5184000,2592000,0),
+(1,'HTML - create new page','Create new page',30000,5184000,2592000,0),
+(1,'HTML - modify page','Modify web page',19900,5184000,2592000,0),
+(1,'HTML+CSS Develop web template - only HTML CSS','HTML+CSS Develop web template - only HTML CSS',100000,5184000,2592000,0),
+(1,'HTML+CSS Develop web template - PHP framework','HTML+CSS Develop web template - PHP framework',200000,5184000,2592000,0),
+(1,'HTML+CSS Develop web template - CMS Drupal','HTML+CSS Develop web template - CMS Drupal',350000,5184000,2592000,0),
+(1,'CSS - Modify cascade style','CSS - Modify cascade style',25000,5184000,2592000,0),
+(1,'PHP - New app-function develop by 3rd party','PHP - New app-function develop by 3rd party',100000,5184000,2592000,0),
+(1,'PHP - New app-function','PHP - New app-function',60000,5184000,2592000,0),
+(1,'Drupal - update modules','Drupal - update modules',29900,5184000,2592000,0),
+(1,'Drupal - new instance','Drupal - new instance',150000,5184000,2592000,0),
+(1,'Drupal - create type of content','Drupal - create type of content',70000,5184000,2592000,0),
+(1,'PrestaShop - new instance','PrestaShop - new instance',150000,5184000,2592000,0),
+(1,'Piwic - new instance','Piwic - new instance',100000,5184000,2592000,0),
+(1,'Piwic - update','Piwic - update',30000,5184000,2592000,0),
+(1,'Web application - relate with web analytics','Web application - relate with web analytics',50000,5184000,2592000,0),
+(1,'Drupal - install plug-in','Drupal - install plug-in',30000,5184000,2592000,0),
+(1,'Drupal - deploying content','Drupal - deploying content',30000,5184000,2592000,0),
+(1,'Drupal - configure plug-inu','Drupal - configure plug-inu',40000,5184000,2592000,0),
+(1,'Drupal - development plug-in','Drupal - development plug-in',300000,5184000,2592000,0),
+(1,'PHP - modify function of application develop by 3rd party','PHP - modify function of application develop by 3rd party',50000,5184000,2592000,0),
+(1,'Web-hosting create instance','Webhosting vytvoření nového hostingu',50000,5184000,2592000,0),
+(1,'Drupal - migration to different web-hosting','Drupal - migration to different web-hosting',75000,5184000,2592000,0),
+(1,'Database migration','Database migration',49900,5184000,2592000,0),
+(1,'Web-hosting configuration','Web-hosting configuration',19900,5184000,2592000,0);
+
+INSERT INTO `influencing_ticket` (`name`, `coefficient_price`, `coefficient_time`, `is_for_priority`, `is_for_impact`) VALUES
+('Small', 0.5, 44228, 1, 0),
+('Normal', 1, 1, 1, 1),
+('High', 44317, 0.8, 1, 0),
+('Very small', 0.9, 44378, 0, 1),
+('Small', 0.95, 44317, 0, 1),
+('High', 44256, 0.8, 0, 1),
+('Critical', 44317, 0.7, 0, 1);
+
+INSERT INTO `general_state` (`name`, `coefficient_price`, `is_for_ticket`, `is_for_ci`, `is_for_close_state`) VALUES
+('Draft', 1, 0, 1, 0),
+('Planning', 1, 0, 1, 0),
+('In use', 1, 0, 1, 0),
+('Decommission', 1, 0, 1, 0),
+('Retired', 1, 0, 1, 0),
+('Resolved', 1, 1, 0, 1),
+('No action', 0.1, 0, 0, 1),
+('Rejected', 0.3, 0, 0, 1),
+('Open', 1, 1, 0, 1),
+('Assign', 1, 1, 0, 1),
+('Work in progress', 1, 1, 0, 1),
+('Closed', 1, 1, 0, 1),
+('Waiting for customer', 1, 1, 0, 1),
+('Re-open', 1, 1, 0, 1);

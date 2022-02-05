@@ -1,4 +1,4 @@
-package cz.patyk.invoicesystem_be.dto.mapper;
+package cz.patyk.invoicesystem_be.mapper;
 
 import cz.patyk.invoicesystem_be.dto.InvoiceDto;
 import cz.patyk.invoicesystem_be.entities.Invoice;
