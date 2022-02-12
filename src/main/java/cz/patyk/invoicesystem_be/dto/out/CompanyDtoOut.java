@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @Builder
@@ -21,6 +19,6 @@ public class CompanyDtoOut {
     private String accountNumber;
     private String iban;
     private AddressDto addressDto;
-    private Date created;
-    private Date modify;
+    private int created;
+    private int modify;
 }
