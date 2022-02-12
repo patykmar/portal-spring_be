@@ -9,5 +9,4 @@ public class InvoiceSystemBeApplication {
     public static void main(String[] args) {
         SpringApplication.run(InvoiceSystemBeApplication.class, args);
     }
-
 }
