@@ -28,7 +28,7 @@ public class Country implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "country")
     @ToString.Exclude
-    private List<Address> companyList = new ArrayList<>();
+    private List<Address> addressList = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
