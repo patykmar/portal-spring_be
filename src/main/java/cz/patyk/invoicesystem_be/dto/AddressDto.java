@@ -10,6 +10,7 @@ import lombok.Data;
 public class AddressDto {
     private Long id;
     private CountryDto countryDto;
+    private Long countryId;
     private String street;
     private String city;
     private String zipCode;
