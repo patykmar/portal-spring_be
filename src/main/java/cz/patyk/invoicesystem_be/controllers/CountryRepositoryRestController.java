@@ -24,8 +24,8 @@ public class CountryRepositoryRestController {
     ResponseEntity<CollectionModel<CountryDto>> getCountries() {
         return ResponseEntity.ok(countryService.getAllCountries()
                 .add(linkTo(
-                        methodOn(CompanyRepositoryRestController.class)
-                                .getCompanies())
+                        methodOn(CountryRepositoryRestController.class)
+                                .getCountries())
                         .withSelfRel()));
     }
 }
