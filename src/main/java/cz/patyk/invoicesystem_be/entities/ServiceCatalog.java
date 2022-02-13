@@ -30,7 +30,7 @@ public class ServiceCatalog implements Serializable {
 
     @Column(columnDefinition = "text", nullable = false)
     private String description;
-    private int price;
+    private Long price;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vat_id", nullable = false)

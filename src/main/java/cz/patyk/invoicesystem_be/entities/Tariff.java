@@ -23,7 +23,7 @@ public class Tariff implements Serializable {
     @ToString.Exclude
     private Vat vat;
     private String name;
-    private int price;
+    private Long price;
 
     @Override
     public boolean equals(Object o) {

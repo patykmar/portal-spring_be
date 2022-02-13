@@ -15,7 +15,7 @@ import java.util.Objects;
 public class QueueUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "queue_id", nullable = false)

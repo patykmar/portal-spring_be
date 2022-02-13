@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @NotFound(action = NotFoundAction.IGNORE)

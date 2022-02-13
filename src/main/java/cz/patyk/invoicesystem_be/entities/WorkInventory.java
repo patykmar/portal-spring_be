@@ -16,7 +16,7 @@ import java.util.Date;
 public class WorkInventory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tarrif_id", nullable = false)
