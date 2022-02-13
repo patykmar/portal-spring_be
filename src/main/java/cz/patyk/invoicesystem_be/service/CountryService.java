@@ -6,7 +6,6 @@ import cz.patyk.invoicesystem_be.mapper.CountryMapper;
 import cz.patyk.invoicesystem_be.repositories.CountryRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +19,11 @@ public class CountryService {
     @NonNull
     private final CountryRepository countryRepository;
 
-    public CollectionModel<CountryDto> getAllCountries() {
-        List<CountryDto> countryDtos = countryRepository.findAll()
+    public List<CountryDto> getAllCountries() {
+        return countryRepository.findAll()
                 .stream()
                 .map(countryMapper::toDto)
                 .collect(Collectors.toList());
-        return CollectionModel.of(countryDtos);
     }
 
     public Country toEntity(CountryDto countryDto) {
