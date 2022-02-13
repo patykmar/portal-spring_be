@@ -3,5 +3,5 @@ package cz.patyk.invoicesystem_be.repositories;
 import cz.patyk.invoicesystem_be.entities.WorkInventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface WorkInventoryRepository extends JpaRepository<WorkInventory, Integer> {
+public interface WorkInventoryRepository extends JpaRepository<WorkInventory, Long> {
 }
