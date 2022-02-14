@@ -5,7 +5,8 @@ import cz.patyk.invoicesystem_be.entities.Invoice;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-interface InvoiceMapper {
-    Invoice toEntity(InvoiceDto source);
-    InvoiceDto toDto(Invoice source);
+public interface InvoiceMapper {
+    Invoice toEntity(InvoiceDto invoiceDto);
+
+    InvoiceDto toDto(Invoice invoice);
 }
