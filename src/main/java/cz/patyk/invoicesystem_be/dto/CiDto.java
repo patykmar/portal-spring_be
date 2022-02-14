@@ -7,8 +7,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 public class CiDto {
     private Long id;
     private Long parentId;
@@ -23,3 +23,4 @@ public class CiDto {
     private Long queueTier2Id;
     private Long queueTier3Id;
 }
+
