@@ -16,7 +16,7 @@ public class InvoiceDto {
     private int id;
     private Company supplier;
     private Company subscriber;
-    private PaymentType paymentType;
+    private PaymentTypeDto paymentType;
     private User userCreated;
     private List<WorkInventory> workInventoryList = new ArrayList<>();
     private List<InvoiceItem> invoiceItemList = new ArrayList<>();

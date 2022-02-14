@@ -16,14 +16,14 @@ public class Tariff implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "vat_id", nullable = false)
     @ToString.Exclude
     private Vat vat;
     private String name;
-    private int price;
+    private Long price;
 
     @Override
     public boolean equals(Object o) {

@@ -18,7 +18,7 @@ import java.util.Objects;
 public class InfluencingTicket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private boolean isForPriority;
     private boolean isForImpact;
