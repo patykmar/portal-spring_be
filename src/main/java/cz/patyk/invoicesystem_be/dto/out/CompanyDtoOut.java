@@ -4,14 +4,12 @@ import cz.patyk.invoicesystem_be.dto.AddressDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @Builder
-@NoArgsConstructor
+@AllArgsConstructor
 public class CompanyDtoOut {
-    private int id;
+    private Long id;
     private String name;
     private String description;
     private String companyId;
