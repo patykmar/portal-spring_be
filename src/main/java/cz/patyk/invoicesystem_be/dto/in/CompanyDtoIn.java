@@ -3,14 +3,12 @@ package cz.patyk.invoicesystem_be.dto.in;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @Builder
-@NoArgsConstructor
+@AllArgsConstructor
 public class CompanyDtoIn {
-    private int id;
+    private Long id;
     private String name;
     private String description;
     private String companyId;
