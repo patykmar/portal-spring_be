@@ -5,12 +5,17 @@ import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Country;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class AddressMapperTest {
     @InjectMocks
@@ -24,9 +29,6 @@ class AddressMapperTest {
     private static final String CITY = "Springfield";
     private static final String ZIP_CODE = "12345";
 
-    private static final Country country = new Country();
-    private static final Address address = new Address();
-
     @BeforeAll
     static void init() {
         CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
@@ -34,51 +36,54 @@ class AddressMapperTest {
         ReflectionTestUtils.setField(addressMapper, "countryMapper", countryMapper);
     }
 
-    @BeforeAll
-    static void setUpEntityObjects(){
-        country.setId(ID_POSITIVE);
-        country.setName(COUNTRY_NAME);
-        country.setIso3166alpha3(ISO_3166_ALPHA_3);
+    @ParameterizedTest
+    @MethodSource("providerForEntity")
+    void toDto(Address address, Long id) {
+        assertThat(addressMapper.toDto(address))
+                .returns(id, AddressDto::getId)
+                .returns(STREET, AddressDto::getStreet)
+                .returns(CITY, AddressDto::getCity)
+                .returns(ZIP_CODE, AddressDto::getZipCode);
 
-        address.setId(ID_POSITIVE);
-        address.setCountry(country);
-        address.setStreet(STREET);
-        address.setCity(CITY);
-        address.setZipCode(ZIP_CODE);
+        assertThat(addressMapper.toDto(address).getCountryDto())
+                .returns(id, CountryDto::getId)
+                .returns(COUNTRY_NAME, CountryDto::getName)
+                .returns(ISO_3166_ALPHA_3, CountryDto::getIso3166alpha3);
     }
 
-    @Test
-    void toDto() {
-        AddressDto addressDto = addressMapper.toDto(address);
+    @ParameterizedTest
+    @MethodSource("providerForDto")
+    void toEntity(AddressDto addressDto, Long id) {
+        assertThat(addressMapper.toEntity(addressDto))
+                .returns(id, Address::getId)
+                .returns(STREET, Address::getStreet)
+                .returns(CITY, Address::getCity)
+                .returns(ZIP_CODE, Address::getZipCode);
 
-        assertEquals(address.getId(), addressDto.getId());
-        assertEquals(address.getStreet(), addressDto.getStreet());
-        assertEquals(address.getCity(), addressDto.getCity());
-        assertEquals(address.getZipCode(), addressDto.getZipCode());
-        assertEquals(address.getCountry().getId(), addressDto.getCountryId());
-        assertEquals(address.getCountry().getId(), country.getId());
-        assertEquals(address.getCountry().getName(), country.getName());
-        assertEquals(address.getCountry().getIso3166alpha3(), country.getIso3166alpha3());
+        //TODO: addressMapper.toEntity(addressDto).getCountry() is null, possible options
+        //1. rewrite mapper for load data from database
+        //2. moved logic of load data from DB to service and test service instead of mapper
+        assertThat(addressMapper.toEntity(addressDto).getCountry())
+                .returns(id, Country::getId)
+                .returns(COUNTRY_NAME, Country::getName)
+                .returns(ISO_3166_ALPHA_3, Country::getIso3166alpha3);
     }
 
-    @Test
-    void toEntity() {
-        CountryDto countryDto = CountryDto.builder()
-                .id(ID_POSITIVE)
-                .name(COUNTRY_NAME)
-                .iso3166alpha3(ISO_3166_ALPHA_3)
-                .build();
+    private static Stream<Arguments> providerForEntity() {
+        return Stream.of(
+                Arguments.of(new Address(ID_POSITIVE, STREET, CITY, ZIP_CODE, new Country(ID_POSITIVE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), ID_POSITIVE),
+                Arguments.of(new Address(ID_NEGATIVE, STREET, CITY, ZIP_CODE, new Country(ID_NEGATIVE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), ID_NEGATIVE),
+                Arguments.of(new Address(Long.MIN_VALUE, STREET, CITY, ZIP_CODE, new Country(Long.MIN_VALUE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), Long.MIN_VALUE),
+                Arguments.of(new Address(Long.MIN_VALUE, STREET, CITY, ZIP_CODE, new Country(Long.MIN_VALUE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), Long.MIN_VALUE)
+        );
+    }
 
-        AddressDto addressDto = AddressDto.builder()
-                .id(ID_POSITIVE)
-                .countryDto(countryDto)
-                .street(STREET)
-                .city(CITY)
-                .zipCode(ZIP_CODE)
-                .build();
-
-        Address address = addressMapper.toEntity(addressDto);
-
-        assertEquals(ID_POSITIVE, address.getId());
+    private static Stream<Arguments> providerForDto() {
+        return Stream.of(
+                Arguments.of(new AddressDto(ID_POSITIVE, new CountryDto(ID_POSITIVE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), ID_POSITIVE),
+                Arguments.of(new AddressDto(ID_NEGATIVE, new CountryDto(ID_NEGATIVE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), ID_NEGATIVE),
+                Arguments.of(new AddressDto(Long.MAX_VALUE, new CountryDto(Long.MAX_VALUE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), Long.MAX_VALUE),
+                Arguments.of(new AddressDto(Long.MIN_VALUE, new CountryDto(ID_POSITIVE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), Long.MIN_VALUE)
+        );
     }
 }
