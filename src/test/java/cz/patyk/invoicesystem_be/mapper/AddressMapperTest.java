@@ -2,6 +2,7 @@ package cz.patyk.invoicesystem_be.mapper;
 
 import cz.patyk.invoicesystem_be.dto.AddressDto;
 import cz.patyk.invoicesystem_be.dto.CountryDto;
+import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Country;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,7 +38,7 @@ class AddressMapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("providerForEntity")
+    @MethodSource("providerEntities")
     void toDto(Address address, Long id) {
         assertThat(addressMapper.toDto(address))
                 .returns(id, AddressDto::getId)
@@ -52,8 +53,8 @@ class AddressMapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("providerForDto")
-    void toEntity(AddressDto addressDto, Long id) {
+    @MethodSource("providerDtos")
+    void toEntity(AddressDtoIn addressDto, Long id) {
         assertThat(addressMapper.toEntity(addressDto))
                 .returns(id, Address::getId)
                 .returns(STREET, Address::getStreet)
@@ -63,13 +64,9 @@ class AddressMapperTest {
         //TODO: addressMapper.toEntity(addressDto).getCountry() is null, possible options
         //1. rewrite mapper for load data from database
         //2. moved logic of load data from DB to service and test service instead of mapper
-        assertThat(addressMapper.toEntity(addressDto).getCountry())
-                .returns(id, Country::getId)
-                .returns(COUNTRY_NAME, Country::getName)
-                .returns(ISO_3166_ALPHA_3, Country::getIso3166alpha3);
     }
 
-    private static Stream<Arguments> providerForEntity() {
+    private static Stream<Arguments> providerEntities() {
         return Stream.of(
                 Arguments.of(new Address(ID_POSITIVE, STREET, CITY, ZIP_CODE, new Country(ID_POSITIVE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), ID_POSITIVE),
                 Arguments.of(new Address(ID_NEGATIVE, STREET, CITY, ZIP_CODE, new Country(ID_NEGATIVE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), ID_NEGATIVE),
@@ -78,12 +75,12 @@ class AddressMapperTest {
         );
     }
 
-    private static Stream<Arguments> providerForDto() {
+    private static Stream<Arguments> providerDtos() {
         return Stream.of(
-                Arguments.of(new AddressDto(ID_POSITIVE, new CountryDto(ID_POSITIVE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), ID_POSITIVE),
-                Arguments.of(new AddressDto(ID_NEGATIVE, new CountryDto(ID_NEGATIVE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), ID_NEGATIVE),
-                Arguments.of(new AddressDto(Long.MAX_VALUE, new CountryDto(Long.MAX_VALUE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), Long.MAX_VALUE),
-                Arguments.of(new AddressDto(Long.MIN_VALUE, new CountryDto(ID_POSITIVE, COUNTRY_NAME, ISO_3166_ALPHA_3), 1L, STREET, CITY, ZIP_CODE), Long.MIN_VALUE)
+                Arguments.of(new AddressDtoIn(ID_POSITIVE, 1L, STREET, CITY, ZIP_CODE), ID_POSITIVE),
+                Arguments.of(new AddressDtoIn(ID_NEGATIVE, 1L, STREET, CITY, ZIP_CODE), ID_NEGATIVE),
+                Arguments.of(new AddressDtoIn(Long.MAX_VALUE, 1L, STREET, CITY, ZIP_CODE), Long.MAX_VALUE),
+                Arguments.of(new AddressDtoIn(Long.MIN_VALUE, 1L, STREET, CITY, ZIP_CODE), Long.MIN_VALUE)
         );
     }
 }
