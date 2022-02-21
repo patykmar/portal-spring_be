@@ -5,12 +5,14 @@ import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Country;
+import cz.patyk.invoicesystem_be.repositories.CountryRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -33,8 +35,10 @@ class AddressMapperTest {
     @BeforeAll
     static void init() {
         CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
+        CountryRepository countryRepository = Mockito.mock(CountryRepository.class);
         // inject countryMapper for testing purpose, because autowire is not working
         ReflectionTestUtils.setField(addressMapper, "countryMapper", countryMapper);
+        ReflectionTestUtils.setField(addressMapper, "countryRepository", countryRepository);
     }
 
     @ParameterizedTest
@@ -55,15 +59,25 @@ class AddressMapperTest {
     @ParameterizedTest
     @MethodSource("providerDtos")
     void toEntity(AddressDtoIn addressDto, Long id) {
+        Country country = new Country();
+        country.setId(id);
+        country.setName(COUNTRY_NAME);
+        country.setIso3166alpha3(ISO_3166_ALPHA_3);
+
+        Mockito
+                .when(addressMapper.countryRepository.getById(addressDto.getCountry()))
+                .thenReturn(country);
+
         assertThat(addressMapper.toEntity(addressDto))
                 .returns(id, Address::getId)
                 .returns(STREET, Address::getStreet)
                 .returns(CITY, Address::getCity)
                 .returns(ZIP_CODE, Address::getZipCode);
 
-        //TODO: addressMapper.toEntity(addressDto).getCountry() is null, possible options
-        //1. rewrite mapper for load data from database
-        //2. moved logic of load data from DB to service and test service instead of mapper
+        assertThat(addressMapper.toEntity(addressDto).getCountry())
+                .returns(id, Country::getId)
+                .returns(COUNTRY_NAME, Country::getName)
+                .returns(ISO_3166_ALPHA_3, Country::getIso3166alpha3);
     }
 
     private static Stream<Arguments> providerEntities() {
