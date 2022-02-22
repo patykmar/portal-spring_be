@@ -1,6 +1,6 @@
 package cz.patyk.invoicesystem_be.controllers;
 
-import cz.patyk.invoicesystem_be.dto.AddressDto;
+import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.service.AddressServices;
 import lombok.RequiredArgsConstructor;
@@ -22,22 +22,22 @@ public class AddressController {
     private final AddressServices addressServices;
 
     @GetMapping("")
-    public List<AddressDto> getAllAddresses() {
+    public List<AddressDtoOut> getAllAddresses() {
         return addressServices.getAllAddresses();
     }
 
     @GetMapping("/{id}")
-    public AddressDto getAddress(@PathVariable Long id) {
+    public AddressDtoOut getAddress(@PathVariable Long id) {
         return addressServices.getAddress(id);
     }
 
     @PostMapping("")
-    public AddressDto newAddress(@RequestBody AddressDtoIn addressDtoIn) {
+    public AddressDtoOut newAddress(@RequestBody AddressDtoIn addressDtoIn) {
         return addressServices.newAddress(addressDtoIn);
     }
 
     @PutMapping("/{id}")
-    public AddressDto edit(
+    public AddressDtoOut edit(
             @RequestBody AddressDtoIn addressDtoIn,
             @PathVariable Long id
     ) {

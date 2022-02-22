@@ -1,6 +1,6 @@
 package cz.patyk.invoicesystem_be.mapper;
 
-import cz.patyk.invoicesystem_be.dto.AddressDto;
+import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.entities.Address;
@@ -45,10 +45,10 @@ class AddressMapperTest {
     @MethodSource("providerEntities")
     void toDto(Address address, Long id) {
         assertThat(addressMapper.toDto(address))
-                .returns(id, AddressDto::getId)
-                .returns(STREET, AddressDto::getStreet)
-                .returns(CITY, AddressDto::getCity)
-                .returns(ZIP_CODE, AddressDto::getZipCode);
+                .returns(id, AddressDtoOut::getId)
+                .returns(STREET, AddressDtoOut::getStreet)
+                .returns(CITY, AddressDtoOut::getCity)
+                .returns(ZIP_CODE, AddressDtoOut::getZipCode);
 
         assertThat(addressMapper.toDto(address).getCountryDto())
                 .returns(id, CountryDto::getId)
