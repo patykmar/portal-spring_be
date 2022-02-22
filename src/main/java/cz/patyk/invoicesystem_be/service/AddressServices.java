@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +18,11 @@ public class AddressServices {
         return addressRepository.findAll()
                 .stream()
                 .map(addressMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
+    }
+
+    public AddressDto getAddress(Long id){
+        return addressMapper
+                .toDto(addressRepository.getById(id));
     }
 }
