@@ -4,6 +4,7 @@ import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.service.AddressServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,30 +23,31 @@ public class AddressController {
     private final AddressServices addressServices;
 
     @GetMapping("")
-    public List<AddressDtoOut> getAllAddresses() {
-        return addressServices.getAllAddresses();
+    public ResponseEntity<List<AddressDtoOut>> getAllAddresses() {
+        return ResponseEntity.ok(addressServices.getAllAddresses());
     }
 
     @GetMapping("/{id}")
-    public AddressDtoOut getAddress(@PathVariable Long id) {
-        return addressServices.getAddress(id);
+    public ResponseEntity<AddressDtoOut> getAddress(@PathVariable Long id) {
+        return ResponseEntity.ok(addressServices.getAddress(id));
     }
 
     @PostMapping("")
-    public AddressDtoOut newAddress(@RequestBody AddressDtoIn addressDtoIn) {
-        return addressServices.newAddress(addressDtoIn);
+    public ResponseEntity<AddressDtoOut> newAddress(@RequestBody AddressDtoIn addressDtoIn) {
+        return ResponseEntity.ok(addressServices.newAddress(addressDtoIn));
     }
 
     @PutMapping("/{id}")
-    public AddressDtoOut edit(
+    public ResponseEntity<AddressDtoOut> edit(
             @RequestBody AddressDtoIn addressDtoIn,
             @PathVariable Long id
     ) {
-        return addressServices.edit(addressDtoIn, id);
+        return ResponseEntity.ok(addressServices.edit(addressDtoIn, id));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         addressServices.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
