@@ -1,8 +1,8 @@
 package cz.patyk.invoicesystem_be.mapper;
 
 import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
+import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.entities.Address;
-import cz.patyk.invoicesystem_be.dto.AddressDto;
 import cz.patyk.invoicesystem_be.entities.Country;
 import cz.patyk.invoicesystem_be.repositories.CountryRepository;
 import org.mapstruct.Mapper;
@@ -15,9 +15,9 @@ public abstract class AddressMapper {
     @Autowired
     protected CountryRepository countryRepository;
 
-    @Mapping(target = "countryId", source = "country.id")
+    @Mapping(target = "country", source = "country.id")
     @Mapping(target = "countryDto", source = "address.country")
-    public abstract AddressDto toDto(Address address);
+    public abstract AddressDtoOut toDto(Address address);
 
     @Mapping(target = "country", expression = "java(getCountry(addressDto.getCountry()))")
     public abstract Address toEntity(AddressDtoIn addressDto);

@@ -1,5 +1,6 @@
-package cz.patyk.invoicesystem_be.dto;
+package cz.patyk.invoicesystem_be.dto.out;
 
+import cz.patyk.invoicesystem_be.dto.CountryDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,10 +8,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class AddressDto {
+public class AddressDtoOut {
     private Long id;
     private CountryDto countryDto;
-    private Long countryId;
+    private Long country;
     private String street;
     private String city;
     private String zipCode;
