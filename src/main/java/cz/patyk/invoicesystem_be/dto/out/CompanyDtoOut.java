@@ -15,6 +15,7 @@ public class CompanyDtoOut {
     private String vatNumber;
     private String accountNumber;
     private String iban;
+    private Long address;
     private AddressDtoOut addressDtoOut;
     private int created;
     private int modify;
