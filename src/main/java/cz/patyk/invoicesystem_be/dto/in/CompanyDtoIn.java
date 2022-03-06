@@ -15,5 +15,5 @@ public class CompanyDtoIn {
     private String vatNumber;
     private String accountNumber;
     private String iban;
-    private Long addressId;
+    private Long address;
 }
