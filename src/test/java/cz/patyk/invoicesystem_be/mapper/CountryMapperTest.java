@@ -20,6 +20,8 @@ class CountryMapperTest {
     public static final String COUNTRY_NAME = "Val Verde";
     public static final String ISO_3166_ALPHA_3 = "VV";
 
+    public static final Country COUNTRY = new Country(Long.MAX_VALUE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of());
+
 
     @ParameterizedTest
     @MethodSource("providerEntities")
