@@ -32,6 +32,8 @@ class AddressMapperTest {
     private static final String CITY = "Springfield";
     private static final String ZIP_CODE = "12345";
 
+    public static final Address ADDRESS = new Address(Long.MAX_VALUE, STREET, CITY, ZIP_CODE, CountryMapperTest.COUNTRY);
+
     @BeforeAll
     static void init() {
         CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
@@ -59,14 +61,9 @@ class AddressMapperTest {
     @ParameterizedTest
     @MethodSource("providerDtos")
     void toEntity(AddressDtoIn addressDto, Long id) {
-        Country country = new Country();
-        country.setId(id);
-        country.setName(COUNTRY_NAME);
-        country.setIso3166alpha3(ISO_3166_ALPHA_3);
-
         Mockito
                 .when(addressMapper.countryRepository.getById(addressDto.getCountry()))
-                .thenReturn(country);
+                .thenReturn(CountryMapperTest.COUNTRY);
 
         assertThat(addressMapper.toEntity(addressDto))
                 .returns(id, Address::getId)
