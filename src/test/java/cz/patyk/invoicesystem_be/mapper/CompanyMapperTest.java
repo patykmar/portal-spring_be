@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static cz.patyk.invoicesystem_be.mapper.AddressMapperTest.ADDRESS;
+import static cz.patyk.invoicesystem_be.mapper.AddressMapperTest.ADDRESS_DTO_OUT;
+import static cz.patyk.invoicesystem_be.mapper.CountryMapperTest.COUNTRY_DTO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CompanyMapperTest {
@@ -37,10 +39,8 @@ class CompanyMapperTest {
     static void init() {
         AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
         AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
-        CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
         ReflectionTestUtils.setField(companyMapper, "addressRepository", addressRepository);
         ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
-        ReflectionTestUtils.setField(companyMapper, "countryMapper", countryMapper);
     }
 
     @ParameterizedTest
@@ -48,7 +48,7 @@ class CompanyMapperTest {
     void toEntity(CompanyDtoIn companyDtoIn) {
         Mockito
                 .when(companyMapper.addressRepository.getById(companyDtoIn.getAddress()))
-                .thenReturn(AddressMapperTest.ADDRESS);
+                .thenReturn(ADDRESS);
 
         assertThat(companyMapper.toEntity(companyDtoIn))
                 .returns(companyDtoIn.getId(), Company::getId)
@@ -63,8 +63,17 @@ class CompanyMapperTest {
     @ParameterizedTest
     @MethodSource("provideEntity")
     void toDto(Company company) {
-        //TODO fix-it
-        // Warning:(66, 34) java.lang.NullPointerException: Cannot invoke "cz.patyk.invoicesystem_be.mapper.CountryMapper.toDto(cz.patyk.invoicesystem_be.entities.Country)" because "this.countryMapper" is null
+        AddressMapper addressMapper = Mockito.mock(AddressMapper.class);
+        CountryMapper countryMapper = Mockito.mock(CountryMapper.class);
+
+        Mockito
+                .when(addressMapper.toDto(company.getAddress()))
+                .thenReturn(ADDRESS_DTO_OUT);
+        Mockito
+                .when(countryMapper.toDto(company.getAddress().getCountry()))
+                .thenReturn(COUNTRY_DTO);
+        ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
+
         assertThat(companyMapper.toDto(company))
                 .returns(company.getId(), CompanyDtoOut::getId)
                 .returns(company.getName(), CompanyDtoOut::getName)
