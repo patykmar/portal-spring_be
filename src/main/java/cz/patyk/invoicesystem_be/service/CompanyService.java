@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class CompanyService {
         return companyRepository.findAll()
                 .stream()
                 .map(companyMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public CompanyDtoOut getCompany(Long id) {
