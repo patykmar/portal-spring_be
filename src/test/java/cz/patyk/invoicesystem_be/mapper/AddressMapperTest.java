@@ -18,6 +18,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static cz.patyk.invoicesystem_be.mapper.CountryMapperTest.COUNTRY_DTO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AddressMapperTest {
@@ -31,6 +32,10 @@ class AddressMapperTest {
     private static final String STREET = "Fake street 123";
     private static final String CITY = "Springfield";
     private static final String ZIP_CODE = "12345";
+
+    public static final Address ADDRESS = new Address(Long.MAX_VALUE, STREET, CITY, ZIP_CODE, CountryMapperTest.COUNTRY);
+    public static final AddressDtoOut ADDRESS_DTO_OUT = AddressDtoOut.builder()
+            .id(Long.MAX_VALUE).street(STREET).city(CITY).zipCode(ZIP_CODE).countryDto(COUNTRY_DTO).build();
 
     @BeforeAll
     static void init() {
@@ -59,14 +64,9 @@ class AddressMapperTest {
     @ParameterizedTest
     @MethodSource("providerDtos")
     void toEntity(AddressDtoIn addressDto, Long id) {
-        Country country = new Country();
-        country.setId(id);
-        country.setName(COUNTRY_NAME);
-        country.setIso3166alpha3(ISO_3166_ALPHA_3);
-
         Mockito
                 .when(addressMapper.countryRepository.getById(addressDto.getCountry()))
-                .thenReturn(country);
+                .thenReturn(CountryMapperTest.COUNTRY);
 
         assertThat(addressMapper.toEntity(addressDto))
                 .returns(id, Address::getId)
@@ -75,7 +75,7 @@ class AddressMapperTest {
                 .returns(ZIP_CODE, Address::getZipCode);
 
         assertThat(addressMapper.toEntity(addressDto).getCountry())
-                .returns(id, Country::getId)
+                .returns(CountryMapperTest.COUNTRY.getId(), Country::getId)
                 .returns(COUNTRY_NAME, Country::getName)
                 .returns(ISO_3166_ALPHA_3, Country::getIso3166alpha3);
     }

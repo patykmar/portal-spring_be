@@ -14,6 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Company implements Serializable {
 
     @Id
@@ -23,11 +24,8 @@ public class Company implements Serializable {
     private String description;
     private String companyId;
     private String vatNumber;
-    private int created;
-    private int modify;
-    private String street;
-    private String city;
-    private String zipCode;
+    private Long created;
+    private Long modify;
     private String accountNumber;
     private String iban;
 
