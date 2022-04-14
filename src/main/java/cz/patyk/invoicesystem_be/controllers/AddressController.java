@@ -4,6 +4,9 @@ import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.service.AddressServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +19,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/addresses")
 @RequiredArgsConstructor
 public class AddressController {
     private final AddressServices addressServices;
 
-    @GetMapping("")
-    public ResponseEntity<List<AddressDtoOut>> getAllAddresses() {
-        return ResponseEntity.ok(addressServices.getAllAddresses());
+    @GetMapping(value = "", produces = {"application/hal+json"})
+    public ResponseEntity<CollectionModel<AddressDtoOut>> getAllAddresses(
+            @PageableDefault() final Pageable pageable
+    ) {
+        List<AddressDtoOut> addressDtoOuts = addressServices.getAllAddresses(pageable);
+
+        addressDtoOuts.forEach(addressDtoOut -> addressDtoOut.add(
+                linkTo(AddressController.class)
+                        .slash(addressDtoOut.getId())
+                        .withSelfRel()
+        ));
+
+        CollectionModel<AddressDtoOut> addressDtoOutCollectionModel =
+                CollectionModel.of(addressDtoOuts);
+
+        addressDtoOutCollectionModel
+                .add(
+                        linkTo(methodOn(AddressController.class).getAllAddresses(pageable))
+                                .withSelfRel()
+                );
+
+        return ResponseEntity.ok(addressDtoOutCollectionModel);
     }
 
     @GetMapping("/{id}")
