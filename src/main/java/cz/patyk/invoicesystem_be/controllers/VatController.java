@@ -1,5 +1,6 @@
 package cz.patyk.invoicesystem_be.controllers;
 
+import cz.patyk.invoicesystem_be.dto.in.VatDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.VatDtoOut;
 import cz.patyk.invoicesystem_be.service.VatService;
 import lombok.NonNull;
@@ -52,17 +53,17 @@ public class VatController {
 
     @PostMapping("")
     public ResponseEntity<VatDtoOut> newItem(
-            @RequestBody VatDtoOut vatDto
+            @RequestBody VatDtoIn vatDtoIn
     ) {
-        return ResponseEntity.ok(vatService.newVat(vatDto));
+        return ResponseEntity.ok(vatService.newVat(vatDtoIn));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<VatDtoOut> editItem(
-            @RequestBody VatDtoOut vatDto,
+            @RequestBody VatDtoIn vatDtoIn,
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(vatService.edit(vatDto, id));
+        return ResponseEntity.ok(vatService.edit(vatDtoIn, id));
     }
 
     @DeleteMapping("/{id}")
