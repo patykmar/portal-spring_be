@@ -1,15 +1,16 @@
 package cz.patyk.invoicesystem_be.mapper;
 
-import cz.patyk.invoicesystem_be.dto.VatDto;
+import cz.patyk.invoicesystem_be.dto.in.VatDtoIn;
+import cz.patyk.invoicesystem_be.dto.out.VatDtoOut;
 import cz.patyk.invoicesystem_be.entities.Vat;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface VatMapper {
     @Mapping(source = "default", target = "isDefault")
-    Vat toEntity(VatDto vatDto);
+    @Mapping(target="multiplier", expression="java(vatDtoIn.getPercent() + Vat.MULTIPLIER_CONST)")
+    Vat toEntity(VatDtoIn vatDtoIn);
 
     @Mapping(source = "default", target = "isDefault")
-    VatDto toDto(Vat vat);
+    VatDtoOut toDto(Vat vat);
 }
