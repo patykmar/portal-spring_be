@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import java.util.List;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -31,8 +33,15 @@ public class AddressRepositoryRestController {
     ) {
         log.info("Retrieved data from {} and {} method", AddressRepositoryRestController.class, "getAddresses");
 
+        List<AddressDtoOut> addressDtoOutList = addressServices.getAllAddressesData(pageable);
+        addressDtoOutList.forEach(addressDtoOut -> addressDtoOut.add(
+                linkTo(AddressRepositoryRestController.class)
+                        .slash(addressDtoOut.getId())
+                        .withSelfRel())
+        );
+
         CollectionModel<AddressDtoOut> addressDtoOutCollectionModel =
-                CollectionModel.of(addressServices.getAllAddressesData(pageable));
+                CollectionModel.of(addressDtoOutList);
 
         addressDtoOutCollectionModel.add(linkTo(
                 methodOn(AddressRepositoryRestController.class)
