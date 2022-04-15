@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest-manual")
+@RequestMapping("/self/rest-manual")
 @AllArgsConstructor
 public class VatController {
     @NonNull

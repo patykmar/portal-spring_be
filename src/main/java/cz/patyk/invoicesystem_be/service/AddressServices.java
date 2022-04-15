@@ -6,6 +6,7 @@ import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.mapper.AddressMapper;
 import cz.patyk.invoicesystem_be.repositories.AddressRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,13 @@ public class AddressServices {
 
     public List<AddressDtoOut> getAllAddresses() {
         return addressRepository.findAll()
+                .stream()
+                .map(addressMapper::toDto)
+                .toList();
+    }
+
+    public List<AddressDtoOut> getAllAddressesData(Pageable pageable) {
+        return addressRepository.findAll(pageable)
                 .stream()
                 .map(addressMapper::toDto)
                 .toList();
