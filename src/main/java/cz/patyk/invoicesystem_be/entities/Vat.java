@@ -40,10 +40,11 @@ public class Vat implements Serializable {
     @PrePersist
     @PreUpdate
     public void calculateMultiplier() {
-        int multiplierLocal = percent + MULTIPLIER_CONST;
-        log.info("Is multiplier null? {} ", multiplier);
-        log.info("Calculate multiplier from percent. Percent: {}, multiplier: {}", percent, multiplierLocal);
-        setMultiplier(multiplierLocal);
+        if (multiplier <= 0) {
+            int multiplierLocal = percent + MULTIPLIER_CONST;
+            log.warn("Multiplier is not set. Current value {} will be replace to {}", multiplier, multiplierLocal);
+            setMultiplier(multiplierLocal);
+        }
     }
 
     @Override
