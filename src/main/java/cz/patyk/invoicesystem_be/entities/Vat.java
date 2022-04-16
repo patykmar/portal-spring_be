@@ -1,25 +1,34 @@
 package cz.patyk.invoicesystem_be.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@Slf4j
+@Builder
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vat implements Serializable {
 
+    public static final int MULTIPLIER_CONST = 100;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,6 +36,16 @@ public class Vat implements Serializable {
     private String name;
     private int percent;
     private int multiplier;
+
+    @PrePersist
+    @PreUpdate
+    public void calculateMultiplier() {
+        if (multiplier <= 0) {
+            int multiplierLocal = percent + MULTIPLIER_CONST;
+            log.warn("Multiplier is not set. Current value {} will be replace to {}", multiplier, multiplierLocal);
+            setMultiplier(multiplierLocal);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
