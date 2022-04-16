@@ -1,24 +1,76 @@
 package cz.patyk.invoicesystem_be.controllers;
 
-import cz.patyk.invoicesystem_be.dto.VatDto;
+import cz.patyk.invoicesystem_be.dto.in.VatDtoIn;
+import cz.patyk.invoicesystem_be.dto.out.VatDtoOut;
 import cz.patyk.invoicesystem_be.service.VatService;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
-@RequestMapping("/rest-manual")
-@AllArgsConstructor
+@RequestMapping("/vats")
+@RequiredArgsConstructor
 public class VatController {
     @NonNull
     private final VatService vatService;
 
-    @GetMapping("/simple-vats")
-    public List<VatDto> findAll(){
-        return vatService.getAllVats();
+    @GetMapping(value = "", produces = {"application/hal+json"})
+    public ResponseEntity<CollectionModel<VatDtoOut>> getAll(
+            @PageableDefault() final Pageable pageable
+    ) {
+        List<VatDtoOut> vatDtoList = vatService.getAllVats(pageable);
+
+        vatDtoList.forEach(vatDto -> vatDto.add(
+                linkTo(VatController.class)
+                        .slash(vatDto.getId())
+                        .withSelfRel()
+        ));
+
+        CollectionModel<VatDtoOut> vatDtoCollectionModel = CollectionModel.of(vatDtoList);
+
+        vatDtoCollectionModel.add(
+                linkTo(methodOn(VatController.class).getAll(pageable))
+                        .withSelfRel()
+        );
+        return ResponseEntity.ok(vatDtoCollectionModel);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<VatDtoOut> getOne(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(vatService.getVat(id));
+    }
+
+    @PostMapping("")
+    public ResponseEntity<VatDtoOut> newItem(
+            @RequestBody VatDtoIn vatDtoIn
+    ) {
+        return ResponseEntity.ok(vatService.newVat(vatDtoIn));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<VatDtoOut> editItem(
+            @RequestBody VatDtoIn vatDtoIn,
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(vatService.edit(vatDtoIn, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteItem(
+            @PathVariable Long id
+    ) {
+        vatService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
