@@ -3,7 +3,9 @@ package cz.patyk.invoicesystem_be.mapper;
 import cz.patyk.invoicesystem_be.dto.in.VatDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.VatDtoOut;
 import cz.patyk.invoicesystem_be.entities.Vat;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 
 @Mapper(componentModel = "spring")
 public interface VatMapper {
