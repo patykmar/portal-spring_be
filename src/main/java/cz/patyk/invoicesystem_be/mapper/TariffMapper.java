@@ -1,6 +1,6 @@
 package cz.patyk.invoicesystem_be.mapper;
 
-import cz.patyk.invoicesystem_be.dto.TariffDto;
+import cz.patyk.invoicesystem_be.dto.in.TariffDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.TariffDtoOut;
 import cz.patyk.invoicesystem_be.entities.Tariff;
 import cz.patyk.invoicesystem_be.entities.Vat;
@@ -14,9 +14,8 @@ public abstract class TariffMapper {
 
     @Autowired
     protected VatRepository vatRepository;
-    public abstract Tariff toEntity(TariffDto tariffDto);
 
-    public abstract TariffDto toDto(Tariff tariff);
+    public abstract Tariff toEntity(TariffDtoIn tariffDtoIn);
 
     @Mapping(target = "vat", source = "vat.id")
     @Mapping(target = "vatDto", source = "tariff.vat")
