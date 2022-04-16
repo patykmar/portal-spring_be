@@ -10,8 +10,17 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.stream.Stream;
 
-import static cz.patyk.invoicesystem_be.common.TestConstants.*;
+import static cz.patyk.invoicesystem_be.common.TestConstants.INT_MAX;
+import static cz.patyk.invoicesystem_be.common.TestConstants.INT_MIN;
+import static cz.patyk.invoicesystem_be.common.TestConstants.INT_NEGATIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.INT_POSITIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.INT_ZERO;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_MAX;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_MIN;
 import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_NEGATIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_POSITIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_ZERO;
+import static cz.patyk.invoicesystem_be.common.TestConstants.TEST_VAT_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class VatMapperTest {
