@@ -1,13 +1,14 @@
 package cz.patyk.invoicesystem_be.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
-@Data
 @Builder
-@AllArgsConstructor
-public class QueueDto {
+@Getter
+@Setter
+public class QueueDto extends RepresentationModel<QueueDto> {
     private Long id;
     private String name;
 }
