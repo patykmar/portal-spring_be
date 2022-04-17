@@ -5,21 +5,22 @@ import cz.patyk.invoicesystem_be.entities.Country;
 import cz.patyk.invoicesystem_be.mapper.CountryMapper;
 import cz.patyk.invoicesystem_be.repositories.CountryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static cz.patyk.invoicesystem_be.service.ServiceConstants.COUNTRY_NOT_FOUND_MESSAGE;
+
 @Service
 @RequiredArgsConstructor
 public class CountryService {
-    private static final String NOT_FOUND_MESSAGE = "Country not found";
-
     private final CountryMapper countryMapper;
     private final CountryRepository countryRepository;
     private final ErrorHandleService errorHandleService;
 
-    public List<CountryDto> getAllCountries() {
-        return countryRepository.findAll()
+    public List<CountryDto> getAllCountries(Pageable pageable) {
+        return countryRepository.findAll(pageable)
                 .stream()
                 .map(countryMapper::toDto)
                 .toList();
@@ -28,7 +29,7 @@ public class CountryService {
     public CountryDto getCountry(Long id) {
         return countryMapper.toDto(
                 countryRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE)));
+                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, COUNTRY_NOT_FOUND_MESSAGE)));
     }
 
     public CountryDto newCountry(CountryDto countryDto) {
@@ -38,7 +39,7 @@ public class CountryService {
 
     public CountryDto edit(CountryDto countryDto, Long id) {
         if (!countryRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, COUNTRY_NOT_FOUND_MESSAGE);
         }
         Country country = countryMapper.toEntity(countryDto);
         country.setId(id);
@@ -47,7 +48,7 @@ public class CountryService {
 
     public void delete(Long id) {
         if (!countryRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, COUNTRY_NOT_FOUND_MESSAGE);
         }
         countryRepository.deleteById(id);
     }

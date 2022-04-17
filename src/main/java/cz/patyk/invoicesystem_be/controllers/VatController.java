@@ -35,13 +35,10 @@ public class VatController {
                         .withSelfRel()
         ));
 
-        CollectionModel<VatDtoOut> vatDtoCollectionModel = CollectionModel.of(vatDtoList);
-
-        vatDtoCollectionModel.add(
+        return ResponseEntity.ok(CollectionModel.of(vatDtoList).add(
                 linkTo(methodOn(VatController.class).getAll(pageable))
                         .withSelfRel()
-        );
-        return ResponseEntity.ok(vatDtoCollectionModel);
+        ));
     }
 
     @GetMapping("/{id}")

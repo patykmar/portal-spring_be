@@ -6,21 +6,22 @@ import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.mapper.CompanyMapper;
 import cz.patyk.invoicesystem_be.repositories.CompanyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static cz.patyk.invoicesystem_be.service.ServiceConstants.COMPANY_NOT_FOUND_MESSAGE;
+
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
-    private static final String NOT_FOUND_MESSAGE = "Company not found";
-
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
     private final ErrorHandleService errorHandleService;
 
-    public List<CompanyDtoOut> getAllCompanies() {
-        return companyRepository.findAll()
+    public List<CompanyDtoOut> getAllCompanies(Pageable pageable) {
+        return companyRepository.findAll(pageable)
                 .stream()
                 .map(companyMapper::toDto)
                 .toList();
@@ -29,7 +30,7 @@ public class CompanyService {
     public CompanyDtoOut getCompany(Long id) {
         return companyMapper.toDto(
                 companyRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE))
+                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE))
         );
     }
 
@@ -40,7 +41,7 @@ public class CompanyService {
 
     public CompanyDtoOut edit(CompanyDtoIn companyDtoIn, Long id) {
         if (!companyRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE);
         }
         Company company = companyMapper.toEntity(companyDtoIn);
         company.setId(id);
@@ -49,7 +50,7 @@ public class CompanyService {
 
     public void delete(Long id) {
         if (!companyRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE);
         }
         companyRepository.deleteById(id);
     }

@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static cz.patyk.invoicesystem_be.service.ServiceConstants.VAT_NOT_FOUND_MESSAGE;
+
 @Service
 @RequiredArgsConstructor
 public class VatService {
-    private static final String NOT_FOUND_MESSAGE = "Vat not found";
-
     @NonNull
     private final VatRepository vatRepository;
     @NonNull
@@ -35,7 +35,7 @@ public class VatService {
     public VatDtoOut getVat(Long id) {
         return vatMapper.toDto(
                 vatRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE))
+                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, VAT_NOT_FOUND_MESSAGE))
         );
     }
 
@@ -46,7 +46,7 @@ public class VatService {
 
     public VatDtoOut edit(VatDtoIn vatDtoIn, Long id) {
         if (!vatRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, VAT_NOT_FOUND_MESSAGE);
         }
         Vat vat = vatMapper.toEntity(vatDtoIn);
         vat.setId(id);
@@ -55,7 +55,7 @@ public class VatService {
 
     public void delete(Long id) {
         if(!vatRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, VAT_NOT_FOUND_MESSAGE);
         }
         vatRepository.deleteById(id);
     }

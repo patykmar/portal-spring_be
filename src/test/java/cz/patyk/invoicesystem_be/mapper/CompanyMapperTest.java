@@ -9,31 +9,30 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static cz.patyk.invoicesystem_be.mapper.AddressMapperTest.ADDRESS;
-import static cz.patyk.invoicesystem_be.mapper.AddressMapperTest.ADDRESS_DTO_OUT;
-import static cz.patyk.invoicesystem_be.mapper.CountryMapperTest.COUNTRY_DTO;
+import static cz.patyk.invoicesystem_be.common.TestConstants.ADDRESS_TEST_DTO_OUT;
+import static cz.patyk.invoicesystem_be.common.TestConstants.ADDRESS_TEST_ENTITY;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_ACCOUNT_NUMBER;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_COMPANY_ID;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_CREATED;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_DESCRIPTION;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_IBAN;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_MODIFY;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_NAME;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_VAT_NUMBER;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COUNTRY_TEST_DTO;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_NEGATIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_POSITIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CompanyMapperTest {
-    @InjectMocks
     private static final CompanyMapper companyMapper = Mappers.getMapper(CompanyMapper.class);
-
-    public static final String NAME = "Testing company name";
-    public static final String DESCRIPTION = "Testing company description";
-    public static final String COMPANY_ID = "123456789";
-    public static final String VAT_NUMBER = "CZ123456789";
-    public static final Long CREATED = 915148800L;
-    public static final Long MODIFY = Instant.now().getEpochSecond();
-    public static final String ACCOUNT_NUMBER = "12345-123456789/0123";
-    public static final String IBAN = "CZ1234567890123456789012";
 
     @BeforeAll
     static void init() {
@@ -48,7 +47,7 @@ class CompanyMapperTest {
     void toEntity(CompanyDtoIn companyDtoIn) {
         Mockito
                 .when(companyMapper.addressRepository.getById(companyDtoIn.getAddress()))
-                .thenReturn(ADDRESS);
+                .thenReturn(ADDRESS_TEST_ENTITY);
 
         assertThat(companyMapper.toEntity(companyDtoIn))
                 .returns(companyDtoIn.getId(), Company::getId)
@@ -68,10 +67,11 @@ class CompanyMapperTest {
 
         Mockito
                 .when(addressMapper.toDto(company.getAddress()))
-                .thenReturn(ADDRESS_DTO_OUT);
+                .thenReturn(ADDRESS_TEST_DTO_OUT);
+
         Mockito
                 .when(countryMapper.toDto(company.getAddress().getCountry()))
-                .thenReturn(COUNTRY_DTO);
+                .thenReturn(COUNTRY_TEST_DTO);
         ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
 
         assertThat(companyMapper.toDto(company))
@@ -86,21 +86,21 @@ class CompanyMapperTest {
 
     private static Stream<Arguments> provideEntity() {
         return Stream.of(
-                Arguments.of(new Company(Long.MIN_VALUE, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, CREATED, MODIFY, ACCOUNT_NUMBER, IBAN, List.of(), ADDRESS)),
-                Arguments.of(new Company(-1L, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, CREATED, MODIFY, ACCOUNT_NUMBER, IBAN, List.of(), ADDRESS)),
-                Arguments.of(new Company(0L, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, CREATED, MODIFY, ACCOUNT_NUMBER, IBAN, List.of(), ADDRESS)),
-                Arguments.of(new Company(1L, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, CREATED, MODIFY, ACCOUNT_NUMBER, IBAN, List.of(), ADDRESS)),
-                Arguments.of(new Company(Long.MAX_VALUE, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, CREATED, MODIFY, ACCOUNT_NUMBER, IBAN, List.of(), ADDRESS))
+                Arguments.of(new Company(Long.MIN_VALUE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_CREATED, COMPANY_TEST_MODIFY, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, List.of(), ADDRESS_TEST_ENTITY)),
+                Arguments.of(new Company(LONG_NEGATIVE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_CREATED, COMPANY_TEST_MODIFY, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, List.of(), ADDRESS_TEST_ENTITY)),
+                Arguments.of(new Company(LONG_ZERO, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_CREATED, COMPANY_TEST_MODIFY, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, List.of(), ADDRESS_TEST_ENTITY)),
+                Arguments.of(new Company(LONG_POSITIVE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_CREATED, COMPANY_TEST_MODIFY, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, List.of(), ADDRESS_TEST_ENTITY)),
+                Arguments.of(new Company(Long.MAX_VALUE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_CREATED, COMPANY_TEST_MODIFY, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, List.of(), ADDRESS_TEST_ENTITY))
         );
     }
 
     private static Stream<Arguments> provideDto() {
         return Stream.of(
-                Arguments.of(new CompanyDtoIn(Long.MIN_VALUE, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, ACCOUNT_NUMBER, IBAN, 1L)),
-                Arguments.of(new CompanyDtoIn(-1L, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, ACCOUNT_NUMBER, IBAN, 1L)),
-                Arguments.of(new CompanyDtoIn(0L, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, ACCOUNT_NUMBER, IBAN, 1L)),
-                Arguments.of(new CompanyDtoIn(1L, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, ACCOUNT_NUMBER, IBAN, 1L)),
-                Arguments.of(new CompanyDtoIn(Long.MAX_VALUE, NAME, DESCRIPTION, COMPANY_ID, VAT_NUMBER, ACCOUNT_NUMBER, IBAN, 1L))
+                Arguments.of(new CompanyDtoIn(Long.MIN_VALUE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, LONG_POSITIVE)),
+                Arguments.of(new CompanyDtoIn(LONG_NEGATIVE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, LONG_POSITIVE)),
+                Arguments.of(new CompanyDtoIn(LONG_ZERO, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, LONG_POSITIVE)),
+                Arguments.of(new CompanyDtoIn(LONG_POSITIVE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, LONG_POSITIVE)),
+                Arguments.of(new CompanyDtoIn(Long.MAX_VALUE, COMPANY_TEST_NAME, COMPANY_TEST_DESCRIPTION, COMPANY_TEST_COMPANY_ID, COMPANY_TEST_VAT_NUMBER, COMPANY_TEST_ACCOUNT_NUMBER, COMPANY_TEST_IBAN, LONG_POSITIVE))
         );
     }
 }
