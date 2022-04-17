@@ -40,12 +40,10 @@ public class TariffController {
                         .withSelfRel()
         ));
 
-        return ResponseEntity.ok(
-                CollectionModel.of(tariffDtoOuts)
-                        .add(
-                                linkTo(methodOn(TariffController.class).getAll(pageable))
-                                        .withSelfRel()
-                        ));
+        return ResponseEntity.ok(CollectionModel.of(tariffDtoOuts).add(
+                linkTo(methodOn(TariffController.class).getAll(pageable))
+                        .withSelfRel()
+        ));
     }
 
     @GetMapping("/{id}")
@@ -56,14 +54,14 @@ public class TariffController {
     }
 
     @PostMapping("")
-    public ResponseEntity<TariffDtoOut> newOne(
+    public ResponseEntity<TariffDtoOut> newItem(
             @RequestBody TariffDtoIn tariffDtoIn
     ) {
         return ResponseEntity.ok(tariffService.newOne(tariffDtoIn));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TariffDtoOut> edit(
+    public ResponseEntity<TariffDtoOut> editItem(
             @RequestBody TariffDtoIn tariffDtoIn,
             @PathVariable Long id
     ) {

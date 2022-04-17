@@ -29,7 +29,7 @@ public class AddressController {
     private final AddressServices addressServices;
 
     @GetMapping(value = "", produces = {"application/hal+json"})
-    public ResponseEntity<CollectionModel<AddressDtoOut>> getAllAddresses(
+    public ResponseEntity<CollectionModel<AddressDtoOut>> getAll(
             @PageableDefault() final Pageable pageable
     ) {
         List<AddressDtoOut> addressDtoOuts = addressServices.getAllAddresses(pageable);
@@ -40,30 +40,26 @@ public class AddressController {
                         .withSelfRel()
         ));
 
-        CollectionModel<AddressDtoOut> addressDtoOutCollectionModel =
-                CollectionModel.of(addressDtoOuts);
-
-        addressDtoOutCollectionModel
-                .add(
-                        linkTo(methodOn(AddressController.class).getAllAddresses(pageable))
-                                .withSelfRel()
-                );
-
-        return ResponseEntity.ok(addressDtoOutCollectionModel);
+        return ResponseEntity.ok(CollectionModel.of(addressDtoOuts).add(
+                linkTo(methodOn(AddressController.class).getAll(pageable))
+                        .withSelfRel()
+        ));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AddressDtoOut> getAddress(@PathVariable Long id) {
+    public ResponseEntity<AddressDtoOut> getOne(
+            @PathVariable Long id
+    ) {
         return ResponseEntity.ok(addressServices.getAddress(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<AddressDtoOut> newAddress(@RequestBody AddressDtoIn addressDtoIn) {
+    public ResponseEntity<AddressDtoOut> newItem(@RequestBody AddressDtoIn addressDtoIn) {
         return ResponseEntity.ok(addressServices.newAddress(addressDtoIn));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AddressDtoOut> edit(
+    public ResponseEntity<AddressDtoOut> editItem(
             @RequestBody AddressDtoIn addressDtoIn,
             @PathVariable Long id
     ) {
