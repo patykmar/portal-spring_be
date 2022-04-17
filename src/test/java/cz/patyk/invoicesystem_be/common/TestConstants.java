@@ -44,6 +44,8 @@ public class TestConstants {
     public static final AddressDtoOut ADDRESS_TEST_DTO_OUT = AddressDtoOut.builder()
             .id(Long.MAX_VALUE).street(ADDRESS_TEST_STREET).city(ADDRESS_TEST_CITY).zipCode(ADDRESS_TEST_ZIP_CODE).countryDto(COUNTRY_TEST_DTO).build();
 
+    public static final String QUEUE_TEST_NAME = "test Queue name";
+
     public static final String VAT_TEST_NAME = "test vat name";
 
     public static final int VAT_TEST_PERCENT = 20;
