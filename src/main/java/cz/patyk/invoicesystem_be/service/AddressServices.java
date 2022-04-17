@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static cz.patyk.invoicesystem_be.service.ServiceConstants.ADDRESS_NOT_FOUND_MESSAGE;
+
 @Service
 @RequiredArgsConstructor
 public class AddressServices {
-    private static final String NOT_FOUND_MESSAGE = "Address not found";
-
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
     private final ErrorHandleService errorHandleService;
@@ -30,7 +30,7 @@ public class AddressServices {
     public AddressDtoOut getAddress(Long id) {
         return addressMapper.toDto(
                 addressRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE))
+                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ADDRESS_NOT_FOUND_MESSAGE))
         );
     }
 
@@ -41,7 +41,7 @@ public class AddressServices {
 
     public AddressDtoOut edit(AddressDtoIn addressDtoIn, Long id) {
         if (!addressRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, ADDRESS_NOT_FOUND_MESSAGE);
         }
         Address address = addressMapper.toEntity(addressDtoIn);
         address.setId(id);
@@ -53,7 +53,7 @@ public class AddressServices {
     //org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint [\"FKGFIFM4874CE6MECWJ54WDB3MA: PUBLIC.COMPANY FOREIGN KEY(ADDRESS_ID) REFERENCES PUBLIC.ADDRESS(ID) (12)\"
     public void delete(Long id) {
         if (!addressRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, ADDRESS_NOT_FOUND_MESSAGE);
         }
         addressRepository.deleteById(id);
     }
