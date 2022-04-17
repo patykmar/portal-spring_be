@@ -11,31 +11,26 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import static cz.patyk.invoicesystem_be.mapper.CountryMapperTest.COUNTRY_DTO;
+import static cz.patyk.invoicesystem_be.common.TestConstants.ADDRESS_TEST_CITY;
+import static cz.patyk.invoicesystem_be.common.TestConstants.ADDRESS_TEST_STREET;
+import static cz.patyk.invoicesystem_be.common.TestConstants.ADDRESS_TEST_ZIP_CODE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_NEGATIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.LONG_POSITIVE;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COUNTRY_TEST_ENTITY;
+
+
+import static cz.patyk.invoicesystem_be.common.TestConstants.COUNTRY_TEST_ISO_3166_ALPHA_3;
+import static cz.patyk.invoicesystem_be.common.TestConstants.COUNTRY_TEST_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AddressMapperTest {
-    @InjectMocks
     private static final AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
-
-    private static final Long ID_POSITIVE = 1L;
-    private static final Long ID_NEGATIVE = -1L;
-    private static final String COUNTRY_NAME = "Val Verde";
-    private static final String ISO_3166_ALPHA_3 = "VV";
-    private static final String STREET = "Fake street 123";
-    private static final String CITY = "Springfield";
-    private static final String ZIP_CODE = "12345";
-
-    public static final Address ADDRESS = new Address(Long.MAX_VALUE, STREET, CITY, ZIP_CODE, CountryMapperTest.COUNTRY);
-    public static final AddressDtoOut ADDRESS_DTO_OUT = AddressDtoOut.builder()
-            .id(Long.MAX_VALUE).street(STREET).city(CITY).zipCode(ZIP_CODE).countryDto(COUNTRY_DTO).build();
 
     @BeforeAll
     static void init() {
@@ -51,14 +46,14 @@ class AddressMapperTest {
     void toDto(Address address, Long id) {
         assertThat(addressMapper.toDto(address))
                 .returns(id, AddressDtoOut::getId)
-                .returns(STREET, AddressDtoOut::getStreet)
-                .returns(CITY, AddressDtoOut::getCity)
-                .returns(ZIP_CODE, AddressDtoOut::getZipCode);
+                .returns(ADDRESS_TEST_STREET, AddressDtoOut::getStreet)
+                .returns(ADDRESS_TEST_CITY, AddressDtoOut::getCity)
+                .returns(ADDRESS_TEST_ZIP_CODE, AddressDtoOut::getZipCode);
 
         assertThat(addressMapper.toDto(address).getCountryDto())
                 .returns(id, CountryDto::getId)
-                .returns(COUNTRY_NAME, CountryDto::getName)
-                .returns(ISO_3166_ALPHA_3, CountryDto::getIso3166alpha3);
+                .returns(COUNTRY_TEST_NAME, CountryDto::getName)
+                .returns(COUNTRY_TEST_ISO_3166_ALPHA_3, CountryDto::getIso3166alpha3);
     }
 
     @ParameterizedTest
@@ -66,35 +61,35 @@ class AddressMapperTest {
     void toEntity(AddressDtoIn addressDto, Long id) {
         Mockito
                 .when(addressMapper.countryRepository.getById(addressDto.getCountry()))
-                .thenReturn(CountryMapperTest.COUNTRY);
+                .thenReturn(COUNTRY_TEST_ENTITY);
 
         assertThat(addressMapper.toEntity(addressDto))
                 .returns(id, Address::getId)
-                .returns(STREET, Address::getStreet)
-                .returns(CITY, Address::getCity)
-                .returns(ZIP_CODE, Address::getZipCode);
+                .returns(ADDRESS_TEST_STREET, Address::getStreet)
+                .returns(ADDRESS_TEST_CITY, Address::getCity)
+                .returns(ADDRESS_TEST_ZIP_CODE, Address::getZipCode);
 
         assertThat(addressMapper.toEntity(addressDto).getCountry())
-                .returns(CountryMapperTest.COUNTRY.getId(), Country::getId)
-                .returns(COUNTRY_NAME, Country::getName)
-                .returns(ISO_3166_ALPHA_3, Country::getIso3166alpha3);
+                .returns(COUNTRY_TEST_ENTITY.getId(), Country::getId)
+                .returns(COUNTRY_TEST_NAME, Country::getName)
+                .returns(COUNTRY_TEST_ISO_3166_ALPHA_3, Country::getIso3166alpha3);
     }
 
     private static Stream<Arguments> providerEntities() {
         return Stream.of(
-                Arguments.of(new Address(ID_POSITIVE, STREET, CITY, ZIP_CODE, new Country(ID_POSITIVE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), ID_POSITIVE),
-                Arguments.of(new Address(ID_NEGATIVE, STREET, CITY, ZIP_CODE, new Country(ID_NEGATIVE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), ID_NEGATIVE),
-                Arguments.of(new Address(Long.MIN_VALUE, STREET, CITY, ZIP_CODE, new Country(Long.MIN_VALUE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), Long.MIN_VALUE),
-                Arguments.of(new Address(Long.MIN_VALUE, STREET, CITY, ZIP_CODE, new Country(Long.MIN_VALUE, COUNTRY_NAME, ISO_3166_ALPHA_3, List.of())), Long.MIN_VALUE)
+                Arguments.of(new Address(LONG_POSITIVE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE, new Country(LONG_POSITIVE, COUNTRY_TEST_NAME, COUNTRY_TEST_ISO_3166_ALPHA_3, List.of())), LONG_POSITIVE),
+                Arguments.of(new Address(LONG_NEGATIVE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE, new Country(LONG_NEGATIVE, COUNTRY_TEST_NAME, COUNTRY_TEST_ISO_3166_ALPHA_3, List.of())), LONG_NEGATIVE),
+                Arguments.of(new Address(Long.MIN_VALUE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE, new Country(Long.MIN_VALUE, COUNTRY_TEST_NAME, COUNTRY_TEST_ISO_3166_ALPHA_3, List.of())), Long.MIN_VALUE),
+                Arguments.of(new Address(Long.MIN_VALUE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE, new Country(Long.MIN_VALUE, COUNTRY_TEST_NAME, COUNTRY_TEST_ISO_3166_ALPHA_3, List.of())), Long.MIN_VALUE)
         );
     }
 
     private static Stream<Arguments> providerDtos() {
         return Stream.of(
-                Arguments.of(new AddressDtoIn(ID_POSITIVE, 1L, STREET, CITY, ZIP_CODE), ID_POSITIVE),
-                Arguments.of(new AddressDtoIn(ID_NEGATIVE, 1L, STREET, CITY, ZIP_CODE), ID_NEGATIVE),
-                Arguments.of(new AddressDtoIn(Long.MAX_VALUE, 1L, STREET, CITY, ZIP_CODE), Long.MAX_VALUE),
-                Arguments.of(new AddressDtoIn(Long.MIN_VALUE, 1L, STREET, CITY, ZIP_CODE), Long.MIN_VALUE)
+                Arguments.of(new AddressDtoIn(LONG_POSITIVE, LONG_POSITIVE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE), LONG_POSITIVE),
+                Arguments.of(new AddressDtoIn(LONG_NEGATIVE, LONG_POSITIVE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE), LONG_NEGATIVE),
+                Arguments.of(new AddressDtoIn(Long.MAX_VALUE, LONG_POSITIVE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE), Long.MAX_VALUE),
+                Arguments.of(new AddressDtoIn(Long.MIN_VALUE, LONG_POSITIVE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE), Long.MIN_VALUE)
         );
     }
 }
