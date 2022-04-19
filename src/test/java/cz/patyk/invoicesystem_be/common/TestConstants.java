@@ -11,17 +11,10 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 import java.util.List;
 
+import static org.apache.commons.lang3.math.NumberUtils.LONG_ONE;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestConstants {
-
-    public static final int INT_NEGATIVE = -1;
-    public static final int INT_ZERO = 0;
-    public static final int INT_POSITIVE = 1;
-
-    public static final Long LONG_NEGATIVE = -1L;
-    public static final Long LONG_ZERO = 0L;
-    public static final Long LONG_POSITIVE = 1L;
-
     public static final String COMPANY_TEST_NAME = "Testing company name";
     public static final String COMPANY_TEST_DESCRIPTION = "Testing company description";
     public static final String COMPANY_TEST_COMPANY_ID = "123456789";
@@ -47,10 +40,11 @@ public class TestConstants {
     public static final String QUEUE_TEST_NAME = "test Queue name";
 
     public static final String VAT_TEST_NAME = "test vat name";
+    public static final String GENERAL_STATE_TEST_NAME = "test general state name";
 
     public static final int VAT_TEST_PERCENT = 20;
     public static final int VAT_TEST_MULTIPLIER = 120;
-    public static final Vat VAT_TEST_ENTITY = Vat.builder().id(LONG_POSITIVE).name(VAT_TEST_NAME).isDefault(true).percent(VAT_TEST_PERCENT).multiplier(VAT_TEST_MULTIPLIER).build();
+    public static final Vat VAT_TEST_ENTITY = Vat.builder().id(LONG_ONE).name(VAT_TEST_NAME).isDefault(true).percent(VAT_TEST_PERCENT).multiplier(VAT_TEST_MULTIPLIER).build();
 
     public static final String TARIFF_TEST_NAME = "test tariff name";
 }
