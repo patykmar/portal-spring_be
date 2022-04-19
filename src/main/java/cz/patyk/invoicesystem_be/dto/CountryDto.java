@@ -1,6 +1,5 @@
 package cz.patyk.invoicesystem_be.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import java.util.Objects;
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
 public class CountryDto extends RepresentationModel<CountryDto> {
     @Positive
     private Long id;

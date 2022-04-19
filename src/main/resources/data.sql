@@ -741,3 +741,8 @@ INSERT INTO `general_state` (`name`, `coefficient_price`, `is_for_ticket`, `is_f
 ('Closed', 1, 1, 0, 1),
 ('Waiting for customer', 1, 1, 0, 1),
 ('Re-open', 1, 1, 0, 1);
+
+INSERT INTO `queue` (`name`) VALUES
+('test queue 1'),
+('test queue 2'),
+('test queue 3');

@@ -1,6 +1,11 @@
 package cz.patyk.invoicesystem_be.entities;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
@@ -10,11 +15,13 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Builder
 @Entity
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class GeneralState implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
