@@ -46,5 +46,6 @@ public class TestConstants {
     public static final int VAT_TEST_MULTIPLIER = 120;
     public static final Vat VAT_TEST_ENTITY = Vat.builder().id(LONG_ONE).name(VAT_TEST_NAME).isDefault(true).percent(VAT_TEST_PERCENT).multiplier(VAT_TEST_MULTIPLIER).build();
 
+    public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
     public static final String TARIFF_TEST_NAME = "test tariff name";
 }
