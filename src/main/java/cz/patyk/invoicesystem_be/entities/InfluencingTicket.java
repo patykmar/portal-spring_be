@@ -1,7 +1,11 @@
 package cz.patyk.invoicesystem_be.entities;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +14,13 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Builder
 @Entity
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class InfluencingTicket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +34,13 @@ public class InfluencingTicket implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         InfluencingTicket that = (InfluencingTicket) o;
-        return Objects.equals(id, that.id);
+        return isForPriority == that.isForPriority && isForImpact == that.isForImpact && Float.compare(that.coefficientPrice, coefficientPrice) == 0 && Float.compare(that.coefficientTime, coefficientTime) == 0 && Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, name, isForPriority, isForImpact, coefficientPrice, coefficientTime);
     }
 }

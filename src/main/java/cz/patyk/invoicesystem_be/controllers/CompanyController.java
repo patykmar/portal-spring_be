@@ -17,8 +17,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/companies")
 @RequiredArgsConstructor
+@RequestMapping("/companies")
 public class CompanyController {
     private final CompanyService companyService;
 
@@ -26,7 +26,7 @@ public class CompanyController {
     public ResponseEntity<CollectionModel<CompanyDtoOut>> getAll(
             @PageableDefault() final Pageable pageable
     ) {
-        List<CompanyDtoOut> companyDtoOuts = companyService.getAllCompanies(pageable);
+        List<CompanyDtoOut> companyDtoOuts = companyService.getAll(pageable);
 
         companyDtoOuts.forEach(companyDtoOut -> companyDtoOut.add(
                 linkTo(CompanyController.class)
@@ -43,7 +43,7 @@ public class CompanyController {
     public ResponseEntity<CompanyDtoOut> getOne(
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(companyService.getCompany(id));
+        return ResponseEntity.ok(companyService.getOne(id));
     }
 
     @PostMapping("")
@@ -51,7 +51,7 @@ public class CompanyController {
             @RequestBody CompanyDtoIn companyDtoIn
     ) {
         return ResponseEntity.ok(
-                companyService.newCompany(companyDtoIn)
+                companyService.newItem(companyDtoIn)
         );
     }
 
@@ -61,7 +61,7 @@ public class CompanyController {
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(
-                companyService.edit(companyDtoIn, id)
+                companyService.editItem(companyDtoIn, id)
         );
     }
 
@@ -69,7 +69,8 @@ public class CompanyController {
     public ResponseEntity<Void> delete(
             @PathVariable Long id
     ) {
-        companyService.delete(id);
+        companyService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }
 }
+

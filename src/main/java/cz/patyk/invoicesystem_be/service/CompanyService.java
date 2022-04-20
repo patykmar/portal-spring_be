@@ -20,26 +20,26 @@ public class CompanyService {
     private final CompanyMapper companyMapper;
     private final ErrorHandleService errorHandleService;
 
-    public List<CompanyDtoOut> getAllCompanies(Pageable pageable) {
+    public List<CompanyDtoOut> getAll(Pageable pageable) {
         return companyRepository.findAll(pageable)
                 .stream()
                 .map(companyMapper::toDto)
                 .toList();
     }
 
-    public CompanyDtoOut getCompany(Long id) {
+    public CompanyDtoOut getOne(Long id) {
         return companyMapper.toDto(
                 companyRepository.findById(id)
                         .orElseThrow(() -> errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE))
         );
     }
 
-    public CompanyDtoOut newCompany(CompanyDtoIn companyDtoIn) {
+    public CompanyDtoOut newItem(CompanyDtoIn companyDtoIn) {
         Company company = companyMapper.toEntity(companyDtoIn);
         return companyMapper.toDto(companyRepository.save(company));
     }
 
-    public CompanyDtoOut edit(CompanyDtoIn companyDtoIn, Long id) {
+    public CompanyDtoOut editItem(CompanyDtoIn companyDtoIn, Long id) {
         if (!companyRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE);
         }
@@ -48,7 +48,7 @@ public class CompanyService {
         return companyMapper.toDto(companyRepository.save(company));
     }
 
-    public void delete(Long id) {
+    public void deleteItem(Long id) {
         if (!companyRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE);
         }
