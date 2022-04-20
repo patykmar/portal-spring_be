@@ -48,4 +48,7 @@ public class TestConstants {
 
     public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
     public static final String TARIFF_TEST_NAME = "test tariff name";
+
+    public static final String TICKET_TYPE_TEST_NAME = "test Ticket type name";
+    public static final String TICKET_TYPE_TEST_ABBREVIATION = "test Ticket type abbreviation";
 }
