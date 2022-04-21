@@ -13,14 +13,14 @@
 --TRUNCATE TABLE `general_state`;
 --SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO `country` (`name`, `iso3166alpha3`) VALUES
+insert into `country` (`name`, `iso3166alpha3`) VALUES
 ('Česká republika', 'CZE'),
 ('Slovenská republika', 'SVK'),
 ('Polská republika', 'POL'),
 ('Republika Rakousko', 'AUT'),
 ('Spolková republika Německo', 'DEU');
 
-INSERT INTO `address` (`country_id`, `street`, `city`, `zip_code`) VALUES
+insert into `address` (`country_id`, `street`, `city`, `zip_code`) VALUES
 (1, 'Černá 1416/5', 'Opava - Kateřinky', '74705'),
 (1, 'náměstí Junkových 2', 'Praha 5', '15500'),
 (1, 'Tomíčkova 2144/1','Praha 4','14800'),
@@ -34,7 +34,7 @@ INSERT INTO `address` (`country_id`, `street`, `city`, `zip_code`) VALUES
 (1, 'Boženy Němcové 1604/24','Opava','74601'),
 (1, 'Vinařská 460/3','Brno - Pisárky','60300');
 
-INSERT INTO `company` (`name`,`description`,`company_id`,`vat_number`,`created`,`modify`,`address_id` ,`account_number`,`iban`) VALUES
+insert into `company` (`name`,`description`,`company_id`,`vat_number`,`created`,`modify`,`address_id` ,`account_number`,`iban`) VALUES
 ('Ing. Martin Patyk','Ing. Martin Patyk - Cerna','88230104','CZ8707145876', 1389647840, 1625643430, 1,'670100-2209225998/6210',''),
 ('Vodafone Czech Republic a. s.','Vodafone Czech Republic a. s.','25788001','CZ25788001', 1069181619, 1625643430, 2 ,'',''),
 ('T-Mobile Czech Republic a.s.','T-Mobile Czech Republic a.s.','64949681','CZ64949681', 1454257843, 1625643430, 3 ,'',''),
@@ -48,7 +48,7 @@ INSERT INTO `company` (`name`,`description`,`company_id`,`vat_number`,`created`,
 ('Innovation Advisors s.r.o.','Innovation Advisors s.r.o.','40763200','CZ40763200', 1614790899, 1625643430, 11,'',''),
 ('Czech Green Energy s.r.o.','Czech Green Energy s.r.o.','9703667','CZ09703667', 1006680129, 1625643431, 12,'','');
 
-INSERT INTO `vat` (`name`, `is_default`, `percent`, `multiplier`) VALUES
+insert into `vat` (`name`, `is_default`, `percent`, `multiplier`) VALUES
 ('No VAT', 1, 0, 100),
 ('VAT 5%', 0, 5, 105),
 ('VAT 10%', 0, 10, 110),
@@ -57,7 +57,7 @@ INSERT INTO `vat` (`name`, `is_default`, `percent`, `multiplier`) VALUES
 ('VAT 21%', 0, 21, 121),
 ('VAT 22%', 0, 22, 122);
 
-INSERT INTO `tariff` (`name`, `price`, `vat_id`) VALUES
+insert into `tariff` (`name`, `price`, `vat_id`) VALUES
 ('299 CZK per hour', 29900, 1),
 ('399 CZK per hour', 39900, 2),
 ('450 CZK per hour', 45000, 3),
@@ -66,20 +66,20 @@ INSERT INTO `tariff` (`name`, `price`, `vat_id`) VALUES
 ('699 CZK per hour', 69900, 6),
 ('999 CZK per hour', 99900, 7);
 
-INSERT INTO `payment_type` (`name`, `is_default`) VALUES
+insert into `payment_type` (`name`, `is_default`) VALUES
 ('převodním příkazem', 1),
 ('hotově', 0);
 
-INSERT INTO `user` (`email`, `roles`, `password`, `first_name`, `last_name`, `last_login`, `created`, `password_changed`) VALUES
-('admin@fake-admin.com','admin','some-strong-password','admin','fake-admin','2021-07-07 9:37:09','2021-07-07 9:37:09','2021-07-07 9:37:09'),
-('user@fake-user.com','user','some-weak-password','user','fake-user','2021-07-07 9:37:09','2021-07-07 9:37:09','2021-07-07 9:37:09'),
-('leslie.andrews@fake-user.com','user','some-strong-password','Leslie','Andrews','2021-01-15 9:37:09','2021-07-07 9:37:09','2021-07-07 9:37:09'),
-('emma.baumgarten@fake-user.com','user','some-weak-password','Emma','Baumgarten','2021-06-25 9:37:09','2021-07-07 9:37:09','2021-07-07 9:37:09'),
-('avani.gupta@fake-admin.com','admin','some-strong-password','Avani','Gupta','2021-05-10 9:37:09','2021-07-07 9:37:09','2021-07-07 9:37:09'),
-('yuri.petrov@fake-user.com','user','some-weak-password','Yuri','Petrov','2021-12-04 9:37:09','2021-07-07 9:37:09','2021-07-07 9:37:09'),
-('juan.vega@fake-admin.com','admin','some-strong-password','Juan','Vega','2021-12-05 9:37:09','2021-07-08 9:37:09','2021-07-08 9:37:09');
+insert into `user` (`email`, `roles`, `password`, `first_name`, `last_name`, `last_login`, `created`, `password_changed`) VALUES
+('admin@fake-admin.com','admin','some-strong-password','admin','fake-admin',315532800,315540800,315550800),
+('user@fake-user.com','user','some-weak-password','user','fake-user',315532800,315540800,315550800),
+('leslie.andrews@fake-user.com','user','some-strong-password','Leslie','Andrews',315532800,315540800,315550800),
+('emma.baumgarten@fake-user.com','user','some-weak-password','Emma','Baumgarten',315532800,315540800,315550800),
+('avani.gupta@fake-admin.com','admin','some-strong-password','Avani','Gupta',315532800,315540800,315550800),
+('yuri.petrov@fake-user.com','user','some-weak-password','Yuri','Petrov',315532800,315540800,315550800),
+('juan.vega@fake-admin.com','admin','some-strong-password','Juan','Vega',315532800,315540800,315550800);
 
-INSERT INTO `work_inventory` (`tarrif_id`, `company_id`, `user_id`, `invoice_id`, `description`, `work_start`, `work_end`, `work_duration`) VALUES
+insert into `work_inventory` (`tarrif_id`, `company_id`, `user_id`, `invoice_id`, `description`, `work_start`, `work_end`, `work_duration`) VALUES
 (1,1,1,null,'Curabitur ut sodales ante.','2021-07-02 14:04:56','2021-07-03 12:22:34',22.5),
 (2,2,2,null,'Lorem ipsum dolor sit amet, consectetur adipiscing elit.','2021-07-06 09:02:44','2021-07-05 18:11:45',15),
 (3,3,3,null,'Duis tempor nibh sapien.','2021-07-06 22:06:48','2021-07-03 13:25:54',81),
@@ -149,7 +149,7 @@ INSERT INTO `work_inventory` (`tarrif_id`, `company_id`, `user_id`, `invoice_id`
 (4,7,4,null,'Curabitur ut sodales ante.','2021-07-07 11:40:11','2021-07-05 18:09:40',41.5);
 
 
-INSERT INTO `invoice` (`supplier_id`, `subscriber_id`, `payment_type_id`, `user_id`, `due`, `invoice_created`, `due_date`, `payment_date`, `vs`) VALUES
+insert into `invoice` (`supplier_id`, `subscriber_id`, `payment_type_id`, `user_id`, `due`, `invoice_created`, `due_date`, `payment_date`, `vs`) VALUES
 (1,5,1,4,14,'2021-07-07 9:37:10','2021-07-21','2021-07-23',2021370342),
 (2,6,2,3,14,'2021-07-07 9:37:11','2021-07-21','2021-07-17',2021489971),
 (3,7,1,2,14,'2021-07-07 9:37:11','2021-07-21','2021-07-25',2021343353),
@@ -182,7 +182,7 @@ INSERT INTO `invoice` (`supplier_id`, `subscriber_id`, `payment_type_id`, `user_
 (2,10,2,7,14,'2021-07-07 9:37:11','2021-07-21','2021-07-25',2021540716);
 
 
-INSERT INTO `invoice_item` (`invoice_id`, `vat_id`, `name`, `price`, `margin`, `margin_total`, `price_inc_margin`, `discount`, `discount_total`, `price_inc_margin_minus_discount`, `price_inc_margin_discount_multi_vat`, `price_inc_margin_multi_vat`, `unit_count`, `total_price_inc_margin_discount_vat`, `total_price_inc_margin_vat`) VALUES
+insert into `invoice_item` (`invoice_id`, `vat_id`, `name`, `price`, `margin`, `margin_total`, `price_inc_margin`, `discount`, `discount_total`, `price_inc_margin_minus_discount`, `price_inc_margin_discount_multi_vat`, `price_inc_margin_multi_vat`, `unit_count`, `total_price_inc_margin_discount_vat`, `total_price_inc_margin_vat`) VALUES
 (11, 4, 'Suspendisse ac nisi laoreet, vulputate augue eget, porttitor arcu.', 253679, 93, 235921, 489600, 5, 24480, 465120, 562795, 592416, 3912040, 35743673245, 37624932576),
 (15, 3, 'Quisque elementum, nulla id sollicitudin volutpat, metus nunc pretium nisi, in varius massa lectus vitae sapien.', 463656, 254, 1177686, 1641342, 33, 541643, 1099699, 1264654, 1887543, 1912400, 26454032372, 39483624474),
 (14, 1, 'In hac habitasse platea dictumst.', 906694, 247, 2239534, 3146228, 22, 692170, 2454058, 2576761, 3303539, 4023360, 39998030299, 51279514481),
@@ -685,12 +685,12 @@ INSERT INTO `invoice_item` (`invoice_id`, `vat_id`, `name`, `price`, `margin`, `
 (17, 5, 'Nunc laoreet, quam sit amet pretium ultricies, justo nisi placerat libero, a molestie dolor odio vel nisl.', 73110, 172, 125749, 198859, 88, 174996, 23863, 28636, 238631, 2454200, 1862233443, 15518460287);
 
 
-INSERT INTO `ticket_type` (`name`, `abbreviation`, `is_disable`, `coefficient_price`, `coefficient_time`) VALUES
+insert into `ticket_type` (`name`, `abbreviation`, `is_disable`, `coefficient_price`, `coefficient_time`) VALUES
 ('Order', 'ORD', FALSE, 1, 1),
 ('Incident', 'INC', FALSE, 1, 1),
 ('Incident task', 'ITASK', FALSE, 0.9, 0.8);
 
-INSERT INTO `service_catalog` (`vat_id`, `name`, `description`, `price`, `estimate_time_delivery`, `estimate_time_reaction`, `is_disable`) VALUES
+insert into `service_catalog` (`vat_id`, `name`, `description`, `price`, `estimate_time_delivery`, `estimate_time_reaction`, `is_disable`) VALUES
 (1,'Web alarm','Web alarm',10000,5184000,2592000,0),
 (1,'HTML - create new page','Create new page',30000,5184000,2592000,0),
 (1,'HTML - modify page','Modify web page',19900,5184000,2592000,0),
@@ -717,7 +717,7 @@ INSERT INTO `service_catalog` (`vat_id`, `name`, `description`, `price`, `estima
 (1,'Database migration','Database migration',49900,5184000,2592000,0),
 (1,'Web-hosting configuration','Web-hosting configuration',19900,5184000,2592000,0);
 
-INSERT INTO `influencing_ticket` (`name`, `coefficient_price`, `coefficient_time`, `is_for_priority`, `is_for_impact`) VALUES
+insert into `influencing_ticket` (`name`, `coefficient_price`, `coefficient_time`, `is_for_priority`, `is_for_impact`) VALUES
 ('Small', 0.5, 44228, 1, 0),
 ('Normal', 1, 1, 1, 1),
 ('High', 44317, 0.8, 1, 0),
@@ -726,7 +726,7 @@ INSERT INTO `influencing_ticket` (`name`, `coefficient_price`, `coefficient_time
 ('High', 44256, 0.8, 0, 1),
 ('Critical', 44317, 0.7, 0, 1);
 
-INSERT INTO `general_state` (`name`, `coefficient_price`, `is_for_ticket`, `is_for_ci`, `is_for_close_state`) VALUES
+insert into `general_state` (`name`, `coefficient_price`, `is_for_ticket`, `is_for_ci`, `is_for_close_state`) VALUES
 ('Draft', 1, 0, 1, 0),
 ('Planning', 1, 0, 1, 0),
 ('In use', 1, 0, 1, 0),
@@ -742,7 +742,7 @@ INSERT INTO `general_state` (`name`, `coefficient_price`, `is_for_ticket`, `is_f
 ('Waiting for customer', 1, 1, 0, 1),
 ('Re-open', 1, 1, 0, 1);
 
-INSERT INTO `queue` (`name`) VALUES
+insert into `queue` (`name`) VALUES
 ('test queue 1'),
 ('test queue 2'),
 ('test queue 3');
