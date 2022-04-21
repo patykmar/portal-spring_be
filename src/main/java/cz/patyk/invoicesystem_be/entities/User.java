@@ -1,20 +1,34 @@
 package cz.patyk.invoicesystem_be.entities;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable {
 
     public enum Role {ADMIN, USER}
@@ -33,9 +47,9 @@ public class User implements Serializable {
     private String password;
     private String firstName;
     private String lastName;
-    private Date lastLogin;
-    private Date created;
-    private Date passwordChanged;
+    private Long lastLogin;
+    private Long created;
+    private Long passwordChanged;
 
     @Enumerated(EnumType.STRING)
     private Role roles;
@@ -43,13 +57,13 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id);
+        return Objects.equals(id, user.id) && Objects.equals(employeeOfCompanyId, user.employeeOfCompanyId) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(lastLogin, user.lastLogin) && Objects.equals(created, user.created) && Objects.equals(passwordChanged, user.passwordChanged) && roles == user.roles;
     }
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(id, employeeOfCompanyId, email, password, firstName, lastName, lastLogin, created, passwordChanged, roles);
     }
 }
