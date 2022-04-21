@@ -12,8 +12,9 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 public class Company implements Serializable {
 
