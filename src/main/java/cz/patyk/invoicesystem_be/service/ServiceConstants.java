@@ -14,5 +14,6 @@ public class ServiceConstants {
     public static final String INFLUENCING_TICKET_NOT_FOUND_MESSAGE = "Influencing ticket not found";
     public static final String TARIFF_NOT_FOUND_MESSAGE = "Tariff not found";
     public static final String TICKET_TYPE_NOT_FOUND_MESSAGE = "TicketType not found";
+    public static final String USER_NOT_FOUND_MESSAGE = "User not found";
     public static final String VAT_NOT_FOUND_MESSAGE = "Vat not found";
 }
