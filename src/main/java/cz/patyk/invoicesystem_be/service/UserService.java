@@ -63,6 +63,10 @@ public class UserService {
         }
     }
 
+    public String passwordEncode(String clearPassword) {
+        return passwordEncoder.encode(clearPassword);
+    }
+
     public void deleteItem(Long id) {
         isIdExist(id);
         userRepository.deleteById(id);
