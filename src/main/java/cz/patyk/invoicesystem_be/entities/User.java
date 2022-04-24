@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -29,8 +30,8 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User implements Serializable {
-
     public enum Role {ADMIN, USER}
 
     @Id
@@ -48,7 +49,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private Long lastLogin;
-    private Long created;
+    private Long createdDate;
     private Long passwordChanged;
 
     @Enumerated(EnumType.STRING)
@@ -57,13 +58,13 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(employeeOfCompanyId, user.employeeOfCompanyId) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(lastLogin, user.lastLogin) && Objects.equals(created, user.created) && Objects.equals(passwordChanged, user.passwordChanged) && roles == user.roles;
+        return id != null && Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, employeeOfCompanyId, email, password, firstName, lastName, lastLogin, created, passwordChanged, roles);
+        return Objects.hash(id, employeeOfCompanyId, email, password, firstName, lastName, lastLogin, createdDate, passwordChanged, roles);
     }
 }
