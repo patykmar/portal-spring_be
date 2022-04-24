@@ -1,6 +1,8 @@
 package cz.patyk.invoicesystem_be.mapper;
 
-import cz.patyk.invoicesystem_be.dto.UserDto;
+import cz.patyk.invoicesystem_be.dto.in.UserDtoIn;
+import cz.patyk.invoicesystem_be.dto.in.UserDtoInTwoPassword;
+import cz.patyk.invoicesystem_be.dto.out.UserDtoOut;
 import cz.patyk.invoicesystem_be.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,8 +11,11 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
     @Mapping(target = "employeeOfCompanyId",  source= "employeeOfCompanyId.id")
-    UserDto toDto(User user);
+    UserDtoOut toDto(User user);
 
     @Mapping(target = "employeeOfCompanyId.id", source = "employeeOfCompanyId")
-    User toEntity(UserDto userDto);
+    User toEntity(UserDtoIn userDtoIn);
+
+//    @Mapping(target = "employeeOfCompanyId",  source= "employeeOfCompanyId.id")
+    UserDtoIn toDtoIn(UserDtoInTwoPassword userDtoInTwoPassword);
 }
