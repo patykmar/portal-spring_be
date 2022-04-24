@@ -70,7 +70,7 @@ insert into `payment_type` (`name`, `is_default`) VALUES
 ('převodním příkazem', 1),
 ('hotově', 0);
 
-insert into `user` (`email`, `roles`, `password`, `first_name`, `last_name`, `last_login`, `created`, `password_changed`) VALUES
+insert into `users` (`email`, `roles`, `password`, `first_name`, `last_name`, `last_login`, `created_date`, `password_changed`) VALUES
 ('admin@fake-admin.com','admin','some-strong-password','admin','fake-admin',315532800,315540800,315550800),
 ('user@fake-user.com','user','some-weak-password','user','fake-user',315532800,315540800,315550800),
 ('leslie.andrews@fake-user.com','user','some-strong-password','Leslie','Andrews',315532800,315540800,315550800),
