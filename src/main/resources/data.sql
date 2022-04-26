@@ -71,13 +71,13 @@ insert into `payment_type` (`name`, `is_default`) VALUES
 ('hotově', 0);
 
 insert into `users` (`email`, `roles`, `password`, `first_name`, `last_name`, `last_login`, `created_date`, `password_changed`) VALUES
-('admin@fake-admin.com','admin','some-strong-password','admin','fake-admin',315532800,315540800,315550800),
-('user@fake-user.com','user','some-weak-password','user','fake-user',315532800,315540800,315550800),
-('leslie.andrews@fake-user.com','user','some-strong-password','Leslie','Andrews',315532800,315540800,315550800),
-('emma.baumgarten@fake-user.com','user','some-weak-password','Emma','Baumgarten',315532800,315540800,315550800),
-('avani.gupta@fake-admin.com','admin','some-strong-password','Avani','Gupta',315532800,315540800,315550800),
-('yuri.petrov@fake-user.com','user','some-weak-password','Yuri','Petrov',315532800,315540800,315550800),
-('juan.vega@fake-admin.com','admin','some-strong-password','Juan','Vega',315532800,315540800,315550800);
+('admin@fake-admin.com','ADMIN','some-strong-password','admin','fake-admin',315532800,315540800,315550800),
+('user@fake-user.com','USER','some-weak-password','user','fake-user',315532800,315540800,315550800),
+('leslie.andrews@fake-user.com','USER','some-strong-password','Leslie','Andrews',315532800,315540800,315550800),
+('emma.baumgarten@fake-user.com','USER','some-weak-password','Emma','Baumgarten',315532800,315540800,315550800),
+('avani.gupta@fake-admin.com','ADMIN','some-strong-password','Avani','Gupta',315532800,315540800,315550800),
+('yuri.petrov@fake-user.com','USER','some-weak-password','Yuri','Petrov',315532800,315540800,315550800),
+('juan.vega@fake-admin.com','ADMIN','some-strong-password','Juan','Vega',315532800,315540800,315550800);
 
 insert into `work_inventory` (`tarrif_id`, `company_id`, `user_id`, `invoice_id`, `description`, `work_start`, `work_end`, `work_duration`) VALUES
 (1,1,1,null,'Curabitur ut sodales ante.','2021-07-02 14:04:56','2021-07-03 12:22:34',22.5),
