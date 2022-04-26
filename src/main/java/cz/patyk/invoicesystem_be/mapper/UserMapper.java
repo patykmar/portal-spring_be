@@ -14,8 +14,10 @@ public interface UserMapper {
     UserDtoOut toDto(User user);
 
     @Mapping(target = "employeeOfCompanyId.id", source = "employeeOfCompanyId")
+    @Mapping(target = "roles", expression = "java(Enum.valueOf(User.Role.class, userDtoIn.getRoles().toUpperCase()))")
     User toEntity(UserDtoIn userDtoIn);
 
-//    @Mapping(target = "employeeOfCompanyId",  source= "employeeOfCompanyId.id")
-    UserDtoIn toDtoIn(UserDtoInTwoPassword userDtoInTwoPassword);
+    @Mapping(target = "employeeOfCompanyId.id", source = "employeeOfCompanyId")
+    @Mapping(target = "roles", expression = "java(Enum.valueOf(User.Role.class, userDtoInTwoPassword.getRoles().toUpperCase()))")
+    User toEntity(UserDtoInTwoPassword userDtoInTwoPassword);
 }
