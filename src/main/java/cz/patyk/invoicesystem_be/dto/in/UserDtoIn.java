@@ -2,6 +2,7 @@ package cz.patyk.invoicesystem_be.dto.in;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -9,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserDtoIn {
     private Long id;
     private Long employeeOfCompanyId;
