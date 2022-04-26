@@ -42,7 +42,7 @@ public class UserService {
         if (!userDtoInTwoPassword.getPassword().equals(userDtoInTwoPassword.getRetypePassword())) {
             throw errorHandleService.handleBadRequestError("New password and re-typed password is not match.");
         }
-        User user = userMapper.toEntity(userMapper.toDtoIn(userDtoInTwoPassword));
+        User user = userMapper.toEntity(userDtoInTwoPassword);
         user.setPassword(passwordEncode(userDtoInTwoPassword.getPassword()));
 
         return userMapper.toDto(userRepository.save(user));
