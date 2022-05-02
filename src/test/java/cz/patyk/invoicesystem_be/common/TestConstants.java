@@ -6,6 +6,7 @@ import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.Country;
+import cz.patyk.invoicesystem_be.entities.PaymentType;
 import cz.patyk.invoicesystem_be.entities.Vat;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,8 @@ public class TestConstants {
             .vatNumber(COMPANY_TEST_VAT_NUMBER).accountNumber(COMPANY_TEST_ACCOUNT_NUMBER)
             .iban(COMPANY_TEST_IBAN).build();
 
+    public static final String GENERAL_STATE_TEST_NAME = "test general state name";
+
     public static final String COUNTRY_TEST_NAME = "Val Verde";
     public static final String COUNTRY_TEST_ISO_3166_ALPHA_3 = "VV";
     public static final Country COUNTRY_TEST_ENTITY = new Country(Long.MAX_VALUE, COUNTRY_TEST_NAME, COUNTRY_TEST_ISO_3166_ALPHA_3, List.of());
@@ -45,9 +48,15 @@ public class TestConstants {
     public static final String ADDRESS_TEST_ZIP_CODE = "12345";
     public static final Address ADDRESS_TEST_ENTITY = new Address(Long.MAX_VALUE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE, COUNTRY_TEST_ENTITY);
     public static final AddressDtoOut ADDRESS_TEST_DTO_OUT = AddressDtoOut.builder()
-            .id(Long.MAX_VALUE).street(ADDRESS_TEST_STREET).city(ADDRESS_TEST_CITY).zipCode(ADDRESS_TEST_ZIP_CODE).countryDto(COUNTRY_TEST_DTO).build();
+            .id(Long.MAX_VALUE).street(ADDRESS_TEST_STREET).city(ADDRESS_TEST_CITY)
+            .zipCode(ADDRESS_TEST_ZIP_CODE).countryDto(COUNTRY_TEST_DTO).build();
+
+    public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
 
     public static final String PAYMENT_TYPE_TEST_NAME = "test Payment Type name";
+    public static final PaymentType PAYMENT_TYPE_ENTITY = PaymentType.builder()
+            .name(PAYMENT_TYPE_TEST_NAME).isDefault(false).build();
+
     public static final String QUEUE_TEST_NAME = "test Queue name";
 
     public static final String USER_TEST_EMAIL = "test@example.com";
@@ -59,13 +68,11 @@ public class TestConstants {
     public static final Long USER_TEST_PASSWORD_CHANGED = 325532800L;
 
     public static final String VAT_TEST_NAME = "test vat name";
-    public static final String GENERAL_STATE_TEST_NAME = "test general state name";
-
     public static final int VAT_TEST_PERCENT = 20;
     public static final int VAT_TEST_MULTIPLIER = 120;
     public static final Vat VAT_TEST_ENTITY = Vat.builder().id(LONG_ONE).name(VAT_TEST_NAME).isDefault(true).percent(VAT_TEST_PERCENT).multiplier(VAT_TEST_MULTIPLIER).build();
 
-    public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
+
     public static final String TARIFF_TEST_NAME = "test tariff name";
 
     public static final String TICKET_TYPE_TEST_NAME = "test Ticket type name";
