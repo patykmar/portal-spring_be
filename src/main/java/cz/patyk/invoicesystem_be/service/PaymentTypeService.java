@@ -1,6 +1,7 @@
 package cz.patyk.invoicesystem_be.service;
 
 import cz.patyk.invoicesystem_be.dto.PaymentTypeDto;
+import cz.patyk.invoicesystem_be.dto.in.PaymentTypeDtoIn;
 import cz.patyk.invoicesystem_be.entities.PaymentType;
 import cz.patyk.invoicesystem_be.mapper.PaymentTypeMapper;
 import cz.patyk.invoicesystem_be.repositories.PaymentTypeRepository;
@@ -33,14 +34,14 @@ public class PaymentTypeService {
         );
     }
 
-    public PaymentTypeDto newItem(PaymentTypeDto ticketTypeDto) {
+    public PaymentTypeDto newItem(PaymentTypeDtoIn ticketTypeDto) {
         PaymentType paymentType = paymentTypeMapper.toEntity(ticketTypeDto);
         return paymentTypeMapper.toDto(paymentTypeRepository.save(paymentType));
     }
 
-    public PaymentTypeDto editItem(PaymentTypeDto ticketTypeDto, Long id) {
+    public PaymentTypeDto editItem(PaymentTypeDtoIn paymentTypeDtoIn, Long id) {
         isIdExist(id);
-        PaymentType paymentType = paymentTypeMapper.toEntity(ticketTypeDto);
+        PaymentType paymentType = paymentTypeMapper.toEntity(paymentTypeDtoIn);
         paymentType.setId(id);
         return paymentTypeMapper.toDto(paymentTypeRepository.save(paymentType));
     }
