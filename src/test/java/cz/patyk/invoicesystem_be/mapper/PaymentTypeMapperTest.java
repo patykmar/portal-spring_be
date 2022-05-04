@@ -1,6 +1,6 @@
 package cz.patyk.invoicesystem_be.mapper;
 
-import cz.patyk.invoicesystem_be.dto.PaymentTypeDto;
+import cz.patyk.invoicesystem_be.dto.out.PaymentTypeDtoOut;
 import cz.patyk.invoicesystem_be.entities.PaymentType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,18 +22,18 @@ class PaymentTypeMapperTest {
     @MethodSource("entityProvider")
     void toDto(PaymentType paymentType) {
         assertThat(PAYMENT_TYPE_MAPPER.toDto(paymentType))
-                .returns(paymentType.getId(), PaymentTypeDto::getId)
-                .returns(paymentType.getName(), PaymentTypeDto::getName)
-                .returns(paymentType.isDefault(), PaymentTypeDto::isDefault);
+                .returns(paymentType.getId(), PaymentTypeDtoOut::getId)
+                .returns(paymentType.getName(), PaymentTypeDtoOut::getName)
+                .returns(paymentType.isDefault(), PaymentTypeDtoOut::isDefault);
     }
 
     @ParameterizedTest
     @MethodSource("dtoProvider")
-    void toEntity(PaymentTypeDto paymentTypeDto) {
-        assertThat(PAYMENT_TYPE_MAPPER.toEntity(paymentTypeDto))
-                .returns(paymentTypeDto.getId(), PaymentType::getId)
-                .returns(paymentTypeDto.getName(), PaymentType::getName)
-                .returns(paymentTypeDto.isDefault(), PaymentType::isDefault);
+    void toEntity(PaymentTypeDtoOut paymentTypeDtoOut) {
+        assertThat(PAYMENT_TYPE_MAPPER.toEntity(paymentTypeDtoOut))
+                .returns(paymentTypeDtoOut.getId(), PaymentType::getId)
+                .returns(paymentTypeDtoOut.getName(), PaymentType::getName)
+                .returns(paymentTypeDtoOut.isDefault(), PaymentType::isDefault);
     }
 
     private static Stream<Arguments> entityProvider(){
@@ -48,11 +48,11 @@ class PaymentTypeMapperTest {
 
     private static Stream<Arguments> dtoProvider() {
         return Stream.of(
-                Arguments.of(PaymentTypeDto.builder().id(Long.MIN_VALUE).name(PAYMENT_TYPE_TEST_NAME).isDefault(true).build()),
-                Arguments.of(PaymentTypeDto.builder().id(LONG_MINUS_ONE).name(PAYMENT_TYPE_TEST_NAME).isDefault(false).build()),
-                Arguments.of(PaymentTypeDto.builder().id(LONG_ZERO).name(PAYMENT_TYPE_TEST_NAME).isDefault(true).build()),
-                Arguments.of(PaymentTypeDto.builder().id(LONG_ONE).name(PAYMENT_TYPE_TEST_NAME).isDefault(false).build()),
-                Arguments.of(PaymentTypeDto.builder().id(Long.MAX_VALUE).name(PAYMENT_TYPE_TEST_NAME).isDefault(true).build())
+                Arguments.of(PaymentTypeDtoOut.builder().id(Long.MIN_VALUE).name(PAYMENT_TYPE_TEST_NAME).isDefault(true).build()),
+                Arguments.of(PaymentTypeDtoOut.builder().id(LONG_MINUS_ONE).name(PAYMENT_TYPE_TEST_NAME).isDefault(false).build()),
+                Arguments.of(PaymentTypeDtoOut.builder().id(LONG_ZERO).name(PAYMENT_TYPE_TEST_NAME).isDefault(true).build()),
+                Arguments.of(PaymentTypeDtoOut.builder().id(LONG_ONE).name(PAYMENT_TYPE_TEST_NAME).isDefault(false).build()),
+                Arguments.of(PaymentTypeDtoOut.builder().id(Long.MAX_VALUE).name(PAYMENT_TYPE_TEST_NAME).isDefault(true).build())
         );
     }
 }

@@ -1,6 +1,6 @@
 package cz.patyk.invoicesystem_be.controllers;
 
-import cz.patyk.invoicesystem_be.dto.PaymentTypeDto;
+import cz.patyk.invoicesystem_be.dto.out.PaymentTypeDtoOut;
 import cz.patyk.invoicesystem_be.dto.in.PaymentTypeDtoIn;
 import cz.patyk.invoicesystem_be.service.PaymentTypeService;
 import lombok.RequiredArgsConstructor;
@@ -31,37 +31,37 @@ public class PaymentTypeController {
     private final PaymentTypeService paymentTypeService;
 
     @GetMapping("")
-    public ResponseEntity<CollectionModel<PaymentTypeDto>> getAll(
+    public ResponseEntity<CollectionModel<PaymentTypeDtoOut>> getAll(
             @PageableDefault final Pageable pageable
     ) {
-        List<PaymentTypeDto> paymentTypeDtoList = paymentTypeService.getAll(pageable);
-        paymentTypeDtoList.forEach(paymentTypeDto -> paymentTypeDto.add(linkTo(PaymentTypeController.class)
+        List<PaymentTypeDtoOut> paymentTypeDtoOutList = paymentTypeService.getAll(pageable);
+        paymentTypeDtoOutList.forEach(paymentTypeDto -> paymentTypeDto.add(linkTo(PaymentTypeController.class)
                 .slash(paymentTypeDto.getId())
                 .withSelfRel()
         ));
 
-        return ResponseEntity.ok(CollectionModel.of(paymentTypeDtoList).add(
+        return ResponseEntity.ok(CollectionModel.of(paymentTypeDtoOutList).add(
                 linkTo(methodOn(PaymentTypeController.class).getAll(pageable))
                         .withSelfRel()
         ));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaymentTypeDto> getOne(
+    public ResponseEntity<PaymentTypeDtoOut> getOne(
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(paymentTypeService.getOne(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<PaymentTypeDto> newItem(
+    public ResponseEntity<PaymentTypeDtoOut> newItem(
             @Valid @RequestBody PaymentTypeDtoIn paymentTypeDto
     ) {
         return ResponseEntity.ok(paymentTypeService.newItem(paymentTypeDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentTypeDto> editItem(
+    public ResponseEntity<PaymentTypeDtoOut> editItem(
             @RequestBody @Valid PaymentTypeDtoIn paymentTypeDtoIn,
             @PathVariable @Positive Long id
     ) {
