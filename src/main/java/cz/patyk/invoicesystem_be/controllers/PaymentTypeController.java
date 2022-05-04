@@ -1,6 +1,7 @@
 package cz.patyk.invoicesystem_be.controllers;
 
 import cz.patyk.invoicesystem_be.dto.PaymentTypeDto;
+import cz.patyk.invoicesystem_be.dto.in.PaymentTypeDtoIn;
 import cz.patyk.invoicesystem_be.service.PaymentTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -52,17 +55,17 @@ public class PaymentTypeController {
 
     @PostMapping("")
     public ResponseEntity<PaymentTypeDto> newItem(
-            @RequestBody PaymentTypeDto paymentTypeDto
+            @Valid @RequestBody PaymentTypeDtoIn paymentTypeDto
     ) {
         return ResponseEntity.ok(paymentTypeService.newItem(paymentTypeDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PaymentTypeDto> editItem(
-            @RequestBody PaymentTypeDto paymentTypeDto,
-            @PathVariable Long id
+            @RequestBody @Valid PaymentTypeDtoIn paymentTypeDtoIn,
+            @PathVariable @Positive Long id
     ) {
-        return ResponseEntity.ok(paymentTypeService.editItem(paymentTypeDto, id));
+        return ResponseEntity.ok(paymentTypeService.editItem(paymentTypeDtoIn, id));
     }
 
     @DeleteMapping("/{id}")
