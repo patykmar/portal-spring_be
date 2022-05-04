@@ -1,5 +1,6 @@
 package cz.patyk.invoicesystem_be.dto;
 
+import cz.patyk.invoicesystem_be.dto.out.PaymentTypeDtoOut;
 import cz.patyk.invoicesystem_be.entities.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class InvoiceDto {
     private int id;
     private Company supplier;
     private Company subscriber;
-    private PaymentTypeDto paymentType;
+    private PaymentTypeDtoOut paymentType;
     private User userCreated;
     private List<WorkInventory> workInventoryList = new ArrayList<>();
     private List<InvoiceItem> invoiceItemList = new ArrayList<>();

@@ -13,4 +13,13 @@ public class ErrorHandleService {
         log.error("ID: {} of {}", id, message);
         return new ApplicationException(message, HttpStatus.NOT_FOUND);
     }
+
+    public ApplicationException handleBadRequestError(Long id, String message) {
+        log.error("ID: {} of {}", id, message);
+        return new ApplicationException(message, HttpStatus.BAD_REQUEST);
+    }
+    public ApplicationException handleBadRequestError(String message) {
+        log.error("{}", message);
+        return new ApplicationException(message, HttpStatus.BAD_REQUEST);
+    }
 }
