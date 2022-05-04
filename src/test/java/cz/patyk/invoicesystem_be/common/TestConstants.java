@@ -2,6 +2,7 @@ package cz.patyk.invoicesystem_be.common;
 
 import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
+import cz.patyk.invoicesystem_be.dto.in.PaymentTypeDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Company;
@@ -54,8 +55,6 @@ public class TestConstants {
     public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
 
     public static final String PAYMENT_TYPE_TEST_NAME = "test Payment Type name";
-    public static final PaymentType PAYMENT_TYPE_ENTITY = PaymentType.builder()
-            .name(PAYMENT_TYPE_TEST_NAME).isDefault(false).build();
 
     public static final String QUEUE_TEST_NAME = "test Queue name";
 
