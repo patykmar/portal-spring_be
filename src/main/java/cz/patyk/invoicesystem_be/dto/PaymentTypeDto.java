@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Getter
@@ -14,7 +15,10 @@ import java.util.Objects;
 @AllArgsConstructor
 public class PaymentTypeDto extends RepresentationModel<PaymentTypeDto> {
     private Long id;
+    @NotNull(message = "Name is mandatory")
     private String name;
+
+    @NotNull
     private boolean isDefault;
 
     @Override
