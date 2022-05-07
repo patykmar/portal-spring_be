@@ -19,5 +19,8 @@ public interface UserMapper {
 
     @Mapping(target = "employeeOfCompanyId.id", source = "employeeOfCompanyId")
     @Mapping(target = "roles", expression = "java(Enum.valueOf(User.Role.class, userDtoInTwoPassword.getRoles().toUpperCase()))")
+    @Mapping(target = "lastLogin", expression = "java(Long.valueOf(\"0\"))")
+    @Mapping(target = "createdDate", expression = "java(java.time.Instant.now().getEpochSecond())")
+    @Mapping(target = "passwordChanged", expression = "java(java.time.Instant.now().getEpochSecond())")
     User toEntity(UserDtoInTwoPassword userDtoInTwoPassword);
 }
