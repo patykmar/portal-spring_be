@@ -2,12 +2,10 @@ package cz.patyk.invoicesystem_be.common;
 
 import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
-import cz.patyk.invoicesystem_be.dto.in.PaymentTypeDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.Country;
-import cz.patyk.invoicesystem_be.entities.PaymentType;
 import cz.patyk.invoicesystem_be.entities.Vat;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
