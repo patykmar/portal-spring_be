@@ -64,7 +64,8 @@ class UserMapperTest {
                 .returns(userDtoInTwoPassword.getEmail(), User::getEmail)
                 .returns(userDtoInTwoPassword.getFirstName(), User::getFirstName)
                 .returns(userDtoInTwoPassword.getLastName(), User::getLastName)
-                .returns(Enum.valueOf(User.Role.class, userDtoInTwoPassword.getRoles().toUpperCase()), User::getRoles);
+                .returns(Enum.valueOf(User.Role.class, userDtoInTwoPassword.getRoles().toUpperCase()), User::getRoles)
+                .returns(LONG_ZERO, User::getLastLogin);
 
         assertThat(USER_MAPPER.toEntity(userDtoInTwoPassword).getEmployeeOfCompanyId())
                 .returns(userDtoInTwoPassword.getEmployeeOfCompanyId(), Company::getId);
