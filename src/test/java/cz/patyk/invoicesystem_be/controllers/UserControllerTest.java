@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.stream.Stream;
 
-import static cz.patyk.invoicesystem_be.common.TestDtoConstants.USER_DTO_IN_ROLE_USER;
+import static cz.patyk.invoicesystem_be.common.TestDtoConstants.USER_DTO_IN_ROLE_ADMIN;
 import static cz.patyk.invoicesystem_be.common.TestDtoConstants.USER_DTO_IN_ROLE_USER_WITH_PASSWORD;
 import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
@@ -78,6 +78,33 @@ class UserControllerTest {
                 mvcResult.getResponse().getContentAsString(),
                 UserDtoOut.class
         );
+
+        log.info("==== Testing put method: editing PaymentType with id: {} ====", userDtoOut.getId());
+
+        String userDtoInRoleUser = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_ADMIN);
+
+        mockMvc.perform(MockMvcRequestBuilders.put(URL + "/" + userDtoOut.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(userDtoInRoleUser)
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(userDtoOut.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(USER_DTO_IN_ROLE_ADMIN.getEmployeeOfCompanyId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(USER_DTO_IN_ROLE_ADMIN.getEmail()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(USER_DTO_IN_ROLE_ADMIN.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(USER_DTO_IN_ROLE_ADMIN.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastLogin").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.createdDate").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.passwordChanged").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_ADMIN.getRoles()))
+        ;
     }
 
     @Test
@@ -118,7 +145,7 @@ class UserControllerTest {
     @ParameterizedTest
     @MethodSource("provideInvalidIds")
     void testEditItemWithInvalidId(Long id) throws Exception {
-        String userDtoInRoleUser = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_USER);
+        String userDtoInRoleUser = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_ADMIN);
 
         mockMvc.perform(MockMvcRequestBuilders.put(URL + "/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
