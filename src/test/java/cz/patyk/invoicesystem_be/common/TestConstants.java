@@ -57,9 +57,13 @@ public class TestConstants {
     public static final String QUEUE_TEST_NAME = "test Queue name";
 
     public static final String USER_TEST_EMAIL = "test@example.com";
+    public static final String USER_TEST_EMAIL_EDIT = "test-edited@example.com";
     public static final String USER_TEST_FIRST_NAME = "Homer";
+    public static final String USER_TEST_FIRST_NAME_EDIT = "Homer J.";
     public static final String USER_TEST_LAST_NAME = "Simpson";
+    public static final String USER_TEST_LAST_NAME_EDIT = "Simpson edited";
     public static final String USER_TEST_PASSWORD = "password1";
+    public static final String USER_TEST_PASSWORD_RETYPED_WRONG = "wrong password";
     public static final Long USER_TEST_LAST_LOGIN = Instant.now().getEpochSecond();
     public static final Long USER_TEST_CREATED = 315532800L;
     public static final Long USER_TEST_PASSWORD_CHANGED = 325532800L;
