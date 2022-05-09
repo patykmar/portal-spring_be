@@ -49,9 +49,15 @@ public class UserService {
     }
 
     public UserDtoOut editItem(UserDtoIn userDtoIn, Long id) {
-        isIdExist(id);
+        User userFromDb = userRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, USER_NOT_FOUND_MESSAGE));
+
         User user = userMapper.toEntity(userDtoIn);
         user.setId(id);
+        user.setLastLogin(userFromDb.getLastLogin());
+        user.setCreatedDate(userFromDb.getCreatedDate());
+        user.setPasswordChanged(userFromDb.getPasswordChanged());
+
         return userMapper.toDto(userRepository.save(user));
     }
 
