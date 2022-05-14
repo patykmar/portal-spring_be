@@ -50,7 +50,79 @@ class UserControllerTest {
     void testApi() throws Exception {
         String userDtoInRoleUserWithPassword = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_USER_WITH_PASSWORD);
 
-        log.info("==== Testing post method: creating new User ====");
+        UserDtoOut userDtoOut = userPostMethodTest(userDtoInRoleUserWithPassword);
+        userGetMethodTest(userDtoOut);
+        userPutMethodTest(userDtoOut);
+        userDeleteMethodTest(userDtoOut);
+
+    }
+
+    private void userDeleteMethodTest(UserDtoOut userDtoOut) throws Exception {
+        log.info("==== Testing delete method: Delete PaymentType with id: {} ====", userDtoOut.getId());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/" + userDtoOut.getId()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+        ;
+    }
+
+    private void userPutMethodTest(UserDtoOut userDtoOut) throws Exception {
+        log.info("==== Testing put method: editing PaymentType with id: {} ====", userDtoOut.getId());
+
+        String userDtoInRoleUser = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_ADMIN);
+
+        mockMvc.perform(MockMvcRequestBuilders.put(URL + "/" + userDtoOut.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userDtoInRoleUser)
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(userDtoOut.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(USER_DTO_IN_ROLE_ADMIN.getEmployeeOfCompanyId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(USER_DTO_IN_ROLE_ADMIN.getEmail()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(USER_DTO_IN_ROLE_ADMIN.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(USER_DTO_IN_ROLE_ADMIN.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastLogin").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.createdDate").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.passwordChanged").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_ADMIN.getRoles()))
+        ;
+    }
+
+    private void userGetMethodTest(UserDtoOut userDtoOut) throws Exception {
+        log.info("Testing {} method", "GET");
+
+        mockMvc.perform(MockMvcRequestBuilders.get(URL + "/" + userDtoOut.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(userDtoOut.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmployeeOfCompanyId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmail()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastLogin").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.createdDate").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.passwordChanged").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").isString())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getRoles()))
+        ;
+    }
+
+    private UserDtoOut userPostMethodTest(String userDtoInRoleUserWithPassword) throws Exception {
+
+        log.info("==== Testing POST method: creating new User ====");
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(URL)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -74,37 +146,10 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getRoles()))
                 .andReturn();
 
-        UserDtoOut userDtoOut = objectMapper.readValue(
+        return objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 UserDtoOut.class
         );
-
-        log.info("==== Testing put method: editing PaymentType with id: {} ====", userDtoOut.getId());
-
-        String userDtoInRoleUser = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_ADMIN);
-
-        mockMvc.perform(MockMvcRequestBuilders.put(URL + "/" + userDtoOut.getId())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(userDtoInRoleUser)
-                )
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(userDtoOut.getId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(USER_DTO_IN_ROLE_ADMIN.getEmployeeOfCompanyId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(USER_DTO_IN_ROLE_ADMIN.getEmail()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(USER_DTO_IN_ROLE_ADMIN.getFirstName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(USER_DTO_IN_ROLE_ADMIN.getLastName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastLogin").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.createdDate").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.passwordChanged").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_ADMIN.getRoles()))
-        ;
     }
 
     @Test
