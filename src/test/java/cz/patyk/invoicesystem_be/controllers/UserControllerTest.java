@@ -126,8 +126,8 @@ class UserControllerTest {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(URL)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(userDtoInRoleUserWithPassword))
-
+                        .content(userDtoInRoleUserWithPassword)
+                )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
