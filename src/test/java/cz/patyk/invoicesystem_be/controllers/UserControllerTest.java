@@ -24,7 +24,6 @@ import static cz.patyk.invoicesystem_be.common.TestDtoConstants.USER_DTO_IN_ROLE
 import static cz.patyk.invoicesystem_be.common.TestDtoConstants.USER_DTO_IN_ROLE_USER_WITH_PASSWORD;
 import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
 import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 @SpringBootTest
@@ -150,31 +149,6 @@ class UserControllerTest {
                 mvcResult.getResponse().getContentAsString(),
                 UserDtoOut.class
         );
-    }
-
-    @Test
-    void getOne() {
-        assertTrue(true);
-    }
-
-    @Test
-    void newItem() {
-        assertTrue(true);
-    }
-
-    @Test
-    void editItem() {
-        assertTrue(true);
-    }
-
-    @Test
-    void testEditItem() {
-        assertTrue(true);
-    }
-
-    @Test
-    void deleteItem() {
-        assertTrue(true);
     }
 
     @ParameterizedTest
