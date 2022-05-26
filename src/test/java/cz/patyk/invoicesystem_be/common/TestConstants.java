@@ -63,6 +63,7 @@ public class TestConstants {
     public static final String USER_TEST_LAST_NAME = "Simpson";
     public static final String USER_TEST_LAST_NAME_EDIT = "Simpson edited";
     public static final String USER_TEST_PASSWORD = "password1";
+    public static final String USER_TEST_PASSWORD_ENCODE = "$2a$10$ysCS4ksIsTqUJPsEaND6s.NoELDCtv9fp/P2pVGF21h03wa7JnPKi";
     public static final String USER_TEST_PASSWORD_RETYPED_WRONG = "wrong password";
     public static final Long USER_TEST_LAST_LOGIN = Instant.now().getEpochSecond();
     public static final Long USER_TEST_CREATED = 315532800L;
