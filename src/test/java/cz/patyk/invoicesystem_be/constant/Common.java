@@ -1,24 +1,18 @@
-package cz.patyk.invoicesystem_be.common;
+package cz.patyk.invoicesystem_be.constant;
 
 import cz.patyk.invoicesystem_be.dto.CountryDto;
-import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
-import cz.patyk.invoicesystem_be.dto.in.PaymentTypeDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.entities.Address;
-import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.Country;
-import cz.patyk.invoicesystem_be.entities.PaymentType;
-import cz.patyk.invoicesystem_be.entities.Vat;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.List;
 
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ONE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class TestConstants {
+public class Common {
     public static final String COMPANY_TEST_NAME = "Testing company name";
     public static final String COMPANY_TEST_DESCRIPTION = "Testing company description";
     public static final String COMPANY_TEST_COMPANY_ID = "123456789";
@@ -27,14 +21,6 @@ public class TestConstants {
     public static final Long COMPANY_TEST_MODIFY = Instant.now().getEpochSecond();
     public static final String COMPANY_TEST_ACCOUNT_NUMBER = "12345-123456789/0123";
     public static final String COMPANY_TEST_IBAN = "CZ1234567890123456789012";
-    public static final Company COMPANY_TEST_ENTITY = Company.builder().id(LONG_ONE)
-            .name(COMPANY_TEST_NAME).description(COMPANY_TEST_DESCRIPTION).companyId(COMPANY_TEST_COMPANY_ID)
-            .vatNumber(COMPANY_TEST_VAT_NUMBER).created(COMPANY_TEST_CREATED).modify(COMPANY_TEST_MODIFY)
-            .accountNumber(COMPANY_TEST_ACCOUNT_NUMBER).iban(COMPANY_TEST_IBAN).build();
-    public static final CompanyDtoIn COMPANY_TEST_DTO_IN = CompanyDtoIn.builder().id(LONG_ONE)
-            .name(COMPANY_TEST_NAME).description(COMPANY_TEST_DESCRIPTION).companyId(COMPANY_TEST_COMPANY_ID)
-            .vatNumber(COMPANY_TEST_VAT_NUMBER).accountNumber(COMPANY_TEST_ACCOUNT_NUMBER)
-            .iban(COMPANY_TEST_IBAN).build();
 
     public static final String GENERAL_STATE_TEST_NAME = "test general state name";
 
@@ -59,9 +45,14 @@ public class TestConstants {
     public static final String QUEUE_TEST_NAME = "test Queue name";
 
     public static final String USER_TEST_EMAIL = "test@example.com";
+    public static final String USER_TEST_EMAIL_EDIT = "test-edited@example.com";
     public static final String USER_TEST_FIRST_NAME = "Homer";
+    public static final String USER_TEST_FIRST_NAME_EDIT = "Homer J.";
     public static final String USER_TEST_LAST_NAME = "Simpson";
+    public static final String USER_TEST_LAST_NAME_EDIT = "Simpson edited";
     public static final String USER_TEST_PASSWORD = "password1";
+    public static final String USER_TEST_PASSWORD_ENCODE = "$2a$10$ysCS4ksIsTqUJPsEaND6s.NoELDCtv9fp/P2pVGF21h03wa7JnPKi";
+    public static final String USER_TEST_PASSWORD_RETYPED_WRONG = "wrong password";
     public static final Long USER_TEST_LAST_LOGIN = Instant.now().getEpochSecond();
     public static final Long USER_TEST_CREATED = 315532800L;
     public static final Long USER_TEST_PASSWORD_CHANGED = 325532800L;
@@ -69,7 +60,6 @@ public class TestConstants {
     public static final String VAT_TEST_NAME = "test vat name";
     public static final int VAT_TEST_PERCENT = 20;
     public static final int VAT_TEST_MULTIPLIER = 120;
-    public static final Vat VAT_TEST_ENTITY = Vat.builder().id(LONG_ONE).name(VAT_TEST_NAME).isDefault(true).percent(VAT_TEST_PERCENT).multiplier(VAT_TEST_MULTIPLIER).build();
 
 
     public static final String TARIFF_TEST_NAME = "test tariff name";

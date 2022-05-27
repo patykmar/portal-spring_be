@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
 
-import static cz.patyk.invoicesystem_be.service.ServiceConstants.USER_NOT_FOUND_MESSAGE;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -34,13 +32,13 @@ public class UserService {
 
     public UserDtoOut getOne(Long id) {
         return userMapper.toDto(userRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, USER_NOT_FOUND_MESSAGE))
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.USER_NOT_FOUND_MESSAGE))
         );
     }
 
     public UserDtoOut newItem(UserDtoInTwoPassword userDtoInTwoPassword) {
         if (!userDtoInTwoPassword.getPassword().equals(userDtoInTwoPassword.getRetypePassword())) {
-            throw errorHandleService.handleBadRequestError("New password and re-typed password is not match.");
+            throw errorHandleService.handleBadRequestError(ServiceConstants.USER_PASSWORD_AND_RETYPED_PASSWORD_NOT_MATCH);
         }
         User user = userMapper.toEntity(userDtoInTwoPassword);
         user.setPassword(passwordEncode(userDtoInTwoPassword.getPassword()));
@@ -49,22 +47,28 @@ public class UserService {
     }
 
     public UserDtoOut editItem(UserDtoIn userDtoIn, Long id) {
-        isIdExist(id);
+        User userFromDb = userRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.USER_NOT_FOUND_MESSAGE));
+
         User user = userMapper.toEntity(userDtoIn);
         user.setId(id);
+        user.setLastLogin(userFromDb.getLastLogin());
+        user.setCreatedDate(userFromDb.getCreatedDate());
+        user.setPasswordChanged(userFromDb.getPasswordChanged());
+
         return userMapper.toDto(userRepository.save(user));
     }
 
     public UserDtoOut passwordChange(UserPasswordChangeIn userPasswordChangeIn, Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, USER_NOT_FOUND_MESSAGE));
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.USER_NOT_FOUND_MESSAGE));
 
         if (!userPasswordChangeIn.getNewPassword().equals(userPasswordChangeIn.getReTypedPassword())) {
-            throw errorHandleService.handleBadRequestError("New password and re-typed password is not match.");
+            throw errorHandleService.handleBadRequestError(ServiceConstants.USER_PASSWORD_AND_RETYPED_PASSWORD_NOT_MATCH);
         }
 
         if (!bCryptPasswordEncoder.matches(userPasswordChangeIn.getOldPassword(), user.getPassword())) {
-            throw errorHandleService.handleBadRequestError(id, "Your old password is incorrect.");
+            throw errorHandleService.handleBadRequestError(id, ServiceConstants.USER_INCORRECT_OLD_PASSWORD);
         } else {
             changePassword(user, userPasswordChangeIn.getNewPassword());
         }
@@ -82,7 +86,7 @@ public class UserService {
 
     private void isIdExist(Long id) {
         if (!userRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, USER_NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, ServiceConstants.USER_NOT_FOUND_MESSAGE);
         }
     }
 
