@@ -1,8 +1,10 @@
 package cz.patyk.invoicesystem_be.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.patyk.invoicesystem_be.constant.TestDtos;
 import cz.patyk.invoicesystem_be.dto.out.UserDtoOut;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,11 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.stream.Stream;
-
-import static cz.patyk.invoicesystem_be.common.TestDtoConstants.USER_DTO_IN_ROLE_ADMIN;
-import static cz.patyk.invoicesystem_be.common.TestDtoConstants.USER_DTO_IN_ROLE_USER_WITH_PASSWORD;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
 
 @Slf4j
 @SpringBootTest
@@ -47,7 +44,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Testing API HTTP methods POST, PUT and DELETE")
     void testApi() throws Exception {
-        String userDtoInRoleUserWithPassword = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_USER_WITH_PASSWORD);
+        String userDtoInRoleUserWithPassword = objectMapper.writeValueAsString(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD);
 
         UserDtoOut userDtoOut = userPostMethodTest(userDtoInRoleUserWithPassword);
         userGetMethodTest(userDtoOut);
@@ -67,7 +64,7 @@ class UserControllerTest {
     private void userPutMethodTest(UserDtoOut userDtoOut) throws Exception {
         log.info("==== Testing put method: editing PaymentType with id: {} ====", userDtoOut.getId());
 
-        String userDtoInRoleUser = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_ADMIN);
+        String userDtoInRoleUser = objectMapper.writeValueAsString(TestDtos.USER_DTO_IN_ROLE_ADMIN);
 
         mockMvc.perform(MockMvcRequestBuilders.put(URL + "/" + userDtoOut.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -78,18 +75,18 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(userDtoOut.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(USER_DTO_IN_ROLE_ADMIN.getEmployeeOfCompanyId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(TestDtos.USER_DTO_IN_ROLE_ADMIN.getEmployeeOfCompanyId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(USER_DTO_IN_ROLE_ADMIN.getEmail()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(TestDtos.USER_DTO_IN_ROLE_ADMIN.getEmail()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(USER_DTO_IN_ROLE_ADMIN.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(TestDtos.USER_DTO_IN_ROLE_ADMIN.getFirstName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(USER_DTO_IN_ROLE_ADMIN.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(TestDtos.USER_DTO_IN_ROLE_ADMIN.getLastName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastLogin").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.createdDate").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.passwordChanged").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.roles").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_ADMIN.getRoles()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(TestDtos.USER_DTO_IN_ROLE_ADMIN.getRoles()))
         ;
     }
 
@@ -104,18 +101,18 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(userDtoOut.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmployeeOfCompanyId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmployeeOfCompanyId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmail()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmail()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getFirstName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getLastName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastLogin").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.createdDate").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.passwordChanged").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.roles").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getRoles()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getRoles()))
         ;
     }
 
@@ -131,18 +128,18 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmployeeOfCompanyId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeOfCompanyId").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmployeeOfCompanyId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmail()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getEmail()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getFirstName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getFirstName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getLastName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getLastName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastLogin").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.createdDate").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.passwordChanged").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.roles").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getRoles()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roles").value(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD.getRoles()))
                 .andReturn();
 
         return objectMapper.readValue(
@@ -164,7 +161,7 @@ class UserControllerTest {
     @ParameterizedTest
     @MethodSource("provideInvalidIds")
     void testEditItemWithInvalidId(Long id) throws Exception {
-        String userDtoInRoleUser = objectMapper.writeValueAsString(USER_DTO_IN_ROLE_ADMIN);
+        String userDtoInRoleUser = objectMapper.writeValueAsString(TestDtos.USER_DTO_IN_ROLE_ADMIN);
 
         mockMvc.perform(MockMvcRequestBuilders.put(URL + "/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -184,8 +181,8 @@ class UserControllerTest {
     private static Stream<Arguments> provideInvalidIds() {
         return Stream.of(
                 Arguments.of(Long.MIN_VALUE),
-                Arguments.of(LONG_ZERO),
-                Arguments.of(LONG_MINUS_ONE)
+                Arguments.of(NumberUtils.LONG_ZERO),
+                Arguments.of(NumberUtils.LONG_MINUS_ONE)
         );
     }
 }
