@@ -1,10 +1,13 @@
 package cz.patyk.invoicesystem_be.mapper;
 
+import cz.patyk.invoicesystem_be.constant.Common;
+import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoInTwoPassword;
 import cz.patyk.invoicesystem_be.dto.out.UserDtoOut;
 import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.User;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,17 +15,6 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.stream.Stream;
 
-import static cz.patyk.invoicesystem_be.common.TestConstants.COMPANY_TEST_ENTITY;
-import static cz.patyk.invoicesystem_be.common.TestConstants.USER_TEST_CREATED;
-import static cz.patyk.invoicesystem_be.common.TestConstants.USER_TEST_EMAIL;
-import static cz.patyk.invoicesystem_be.common.TestConstants.USER_TEST_FIRST_NAME;
-import static cz.patyk.invoicesystem_be.common.TestConstants.USER_TEST_LAST_LOGIN;
-import static cz.patyk.invoicesystem_be.common.TestConstants.USER_TEST_LAST_NAME;
-import static cz.patyk.invoicesystem_be.common.TestConstants.USER_TEST_PASSWORD;
-import static cz.patyk.invoicesystem_be.common.TestConstants.USER_TEST_PASSWORD_CHANGED;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserMapperTest {
@@ -65,7 +57,7 @@ class UserMapperTest {
                 .returns(userDtoInTwoPassword.getFirstName(), User::getFirstName)
                 .returns(userDtoInTwoPassword.getLastName(), User::getLastName)
                 .returns(Enum.valueOf(User.Role.class, userDtoInTwoPassword.getRoles().toUpperCase()), User::getRoles)
-                .returns(LONG_ZERO, User::getLastLogin);
+                .returns(NumberUtils.LONG_ZERO, User::getLastLogin);
 
         assertThat(USER_MAPPER.toEntity(userDtoInTwoPassword).getEmployeeOfCompanyId())
                 .returns(userDtoInTwoPassword.getEmployeeOfCompanyId(), Company::getId);
@@ -73,31 +65,31 @@ class UserMapperTest {
 
     private static Stream<Arguments> entityProvider() {
         return Stream.of(
-                Arguments.of(User.builder().id(Long.MIN_VALUE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).lastLogin(USER_TEST_LAST_LOGIN).createdDate(USER_TEST_CREATED).passwordChanged(USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(COMPANY_TEST_ENTITY).roles(User.Role.ADMIN).build()),
-                Arguments.of(User.builder().id(LONG_MINUS_ONE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).lastLogin(USER_TEST_LAST_LOGIN).createdDate(USER_TEST_CREATED).passwordChanged(USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(COMPANY_TEST_ENTITY).roles(User.Role.USER).build()),
-                Arguments.of(User.builder().id(LONG_ZERO).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).lastLogin(USER_TEST_LAST_LOGIN).createdDate(USER_TEST_CREATED).passwordChanged(USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(COMPANY_TEST_ENTITY).roles(User.Role.ADMIN).build()),
-                Arguments.of(User.builder().id(LONG_ONE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).lastLogin(USER_TEST_LAST_LOGIN).createdDate(USER_TEST_CREATED).passwordChanged(USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(COMPANY_TEST_ENTITY).roles(User.Role.USER).build()),
-                Arguments.of(User.builder().id(Long.MAX_VALUE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).lastLogin(USER_TEST_LAST_LOGIN).createdDate(USER_TEST_CREATED).passwordChanged(USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(COMPANY_TEST_ENTITY).roles(User.Role.ADMIN).build())
+                Arguments.of(User.builder().id(Long.MIN_VALUE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED).passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(TestEntities.COMPANY_TEST_ENTITY).roles(User.Role.ADMIN).build()),
+                Arguments.of(User.builder().id(NumberUtils.LONG_MINUS_ONE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED).passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(TestEntities.COMPANY_TEST_ENTITY).roles(User.Role.USER).build()),
+                Arguments.of(User.builder().id(NumberUtils.LONG_ZERO).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED).passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(TestEntities.COMPANY_TEST_ENTITY).roles(User.Role.ADMIN).build()),
+                Arguments.of(User.builder().id(NumberUtils.LONG_ONE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED).passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(TestEntities.COMPANY_TEST_ENTITY).roles(User.Role.USER).build()),
+                Arguments.of(User.builder().id(Long.MAX_VALUE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED).passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).employeeOfCompanyId(TestEntities.COMPANY_TEST_ENTITY).roles(User.Role.ADMIN).build())
         );
     }
 
     private static Stream<Arguments> dtoInProvider() {
         return Stream.of(
-                Arguments.of(UserDtoIn.builder().id(Long.MIN_VALUE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").build()),
-                Arguments.of(UserDtoIn.builder().id(LONG_MINUS_ONE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").build()),
-                Arguments.of(UserDtoIn.builder().id(LONG_ZERO).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").build()),
-                Arguments.of(UserDtoIn.builder().id(LONG_ONE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").build()),
-                Arguments.of(UserDtoIn.builder().id(Long.MAX_VALUE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").build())
+                Arguments.of(UserDtoIn.builder().id(Long.MIN_VALUE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").build()),
+                Arguments.of(UserDtoIn.builder().id(NumberUtils.LONG_MINUS_ONE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").build()),
+                Arguments.of(UserDtoIn.builder().id(NumberUtils.LONG_ZERO).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").build()),
+                Arguments.of(UserDtoIn.builder().id(NumberUtils.LONG_ONE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").build()),
+                Arguments.of(UserDtoIn.builder().id(Long.MAX_VALUE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").build())
         );
     }
 
     private static Stream<Arguments> dtoInTwoPasswordProvider() {
         return Stream.of(
-                Arguments.of(UserDtoInTwoPassword.builder().id(Long.MIN_VALUE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").password(USER_TEST_PASSWORD).retypePassword(USER_TEST_PASSWORD).build()),
-                Arguments.of(UserDtoInTwoPassword.builder().id(LONG_MINUS_ONE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").password(USER_TEST_PASSWORD).retypePassword(USER_TEST_PASSWORD).build()),
-                Arguments.of(UserDtoInTwoPassword.builder().id(LONG_ZERO).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").password(USER_TEST_PASSWORD).retypePassword(USER_TEST_PASSWORD).build()),
-                Arguments.of(UserDtoInTwoPassword.builder().id(LONG_ONE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").password(USER_TEST_PASSWORD).retypePassword(USER_TEST_PASSWORD).build()),
-                Arguments.of(UserDtoInTwoPassword.builder().id(Long.MAX_VALUE).email(USER_TEST_EMAIL).firstName(USER_TEST_FIRST_NAME).lastName(USER_TEST_LAST_NAME).employeeOfCompanyId(LONG_ONE).roles("admin").password(USER_TEST_PASSWORD).retypePassword(USER_TEST_PASSWORD).build())
+                Arguments.of(UserDtoInTwoPassword.builder().id(Long.MIN_VALUE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").password(Common.USER_TEST_PASSWORD).retypePassword(Common.USER_TEST_PASSWORD).build()),
+                Arguments.of(UserDtoInTwoPassword.builder().id(NumberUtils.LONG_MINUS_ONE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").password(Common.USER_TEST_PASSWORD).retypePassword(Common.USER_TEST_PASSWORD).build()),
+                Arguments.of(UserDtoInTwoPassword.builder().id(NumberUtils.LONG_ZERO).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").password(Common.USER_TEST_PASSWORD).retypePassword(Common.USER_TEST_PASSWORD).build()),
+                Arguments.of(UserDtoInTwoPassword.builder().id(NumberUtils.LONG_ONE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").password(Common.USER_TEST_PASSWORD).retypePassword(Common.USER_TEST_PASSWORD).build()),
+                Arguments.of(UserDtoInTwoPassword.builder().id(Long.MAX_VALUE).email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME).lastName(Common.USER_TEST_LAST_NAME).employeeOfCompanyId(NumberUtils.LONG_ONE).roles("admin").password(Common.USER_TEST_PASSWORD).retypePassword(Common.USER_TEST_PASSWORD).build())
         );
     }
 }

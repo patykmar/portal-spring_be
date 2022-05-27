@@ -1,7 +1,9 @@
 package cz.patyk.invoicesystem_be.mapper;
 
+import cz.patyk.invoicesystem_be.constant.Common;
 import cz.patyk.invoicesystem_be.dto.QueueDto;
 import cz.patyk.invoicesystem_be.entities.Queue;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,10 +11,6 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.stream.Stream;
 
-import static cz.patyk.invoicesystem_be.common.TestConstants.QUEUE_TEST_NAME;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class QueueMapperTest {
@@ -36,21 +34,21 @@ class QueueMapperTest {
 
     private static Stream<Arguments> providerDtos() {
         return Stream.of(
-                Arguments.of(QueueDto.builder().id(Long.MIN_VALUE).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(QueueDto.builder().id(LONG_MINUS_ONE).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(QueueDto.builder().id(LONG_ZERO).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(QueueDto.builder().id(LONG_ONE).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(QueueDto.builder().id(Long.MAX_VALUE).name(QUEUE_TEST_NAME).build())
+                Arguments.of(QueueDto.builder().id(Long.MIN_VALUE).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(QueueDto.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(QueueDto.builder().id(NumberUtils.LONG_ZERO).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(QueueDto.builder().id(NumberUtils.LONG_ONE).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(QueueDto.builder().id(Long.MAX_VALUE).name(Common.QUEUE_TEST_NAME).build())
         );
     }
 
     private static Stream<Arguments> providerEntities() {
         return Stream.of(
-                Arguments.of(Queue.builder().id(Long.MIN_VALUE).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(Queue.builder().id(LONG_MINUS_ONE).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(Queue.builder().id(LONG_ZERO).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(Queue.builder().id(LONG_ONE).name(QUEUE_TEST_NAME).build()),
-                Arguments.of(Queue.builder().id(Long.MAX_VALUE).name(QUEUE_TEST_NAME).build())
+                Arguments.of(Queue.builder().id(Long.MIN_VALUE).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(Queue.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(Queue.builder().id(NumberUtils.LONG_ZERO).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(Queue.builder().id(NumberUtils.LONG_ONE).name(Common.QUEUE_TEST_NAME).build()),
+                Arguments.of(Queue.builder().id(Long.MAX_VALUE).name(Common.QUEUE_TEST_NAME).build())
         );
     }
 }

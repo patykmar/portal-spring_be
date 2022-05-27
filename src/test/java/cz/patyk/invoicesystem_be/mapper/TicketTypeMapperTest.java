@@ -1,7 +1,9 @@
 package cz.patyk.invoicesystem_be.mapper;
 
+import cz.patyk.invoicesystem_be.constant.Common;
 import cz.patyk.invoicesystem_be.dto.TicketTypeDto;
 import cz.patyk.invoicesystem_be.entities.TicketType;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,14 +11,6 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.stream.Stream;
 
-import static cz.patyk.invoicesystem_be.common.TestConstants.TICKET_TYPE_TEST_NAME;
-import static cz.patyk.invoicesystem_be.common.TestConstants.TICKET_TYPE_TEST_ABBREVIATION;
-import static org.apache.commons.lang3.math.NumberUtils.FLOAT_MINUS_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.FLOAT_ZERO;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ONE;
-import static org.apache.commons.lang3.math.NumberUtils.LONG_ZERO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TicketTypeMapperTest {
@@ -49,21 +43,21 @@ class TicketTypeMapperTest {
 
     private static Stream<Arguments> entityProvider() {
         return Stream.of(
-                Arguments.of(TicketType.builder().id(Long.MIN_VALUE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
-                Arguments.of(TicketType.builder().id(LONG_MINUS_ONE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(FLOAT_MINUS_ONE).coefficientTime(FLOAT_MINUS_ONE).build()),
-                Arguments.of(TicketType.builder().id(LONG_ZERO).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(FLOAT_ZERO).coefficientTime(FLOAT_ZERO).build()),
-                Arguments.of(TicketType.builder().id(LONG_ONE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(FLOAT_ONE).coefficientTime(FLOAT_ONE).build()),
-                Arguments.of(TicketType.builder().id(Long.MAX_VALUE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
+                Arguments.of(TicketType.builder().id(Long.MIN_VALUE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
+                Arguments.of(TicketType.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(NumberUtils.FLOAT_MINUS_ONE).coefficientTime(NumberUtils.FLOAT_MINUS_ONE).build()),
+                Arguments.of(TicketType.builder().id(NumberUtils.LONG_ZERO).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(NumberUtils.FLOAT_ZERO).coefficientTime(NumberUtils.FLOAT_ZERO).build()),
+                Arguments.of(TicketType.builder().id(NumberUtils.LONG_ONE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(NumberUtils.FLOAT_ONE).coefficientTime(NumberUtils.FLOAT_ONE).build()),
+                Arguments.of(TicketType.builder().id(Long.MAX_VALUE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
         );
     }
 
     private static Stream<Arguments> dtoProvider() {
         return Stream.of(
-                Arguments.of(TicketTypeDto.builder().id(Long.MIN_VALUE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
-                Arguments.of(TicketTypeDto.builder().id(LONG_MINUS_ONE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(FLOAT_MINUS_ONE).coefficientTime(FLOAT_MINUS_ONE).build()),
-                Arguments.of(TicketTypeDto.builder().id(LONG_ZERO).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(FLOAT_ZERO).coefficientTime(FLOAT_ZERO).build()),
-                Arguments.of(TicketTypeDto.builder().id(LONG_ONE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(FLOAT_ONE).coefficientTime(FLOAT_ONE).build()),
-                Arguments.of(TicketTypeDto.builder().id(Long.MAX_VALUE).name(TICKET_TYPE_TEST_NAME).abbreviation(TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
+                Arguments.of(TicketTypeDto.builder().id(Long.MIN_VALUE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
+                Arguments.of(TicketTypeDto.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(NumberUtils.FLOAT_MINUS_ONE).coefficientTime(NumberUtils.FLOAT_MINUS_ONE).build()),
+                Arguments.of(TicketTypeDto.builder().id(NumberUtils.LONG_ZERO).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(NumberUtils.FLOAT_ZERO).coefficientTime(NumberUtils.FLOAT_ZERO).build()),
+                Arguments.of(TicketTypeDto.builder().id(NumberUtils.LONG_ONE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(NumberUtils.FLOAT_ONE).coefficientTime(NumberUtils.FLOAT_ONE).build()),
+                Arguments.of(TicketTypeDto.builder().id(Long.MAX_VALUE).name(Common.TICKET_TYPE_TEST_NAME).abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION).isDisable(true).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
         );
     }
 }
