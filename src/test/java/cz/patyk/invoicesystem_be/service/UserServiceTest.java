@@ -5,6 +5,7 @@ import cz.patyk.invoicesystem_be.constant.TestDtos;
 import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.in.UserPasswordChangeIn;
 import cz.patyk.invoicesystem_be.dto.out.UserDtoOut;
+import cz.patyk.invoicesystem_be.entities.User;
 import cz.patyk.invoicesystem_be.exceptions.ApplicationException;
 import cz.patyk.invoicesystem_be.mapper.UserMapper;
 import cz.patyk.invoicesystem_be.repositories.UserRepository;
@@ -53,6 +54,9 @@ class UserServiceTest {
         Mockito
                 .when(userRepository.findById(NumberUtils.LONG_ONE))
                 .thenReturn(Optional.ofNullable(TestEntities.USER_ENTITY));
+        Mockito
+                .when(userRepository.save(Mockito.any(User.class)))
+                .thenAnswer(response -> response.getArguments()[0]);
 
         Assertions.assertThat(userService.passwordChange(TestDtos.USER_PASSWORD_CHANGE_CORRECT, NumberUtils.LONG_ONE))
                 .returns(TestEntities.USER_ENTITY.getId(), UserDtoOut::getId);
