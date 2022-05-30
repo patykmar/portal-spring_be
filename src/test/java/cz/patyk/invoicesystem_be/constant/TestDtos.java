@@ -3,6 +3,7 @@ package cz.patyk.invoicesystem_be.constant;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoInTwoPassword;
+import cz.patyk.invoicesystem_be.dto.in.UserPasswordChangeIn;
 import cz.patyk.invoicesystem_be.entities.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -25,13 +26,25 @@ public class TestDtos {
     public static final UserDtoInTwoPassword USER_DTO_IN_ROLE_USER_WITH_PASSWORD = UserDtoInTwoPassword.builder()
             .email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME)
             .employeeOfCompanyId(NumberUtils.LONG_ONE).lastName(Common.USER_TEST_LAST_NAME)
-            .roles(User.Role.USER.toString()).password(Common.USER_TEST_PASSWORD)
-            .retypePassword(Common.USER_TEST_PASSWORD).employeeOfCompanyId(NumberUtils.LONG_ONE)
+            .roles(User.Role.USER.toString()).password(Common.USER_TEST_PASSWORD_1)
+            .retypePassword(Common.USER_TEST_PASSWORD_1).employeeOfCompanyId(NumberUtils.LONG_ONE)
             .build();
 
     public static final UserDtoInTwoPassword USER_DTO_IN_ROLE_USER_WITH_WRONG_PASSWORD = UserDtoInTwoPassword.builder()
             .email(Common.USER_TEST_EMAIL).firstName(Common.USER_TEST_FIRST_NAME)
             .lastName(Common.USER_TEST_LAST_NAME).roles(User.Role.USER.toString())
-            .password(Common.USER_TEST_PASSWORD).retypePassword(Common.USER_TEST_PASSWORD_RETYPED_WRONG)
+            .password(Common.USER_TEST_PASSWORD_1).retypePassword(Common.USER_TEST_PASSWORD_RETYPED_WRONG)
             .employeeOfCompanyId(NumberUtils.LONG_ONE).build();
+
+    public static final UserPasswordChangeIn USER_PASSWORD_CHANGE_IN_WRONG_OLD_PASSWORD =  UserPasswordChangeIn.builder()
+            .oldPassword(Common.USER_TEST_PASSWORD_1 + "WRONG").newPassword(Common.USER_TEST_PASSWORD_1)
+            .reTypedPassword(Common.USER_TEST_PASSWORD_1).build();
+
+    public static final UserPasswordChangeIn USER_PASSWORD_CHANGE_IN_WRONG_RETYPED_PASSWORD =  UserPasswordChangeIn.builder()
+            .oldPassword(Common.USER_TEST_PASSWORD_1).newPassword(Common.USER_TEST_PASSWORD_2)
+            .reTypedPassword(Common.USER_TEST_PASSWORD_2+ "WRONG").build();
+
+    public static final UserPasswordChangeIn USER_PASSWORD_CHANGE_CORRECT =  UserPasswordChangeIn.builder()
+            .oldPassword(Common.USER_TEST_PASSWORD_1).newPassword(Common.USER_TEST_PASSWORD_2)
+            .reTypedPassword(Common.USER_TEST_PASSWORD_2).build();
 }

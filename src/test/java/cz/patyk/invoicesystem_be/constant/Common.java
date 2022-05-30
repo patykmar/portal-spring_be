@@ -50,7 +50,8 @@ public class Common {
     public static final String USER_TEST_FIRST_NAME_EDIT = "Homer J.";
     public static final String USER_TEST_LAST_NAME = "Simpson";
     public static final String USER_TEST_LAST_NAME_EDIT = "Simpson edited";
-    public static final String USER_TEST_PASSWORD = "password1";
+    public static final String USER_TEST_PASSWORD_1 = "password1";
+    public static final String USER_TEST_PASSWORD_2 = "password2";
     public static final String USER_TEST_PASSWORD_ENCODE = "$2a$10$ysCS4ksIsTqUJPsEaND6s.NoELDCtv9fp/P2pVGF21h03wa7JnPKi";
     public static final String USER_TEST_PASSWORD_RETYPED_WRONG = "wrong password";
     public static final Long USER_TEST_LAST_LOGIN = Instant.now().getEpochSecond();
