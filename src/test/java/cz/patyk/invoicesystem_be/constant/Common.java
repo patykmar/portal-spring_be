@@ -26,17 +26,10 @@ public class Common {
 
     public static final String COUNTRY_TEST_NAME = "Val Verde";
     public static final String COUNTRY_TEST_ISO_3166_ALPHA_3 = "VV";
-    public static final Country COUNTRY_TEST_ENTITY = new Country(Long.MAX_VALUE, COUNTRY_TEST_NAME, COUNTRY_TEST_ISO_3166_ALPHA_3, List.of());
-    public static final CountryDto COUNTRY_TEST_DTO = CountryDto.builder()
-            .id(Long.MAX_VALUE).name(COUNTRY_TEST_NAME).iso3166alpha3(COUNTRY_TEST_ISO_3166_ALPHA_3).build();
 
     public static final String ADDRESS_TEST_STREET = "Fake street 123";
     public static final String ADDRESS_TEST_CITY = "Springfield";
     public static final String ADDRESS_TEST_ZIP_CODE = "12345";
-    public static final Address ADDRESS_TEST_ENTITY = new Address(Long.MAX_VALUE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE, COUNTRY_TEST_ENTITY);
-    public static final AddressDtoOut ADDRESS_TEST_DTO_OUT = AddressDtoOut.builder()
-            .id(Long.MAX_VALUE).street(ADDRESS_TEST_STREET).city(ADDRESS_TEST_CITY)
-            .zipCode(ADDRESS_TEST_ZIP_CODE).countryDto(COUNTRY_TEST_DTO).build();
 
     public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
 
