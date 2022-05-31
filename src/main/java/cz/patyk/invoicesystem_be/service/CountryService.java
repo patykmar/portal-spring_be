@@ -26,10 +26,8 @@ public class CountryService {
                 .toList();
     }
 
-    public CountryDto getCountry(Long id) {
-        return countryMapper.toDto(
-                countryRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, COUNTRY_NOT_FOUND_MESSAGE)));
+    public CountryDto getDtoById(Long id) {
+        return countryMapper.toDto(getEntityById(id));
     }
 
     public CountryDto newCountry(CountryDto countryDto) {
@@ -52,4 +50,10 @@ public class CountryService {
         }
         countryRepository.deleteById(id);
     }
+
+    public Country getEntityById(Long id) {
+        return countryRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, COUNTRY_NOT_FOUND_MESSAGE));
+    }
+
 }
