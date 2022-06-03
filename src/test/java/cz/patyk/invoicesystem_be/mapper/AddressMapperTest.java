@@ -1,12 +1,13 @@
 package cz.patyk.invoicesystem_be.mapper;
 
 import cz.patyk.invoicesystem_be.constant.Common;
+import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Country;
-import cz.patyk.invoicesystem_be.repositories.CountryRepository;
+import cz.patyk.invoicesystem_be.service.CountryService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,27 +23,27 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AddressMapperTest {
-    private static final AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
+    private static final AddressMapper ADDRESS_MAPPER = Mappers.getMapper(AddressMapper.class);
 
     @BeforeAll
     static void init() {
         CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
-        CountryRepository countryRepository = Mockito.mock(CountryRepository.class);
+        CountryService countryService = Mockito.mock(CountryService.class);
         // inject countryMapper for testing purpose, because autowire is not working
-        ReflectionTestUtils.setField(addressMapper, "countryMapper", countryMapper);
-        ReflectionTestUtils.setField(addressMapper, "countryRepository", countryRepository);
+        ReflectionTestUtils.setField(ADDRESS_MAPPER, "countryMapper", countryMapper);
+        ReflectionTestUtils.setField(ADDRESS_MAPPER, "countryService", countryService);
     }
 
     @ParameterizedTest
     @MethodSource("providerEntities")
     void toDto(Address address, Long id) {
-        assertThat(addressMapper.toDto(address))
+        assertThat(ADDRESS_MAPPER.toDto(address))
                 .returns(id, AddressDtoOut::getId)
                 .returns(Common.ADDRESS_TEST_STREET, AddressDtoOut::getStreet)
                 .returns(Common.ADDRESS_TEST_CITY, AddressDtoOut::getCity)
                 .returns(Common.ADDRESS_TEST_ZIP_CODE, AddressDtoOut::getZipCode);
 
-        assertThat(addressMapper.toDto(address).getCountryDto())
+        assertThat(ADDRESS_MAPPER.toDto(address).getCountryDto())
                 .returns(id, CountryDto::getId)
                 .returns(Common.COUNTRY_TEST_NAME, CountryDto::getName)
                 .returns(Common.COUNTRY_TEST_ISO_3166_ALPHA_3, CountryDto::getIso3166alpha3);
@@ -52,17 +53,17 @@ class AddressMapperTest {
     @MethodSource("providerDtos")
     void toEntity(AddressDtoIn addressDto, Long id) {
         Mockito
-                .when(addressMapper.countryRepository.getById(addressDto.getCountry()))
-                .thenReturn(Common.COUNTRY_TEST_ENTITY);
+                .when(ADDRESS_MAPPER.countryService.getEntityById(addressDto.getCountry()))
+                .thenReturn(TestEntities.COUNTRY_TEST);
 
-        assertThat(addressMapper.toEntity(addressDto))
+        assertThat(ADDRESS_MAPPER.toEntity(addressDto))
                 .returns(id, Address::getId)
                 .returns(Common.ADDRESS_TEST_STREET, Address::getStreet)
                 .returns(Common.ADDRESS_TEST_CITY, Address::getCity)
                 .returns(Common.ADDRESS_TEST_ZIP_CODE, Address::getZipCode);
 
-        assertThat(addressMapper.toEntity(addressDto).getCountry())
-                .returns(Common.COUNTRY_TEST_ENTITY.getId(), Country::getId)
+        assertThat(ADDRESS_MAPPER.toEntity(addressDto).getCountry())
+                .returns(TestEntities.COUNTRY_TEST.getId(), Country::getId)
                 .returns(Common.COUNTRY_TEST_NAME, Country::getName)
                 .returns(Common.COUNTRY_TEST_ISO_3166_ALPHA_3, Country::getIso3166alpha3);
     }
