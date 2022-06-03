@@ -7,7 +7,7 @@ import cz.patyk.invoicesystem_be.dto.out.TariffDtoOut;
 import cz.patyk.invoicesystem_be.dto.out.VatDtoOut;
 import cz.patyk.invoicesystem_be.entities.Tariff;
 import cz.patyk.invoicesystem_be.entities.Vat;
-import cz.patyk.invoicesystem_be.repositories.VatRepository;
+import cz.patyk.invoicesystem_be.service.VatService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,16 +28,16 @@ class TariffMapperTest {
     @BeforeAll
     static void init() {
         VatMapper vatMapper = Mappers.getMapper(VatMapper.class);
-        VatRepository vatRepository = Mockito.mock(VatRepository.class);
+        VatService vatService = Mockito.mock(VatService.class);
         ReflectionTestUtils.setField(TARIFF_MAPPER, "vatMapper", vatMapper);
-        ReflectionTestUtils.setField(TARIFF_MAPPER, "vatRepository", vatRepository);
+        ReflectionTestUtils.setField(TARIFF_MAPPER, "vatService", vatService);
     }
 
     @ParameterizedTest
     @MethodSource("providerDtos")
     void toEntity(TariffDtoIn tariffDtoIn, Long expectedLong) {
         Mockito
-                .when(TARIFF_MAPPER.vatRepository.getById(tariffDtoIn.getVat()))
+                .when(TARIFF_MAPPER.vatService.getEntityById(tariffDtoIn.getVat()))
                 .thenReturn(TestEntities.VAT_TEST_ENTITY);
 
         assertThat(TARIFF_MAPPER.toEntity(tariffDtoIn))
