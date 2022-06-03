@@ -53,13 +53,13 @@ class UserServiceTest {
     void passwordChangeCorrect() {
         Mockito
                 .when(userRepository.findById(NumberUtils.LONG_ONE))
-                .thenReturn(Optional.ofNullable(TestEntities.USER_ENTITY));
+                .thenReturn(Optional.ofNullable(TestEntities.USER));
         Mockito
                 .when(userRepository.save(Mockito.any(User.class)))
                 .thenAnswer(response -> response.getArguments()[0]);
 
         Assertions.assertThat(userService.passwordChange(TestDtos.USER_PASSWORD_CHANGE_CORRECT, NumberUtils.LONG_ONE))
-                .returns(TestEntities.USER_ENTITY.getId(), UserDtoOut::getId);
+                .returns(TestEntities.USER.getId(), UserDtoOut::getId);
     }
 
     @ParameterizedTest
@@ -67,7 +67,7 @@ class UserServiceTest {
     void passwordChangeWithWrongPassword(UserPasswordChangeIn userPasswordChangeIn, String errorMessage) {
         Mockito
                 .when(userRepository.findById(NumberUtils.LONG_ONE))
-                .thenReturn(Optional.ofNullable(TestEntities.USER_ENTITY));
+                .thenReturn(Optional.ofNullable(TestEntities.USER));
 
         Assertions.assertThatThrownBy(() -> userService.passwordChange(userPasswordChangeIn, NumberUtils.LONG_ONE))
                 .isInstanceOf(ApplicationException.class)

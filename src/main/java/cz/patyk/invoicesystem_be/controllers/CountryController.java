@@ -50,7 +50,7 @@ public class CountryController {
     public ResponseEntity<CountryDto> getOne(
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(countryService.getCountry(id));
+        return ResponseEntity.ok(countryService.getDtoById(id));
     }
 
     @PostMapping("")

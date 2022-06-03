@@ -1,9 +1,11 @@
 package cz.patyk.invoicesystem_be.constant;
 
+import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoInTwoPassword;
 import cz.patyk.invoicesystem_be.dto.in.UserPasswordChangeIn;
+import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.entities.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,20 @@ import org.apache.commons.lang3.math.NumberUtils;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestDtos {
 
-    public static final CompanyDtoIn COMPANY_TEST_DTO_IN = CompanyDtoIn.builder().id(NumberUtils.LONG_ONE)
+    public static final CompanyDtoIn COMPANY_DTO_IN = CompanyDtoIn.builder().id(NumberUtils.LONG_ONE)
             .name(Common.COMPANY_TEST_NAME).description(Common.COMPANY_TEST_DESCRIPTION)
             .companyId(Common.COMPANY_TEST_COMPANY_ID).vatNumber(Common.COMPANY_TEST_VAT_NUMBER)
             .accountNumber(Common.COMPANY_TEST_ACCOUNT_NUMBER).iban(Common.COMPANY_TEST_IBAN).build();
+
+    public static final CountryDto COUNTRY_DTO = CountryDto.builder()
+            .id(Long.MAX_VALUE).name(Common.COUNTRY_TEST_NAME)
+            .iso3166alpha3(Common.COUNTRY_TEST_ISO_3166_ALPHA_3)
+            .build();
+
+    public static final AddressDtoOut ADDRESS_TEST_DTO_OUT = AddressDtoOut.builder()
+            .id(Long.MAX_VALUE).street(Common.ADDRESS_TEST_STREET)
+            .city(Common.ADDRESS_TEST_CITY).zipCode(Common.ADDRESS_TEST_ZIP_CODE)
+            .countryDto(COUNTRY_DTO).build();
 
     public static final UserDtoIn USER_DTO_IN_ROLE_ADMIN = UserDtoIn.builder()
             .email(Common.USER_TEST_EMAIL_EDIT).firstName(Common.USER_TEST_FIRST_NAME_EDIT)

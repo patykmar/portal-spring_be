@@ -28,10 +28,12 @@ public class AddressServices {
     }
 
     public AddressDtoOut getAddress(Long id) {
-        return addressMapper.toDto(
-                addressRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ADDRESS_NOT_FOUND_MESSAGE))
-        );
+        return addressMapper.toDto(getEntityById(id));
+    }
+
+    public Address getEntityById(Long id) {
+        return addressRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ADDRESS_NOT_FOUND_MESSAGE));
     }
 
     public AddressDtoOut newAddress(AddressDtoIn addressDtoIn) {

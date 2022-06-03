@@ -1,10 +1,12 @@
 package cz.patyk.invoicesystem_be.mapper;
 
 import cz.patyk.invoicesystem_be.constant.Common;
+import cz.patyk.invoicesystem_be.constant.TestDtos;
+import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.CompanyDtoOut;
 import cz.patyk.invoicesystem_be.entities.Company;
-import cz.patyk.invoicesystem_be.repositories.AddressRepository;
+import cz.patyk.invoicesystem_be.service.AddressServices;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,24 +22,24 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CompanyMapperTest {
-    private static final CompanyMapper companyMapper = Mappers.getMapper(CompanyMapper.class);
+    private static final CompanyMapper COMPANY_MAPPER = Mappers.getMapper(CompanyMapper.class);
 
     @BeforeAll
     static void init() {
-        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
+        AddressServices addressServices = Mockito.mock(AddressServices.class);
         AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
-        ReflectionTestUtils.setField(companyMapper, "addressRepository", addressRepository);
-        ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
+        ReflectionTestUtils.setField(COMPANY_MAPPER, "addressServices", addressServices);
+        ReflectionTestUtils.setField(COMPANY_MAPPER, "addressMapper", addressMapper);
     }
 
     @ParameterizedTest
     @MethodSource("provideDto")
     void toEntity(CompanyDtoIn companyDtoIn) {
         Mockito
-                .when(companyMapper.addressRepository.getById(companyDtoIn.getAddress()))
-                .thenReturn(Common.ADDRESS_TEST_ENTITY);
+                .when(COMPANY_MAPPER.addressServices.getEntityById(companyDtoIn.getAddress()))
+                .thenReturn(TestEntities.ADDRESS_TEST);
 
-        assertThat(companyMapper.toEntity(companyDtoIn))
+        assertThat(COMPANY_MAPPER.toEntity(companyDtoIn))
                 .returns(companyDtoIn.getId(), Company::getId)
                 .returns(companyDtoIn.getName(), Company::getName)
                 .returns(companyDtoIn.getDescription(), Company::getDescription)
@@ -55,14 +57,14 @@ class CompanyMapperTest {
 
         Mockito
                 .when(addressMapper.toDto(company.getAddress()))
-                .thenReturn(Common.ADDRESS_TEST_DTO_OUT);
+                .thenReturn(TestDtos.ADDRESS_TEST_DTO_OUT);
 
         Mockito
                 .when(countryMapper.toDto(company.getAddress().getCountry()))
-                .thenReturn(Common.COUNTRY_TEST_DTO);
-        ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
+                .thenReturn(TestDtos.COUNTRY_DTO);
+        ReflectionTestUtils.setField(COMPANY_MAPPER, "addressMapper", addressMapper);
 
-        assertThat(companyMapper.toDto(company))
+        assertThat(COMPANY_MAPPER.toDto(company))
                 .returns(company.getId(), CompanyDtoOut::getId)
                 .returns(company.getName(), CompanyDtoOut::getName)
                 .returns(company.getDescription(), CompanyDtoOut::getDescription)
@@ -74,11 +76,11 @@ class CompanyMapperTest {
 
     private static Stream<Arguments> provideEntity() {
         return Stream.of(
-                Arguments.of(new Company(Long.MIN_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(NumberUtils.LONG_MINUS_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(NumberUtils.LONG_ZERO, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(NumberUtils.LONG_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(Long.MAX_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY))
+                Arguments.of(new Company(Long.MIN_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(NumberUtils.LONG_MINUS_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(NumberUtils.LONG_ZERO, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(NumberUtils.LONG_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(Long.MAX_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST))
         );
     }
 
