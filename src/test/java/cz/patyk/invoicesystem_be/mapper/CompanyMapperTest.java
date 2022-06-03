@@ -6,7 +6,7 @@ import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.CompanyDtoOut;
 import cz.patyk.invoicesystem_be.entities.Company;
-import cz.patyk.invoicesystem_be.repositories.AddressRepository;
+import cz.patyk.invoicesystem_be.service.AddressServices;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,24 +22,24 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CompanyMapperTest {
-    private static final CompanyMapper companyMapper = Mappers.getMapper(CompanyMapper.class);
+    private static final CompanyMapper COMPANY_MAPPER = Mappers.getMapper(CompanyMapper.class);
 
     @BeforeAll
     static void init() {
-        AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
+        AddressServices addressServices = Mockito.mock(AddressServices.class);
         AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
-        ReflectionTestUtils.setField(companyMapper, "addressRepository", addressRepository);
-        ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
+        ReflectionTestUtils.setField(COMPANY_MAPPER, "addressServices", addressServices);
+        ReflectionTestUtils.setField(COMPANY_MAPPER, "addressMapper", addressMapper);
     }
 
     @ParameterizedTest
     @MethodSource("provideDto")
     void toEntity(CompanyDtoIn companyDtoIn) {
         Mockito
-                .when(companyMapper.addressRepository.getById(companyDtoIn.getAddress()))
+                .when(COMPANY_MAPPER.addressServices.getEntityById(companyDtoIn.getAddress()))
                 .thenReturn(TestEntities.ADDRESS_TEST);
 
-        assertThat(companyMapper.toEntity(companyDtoIn))
+        assertThat(COMPANY_MAPPER.toEntity(companyDtoIn))
                 .returns(companyDtoIn.getId(), Company::getId)
                 .returns(companyDtoIn.getName(), Company::getName)
                 .returns(companyDtoIn.getDescription(), Company::getDescription)
@@ -62,9 +62,9 @@ class CompanyMapperTest {
         Mockito
                 .when(countryMapper.toDto(company.getAddress().getCountry()))
                 .thenReturn(TestDtos.COUNTRY_DTO);
-        ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
+        ReflectionTestUtils.setField(COMPANY_MAPPER, "addressMapper", addressMapper);
 
-        assertThat(companyMapper.toDto(company))
+        assertThat(COMPANY_MAPPER.toDto(company))
                 .returns(company.getId(), CompanyDtoOut::getId)
                 .returns(company.getName(), CompanyDtoOut::getName)
                 .returns(company.getDescription(), CompanyDtoOut::getDescription)

@@ -1,7 +1,7 @@
 package cz.patyk.invoicesystem_be.mapper;
 
 import cz.patyk.invoicesystem_be.entities.Address;
-import cz.patyk.invoicesystem_be.repositories.AddressRepository;
+import cz.patyk.invoicesystem_be.service.AddressServices;
 import org.mapstruct.Mapper;
 
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
@@ -12,9 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring", uses = {AddressMapper.class, CountryMapper.class})
 public abstract class CompanyMapper {
-
 	@Autowired
-	protected AddressRepository addressRepository;
+	protected AddressServices addressServices;
 
 	@Mapping(target = "address", source = "address.id")
 	@Mapping(target = "addressDtoOut", source = "company.address")
@@ -24,6 +23,6 @@ public abstract class CompanyMapper {
 	public abstract Company toEntity(CompanyDtoIn companyDtoIn);
 
 	public Address getAddress(Long address){
-		return addressRepository.getById(address);
+		return addressServices.getEntityById(address);
 	}
 }
