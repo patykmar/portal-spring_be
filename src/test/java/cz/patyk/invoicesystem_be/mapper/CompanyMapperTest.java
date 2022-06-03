@@ -1,6 +1,8 @@
 package cz.patyk.invoicesystem_be.mapper;
 
 import cz.patyk.invoicesystem_be.constant.Common;
+import cz.patyk.invoicesystem_be.constant.TestDtos;
+import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.CompanyDtoOut;
 import cz.patyk.invoicesystem_be.entities.Company;
@@ -35,7 +37,7 @@ class CompanyMapperTest {
     void toEntity(CompanyDtoIn companyDtoIn) {
         Mockito
                 .when(companyMapper.addressRepository.getById(companyDtoIn.getAddress()))
-                .thenReturn(Common.ADDRESS_TEST_ENTITY);
+                .thenReturn(TestEntities.ADDRESS_TEST);
 
         assertThat(companyMapper.toEntity(companyDtoIn))
                 .returns(companyDtoIn.getId(), Company::getId)
@@ -55,11 +57,11 @@ class CompanyMapperTest {
 
         Mockito
                 .when(addressMapper.toDto(company.getAddress()))
-                .thenReturn(Common.ADDRESS_TEST_DTO_OUT);
+                .thenReturn(TestDtos.ADDRESS_TEST_DTO_OUT);
 
         Mockito
                 .when(countryMapper.toDto(company.getAddress().getCountry()))
-                .thenReturn(Common.COUNTRY_TEST_DTO);
+                .thenReturn(TestDtos.COUNTRY_DTO);
         ReflectionTestUtils.setField(companyMapper, "addressMapper", addressMapper);
 
         assertThat(companyMapper.toDto(company))
@@ -74,11 +76,11 @@ class CompanyMapperTest {
 
     private static Stream<Arguments> provideEntity() {
         return Stream.of(
-                Arguments.of(new Company(Long.MIN_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(NumberUtils.LONG_MINUS_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(NumberUtils.LONG_ZERO, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(NumberUtils.LONG_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY)),
-                Arguments.of(new Company(Long.MAX_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), Common.ADDRESS_TEST_ENTITY))
+                Arguments.of(new Company(Long.MIN_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(NumberUtils.LONG_MINUS_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(NumberUtils.LONG_ZERO, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(NumberUtils.LONG_ONE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST)),
+                Arguments.of(new Company(Long.MAX_VALUE, Common.COMPANY_TEST_NAME, Common.COMPANY_TEST_DESCRIPTION, Common.COMPANY_TEST_COMPANY_ID, Common.COMPANY_TEST_VAT_NUMBER, Common.COMPANY_TEST_CREATED, Common.COMPANY_TEST_MODIFY, Common.COMPANY_TEST_ACCOUNT_NUMBER, Common.COMPANY_TEST_IBAN, List.of(), TestEntities.ADDRESS_TEST))
         );
     }
 
