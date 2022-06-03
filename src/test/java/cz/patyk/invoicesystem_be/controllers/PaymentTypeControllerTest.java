@@ -41,7 +41,7 @@ class PaymentTypeControllerTest {
     @Test
     @DisplayName("Testing API HTTP methods POST, PUT and DELETE")
     void apiTest() throws Exception {
-        String paymentTypeEntityString = objectMapper.writeValueAsString(TestEntities.PAYMENT_TYPE_ENTITY);
+        String paymentTypeEntityString = objectMapper.writeValueAsString(TestEntities.PAYMENT_TYPE);
 
         log.info("==== Testing post method: creating new PaymentType ====");
 
@@ -55,7 +55,7 @@ class PaymentTypeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").isString())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(Common.PAYMENT_TYPE_TEST_NAME))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.default").isBoolean())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.default").value(TestEntities.PAYMENT_TYPE_ENTITY.isDefault()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.default").value(TestEntities.PAYMENT_TYPE.isDefault()))
                 .andReturn();
 
         PaymentType paymentType = objectMapper.readValue(
@@ -65,7 +65,7 @@ class PaymentTypeControllerTest {
 
         log.info("==== Testing put method: editing PaymentType with id: {} ====", paymentType.getId());
 
-        String paymentTypeEntityEditString = objectMapper.writeValueAsString(TestEntities.PAYMENT_TYPE_ENTITY_EDIT);
+        String paymentTypeEntityEditString = objectMapper.writeValueAsString(TestEntities.PAYMENT_TYPE_EDIT);
 
         mockMvc.perform(
                         MockMvcRequestBuilders.put(URL + "/" + paymentType.getId())
@@ -77,9 +77,9 @@ class PaymentTypeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(paymentType.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").isString())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(TestEntities.PAYMENT_TYPE_ENTITY_EDIT.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(TestEntities.PAYMENT_TYPE_EDIT.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.default").isBoolean())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.default").value(TestEntities.PAYMENT_TYPE_ENTITY_EDIT.isDefault()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.default").value(TestEntities.PAYMENT_TYPE_EDIT.isDefault()))
         ;
 
         log.info("==== Testing delete method: Delete PaymentType with id: {} ====", paymentType.getId());
@@ -131,7 +131,7 @@ class PaymentTypeControllerTest {
     @ParameterizedTest
     @MethodSource("provideInvalidIds")
     void editInvalidId(Long id) throws Exception {
-        String paymentTypeEntityEditString = objectMapper.writeValueAsString(TestEntities.PAYMENT_TYPE_ENTITY_EDIT);
+        String paymentTypeEntityEditString = objectMapper.writeValueAsString(TestEntities.PAYMENT_TYPE_EDIT);
 
         mockMvc.perform(
                         MockMvcRequestBuilders.put(URL + "/" + id)
