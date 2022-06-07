@@ -41,9 +41,8 @@ public class TestEntities {
             .lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED)
             .passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).build();
 
-    public static final Vat VAT_TEST_ENTITY = Vat.builder().id(NumberUtils.LONG_ONE)
+    public static final Vat VAT_ENTITY = Vat.builder().id(NumberUtils.LONG_ONE)
             .name(Common.VAT_TEST_NAME).isDefault(true).percent(Common.VAT_TEST_PERCENT)
             .multiplier(Common.VAT_TEST_MULTIPLIER).build();
-
 
 }
