@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/service-controller")
+@RequestMapping("/service-catalog")
 public class ServiceCatalogController {
     private final ServiceCatalogService serviceCatalogService;
 
