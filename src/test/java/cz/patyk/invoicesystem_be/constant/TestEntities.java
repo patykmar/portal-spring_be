@@ -4,6 +4,7 @@ import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.Country;
 import cz.patyk.invoicesystem_be.entities.PaymentType;
+import cz.patyk.invoicesystem_be.entities.ServiceCatalog;
 import cz.patyk.invoicesystem_be.entities.User;
 import cz.patyk.invoicesystem_be.entities.Vat;
 import lombok.AccessLevel;
@@ -45,4 +46,20 @@ public class TestEntities {
             .name(Common.VAT_TEST_NAME).isDefault(true).percent(Common.VAT_TEST_PERCENT)
             .multiplier(Common.VAT_TEST_MULTIPLIER).build();
 
+    public static final ServiceCatalog SERVICE_CATALOG_1 = ServiceCatalog.builder().id(NumberUtils.LONG_ONE)
+            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
+            .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
+            .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY).build();
+
+    public static final ServiceCatalog SERVICE_CATALOG_2 = ServiceCatalog.builder().id(2L)
+            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
+            .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
+            .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY).build();
+
+    public static final ServiceCatalog SERVICE_CATALOG_3 = ServiceCatalog.builder().id(3L)
+            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
+            .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
+            .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY).build();
+
+    public static final List<ServiceCatalog> SERVICE_CATALOG_LIST = List.of(SERVICE_CATALOG_1, SERVICE_CATALOG_2, SERVICE_CATALOG_3);
 }
