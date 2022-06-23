@@ -91,7 +91,7 @@ class ServiceCatalogControllerTest {
                 .returns(TestEntities.SERVICE_CATALOG_1.getName(), ServiceCatalogDtoOut::getName)
                 .returns(TestEntities.SERVICE_CATALOG_1.getDescription(), ServiceCatalogDtoOut::getDescription)
                 .returns(TestEntities.SERVICE_CATALOG_1.getPrice(), ServiceCatalogDtoOut::getPrice)
-                .returns(TestEntities.SERVICE_CATALOG_1.getVat(), ServiceCatalogDtoOut::getVat)
+                .returns(TestEntities.SERVICE_CATALOG_1.getVat().getId(), ServiceCatalogDtoOut::getVat)
                 .returns(TestEntities.SERVICE_CATALOG_1.getEstimateTimeDelivery(), ServiceCatalogDtoOut::getEstimateTimeDelivery)
                 .returns(TestEntities.SERVICE_CATALOG_1.getEstimateTimeReaction(), ServiceCatalogDtoOut::getEstimateTimeReaction)
                 .returns(TestEntities.SERVICE_CATALOG_1.isDisable(), ServiceCatalogDtoOut::isDisable)
