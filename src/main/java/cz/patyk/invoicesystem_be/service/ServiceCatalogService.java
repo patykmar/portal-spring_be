@@ -36,7 +36,7 @@ public class ServiceCatalogService {
     }
 
     public ServiceCatalogDtoOut editItem(ServiceCatalogDtoIn serviceCatalogDtoIn, Long id) {
-        if (serviceCatalogRepository.existsById(id)) {
+        if (!serviceCatalogRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, ServiceConstants.SERVICE_CATALOG_NOT_FOUND_MESSAGE);
         }
         ServiceCatalog serviceCatalog = serviceCatalogMapper.toEntity(serviceCatalogDtoIn);
@@ -45,7 +45,7 @@ public class ServiceCatalogService {
     }
 
     public void deleteItem(Long id) {
-        if (serviceCatalogRepository.existsById(id)) {
+        if (!serviceCatalogRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, ServiceConstants.SERVICE_CATALOG_NOT_FOUND_MESSAGE);
         }
         serviceCatalogRepository.deleteById(id);
