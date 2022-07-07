@@ -160,7 +160,7 @@ class ServiceCatalogControllerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideWrongEditParameters")
+    @MethodSource("provideWrongParameters")
     void editItemValidDto(ServiceCatalogDtoIn serviceCatalogDtoIn) throws Exception {
         String serviceCatalogDtoInAsJson = objectMapper.writeValueAsString(serviceCatalogDtoIn);
 
@@ -168,11 +168,22 @@ class ServiceCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(serviceCatalogDtoInAsJson))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-        ;
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
-    private static Stream<Arguments> provideWrongEditParameters() {
+    @ParameterizedTest
+    @MethodSource("provideWrongParameters")
+    void addItemValidDto(ServiceCatalogDtoIn serviceCatalogDtoIn) throws Exception {
+        String serviceCatalogDtoInAsJson = objectMapper.writeValueAsString(serviceCatalogDtoIn);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(serviceCatalogDtoInAsJson))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    private static Stream<Arguments> provideWrongParameters() {
         return Stream.of(
                 Arguments.of(ServiceCatalogDtoIn.builder().name(null).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).vat(NumberUtils.LONG_ONE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(true).build()),
                 Arguments.of(ServiceCatalogDtoIn.builder().name("").description(null).price(Common.SERVICE_CATALOG_PRICE).vat(NumberUtils.LONG_ONE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(true).build()),
