@@ -120,8 +120,40 @@ class ServiceCatalogControllerTest {
                 .returns(TestEntities.SERVICE_CATALOG_1.getVat().getId(), ServiceCatalogDtoOut::getVat)
                 .returns(TestEntities.SERVICE_CATALOG_1.getEstimateTimeDelivery(), ServiceCatalogDtoOut::getEstimateTimeDelivery)
                 .returns(TestEntities.SERVICE_CATALOG_1.getEstimateTimeReaction(), ServiceCatalogDtoOut::getEstimateTimeReaction)
-                .returns(TestEntities.SERVICE_CATALOG_1.isDisable(), ServiceCatalogDtoOut::isDisable)
-        ;
+                .returns(TestEntities.SERVICE_CATALOG_1.isDisable(), ServiceCatalogDtoOut::isDisable);
+    }
+
+    @Test
+    void newItem() {
+        ServiceCatalog serviceCatalog1Local = TestEntities.SERVICE_CATALOG_1;
+        serviceCatalog1Local.setId(null);
+
+
+        Mockito.when(vatService.getEntityById(NumberUtils.LONG_ONE))
+                .thenReturn(TestEntities.VAT_ENTITY);
+        Mockito.when(serviceCatalogRepository.save(serviceCatalog1Local))
+                .thenReturn(TestEntities.SERVICE_CATALOG_1);
+
+        ResponseEntity<ServiceCatalogDtoOut> serviceCatalogDtoOutResponseEntity = serviceCatalogController.newItem(
+                TestDtos.SERVICE_CATALOG_DTO_IN_1
+        );
+
+        assertThat(serviceCatalogDtoOutResponseEntity)
+                .returns(HttpStatus.OK, ResponseEntity::getStatusCode);
+
+        assertThat(serviceCatalogDtoOutResponseEntity.getHeaders())
+                .isEmpty();
+
+        assertThat(serviceCatalogDtoOutResponseEntity.getBody())
+                .isNotNull()
+                .returns(TestEntities.SERVICE_CATALOG_1.getId(), ServiceCatalogDtoOut::getId)
+                .returns(TestEntities.SERVICE_CATALOG_1.getName(), ServiceCatalogDtoOut::getName)
+                .returns(TestEntities.SERVICE_CATALOG_1.getDescription(), ServiceCatalogDtoOut::getDescription)
+                .returns(TestEntities.SERVICE_CATALOG_1.getPrice(), ServiceCatalogDtoOut::getPrice)
+                .returns(TestEntities.SERVICE_CATALOG_1.getVat().getId(), ServiceCatalogDtoOut::getVat)
+                .returns(TestEntities.SERVICE_CATALOG_1.getEstimateTimeDelivery(), ServiceCatalogDtoOut::getEstimateTimeDelivery)
+                .returns(TestEntities.SERVICE_CATALOG_1.getEstimateTimeReaction(), ServiceCatalogDtoOut::getEstimateTimeReaction)
+                .returns(TestEntities.SERVICE_CATALOG_1.isDisable(), ServiceCatalogDtoOut::isDisable);
     }
 
     @Test
@@ -139,7 +171,7 @@ class ServiceCatalogControllerTest {
                 .thenReturn(serviceCatalogEdited);
 
         ResponseEntity<ServiceCatalogDtoOut> serviceCatalogDtoOutResponse = serviceCatalogController.editItem(
-                TestDtos.SERVICE_CATALOG_DTO_IN, NumberUtils.LONG_ONE
+                TestDtos.SERVICE_CATALOG_DTO_IN_2, NumberUtils.LONG_ONE
         );
 
         assertThat(serviceCatalogDtoOutResponse)
