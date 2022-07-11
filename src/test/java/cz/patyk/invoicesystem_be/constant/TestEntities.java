@@ -53,12 +53,10 @@ public class TestEntities {
             .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
             .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
             .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY).build();
-
     public static final ServiceCatalog SERVICE_CATALOG_2 = ServiceCatalog.builder().id(2L)
             .name(Common.SERVICE_CATALOG_NAME + " 2").description(Common.SERVICE_CATALOG_DESCRIPTION + " 2")
             .price(Common.SERVICE_CATALOG_PRICE + 2L).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY +2)
             .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION + 2).vat(VAT_ENTITY_2).build();
-
     public static final ServiceCatalog SERVICE_CATALOG_3 = ServiceCatalog.builder().id(3L)
             .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
             .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
