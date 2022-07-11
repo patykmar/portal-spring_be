@@ -31,7 +31,14 @@ public class TestDtos {
             .city(Common.ADDRESS_TEST_CITY).zipCode(Common.ADDRESS_TEST_ZIP_CODE)
             .countryDto(COUNTRY_DTO).build();
 
-    public static final ServiceCatalogDtoIn SERVICE_CATALOG_DTO_IN = ServiceCatalogDtoIn.builder()
+    public static final ServiceCatalogDtoIn SERVICE_CATALOG_DTO_IN_1 = ServiceCatalogDtoIn.builder()
+            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
+            .price(Common.SERVICE_CATALOG_PRICE).vat(NumberUtils.LONG_ONE)
+            .estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
+            .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION)
+            .isDisable(true)
+            .build();
+    public static final ServiceCatalogDtoIn SERVICE_CATALOG_DTO_IN_2 = ServiceCatalogDtoIn.builder()
             .name(Common.SERVICE_CATALOG_NAME + " 2").description(Common.SERVICE_CATALOG_DESCRIPTION + " 2")
             .price(Common.SERVICE_CATALOG_PRICE + 2L).vat(2L)
             .estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY + 2)
