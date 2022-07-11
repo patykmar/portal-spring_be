@@ -32,7 +32,7 @@ public class ServiceCatalogService {
 
     public ServiceCatalogDtoOut newItem(ServiceCatalogDtoIn serviceCatalogDtoIn) {
         ServiceCatalog serviceCatalog = serviceCatalogMapper.toEntity(serviceCatalogDtoIn);
-        return serviceCatalogMapper.toDtoOut(serviceCatalog);
+        return serviceCatalogMapper.toDtoOut(serviceCatalogRepository.save(serviceCatalog));
     }
 
     public ServiceCatalogDtoOut editItem(ServiceCatalogDtoIn serviceCatalogDtoIn, Long id) {
