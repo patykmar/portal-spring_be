@@ -1,6 +1,5 @@
 package cz.patyk.invoicesystem_be.dto.out;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,12 +9,17 @@ import org.springframework.hateoas.RepresentationModel;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class VatDtoOut extends RepresentationModel<VatDtoOut> {
+public class ServiceCatalogDtoOut extends RepresentationModel<ServiceCatalogDtoOut> {
     private Long id;
-    private boolean isDefault;
     private String name;
-    private int percent;
-    private int multiplier;
+    private String description;
+    private Long price;
+    private Long vat;
+    private VatDtoOut vatDtoOut;
+    private int estimateTimeDelivery;
+    private int estimateTimeReaction;
+    private boolean isDisable;
 }
+
+

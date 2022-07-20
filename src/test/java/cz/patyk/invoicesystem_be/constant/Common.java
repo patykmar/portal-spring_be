@@ -1,14 +1,9 @@
 package cz.patyk.invoicesystem_be.constant;
 
-import cz.patyk.invoicesystem_be.dto.CountryDto;
-import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
-import cz.patyk.invoicesystem_be.entities.Address;
-import cz.patyk.invoicesystem_be.entities.Country;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.List;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -55,6 +50,11 @@ public class Common {
     public static final int VAT_TEST_PERCENT = 20;
     public static final int VAT_TEST_MULTIPLIER = 120;
 
+    public static final String SERVICE_CATALOG_NAME = "Service catalog test name";
+    public static final String SERVICE_CATALOG_DESCRIPTION = "Service catalog test description";
+    public static final Long SERVICE_CATALOG_PRICE = 100L;
+    public static final int SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY = 10000;
+    public static final int SERVICE_CATALOG_ESTIMATION_TIME_REACTION = 100000;
 
     public static final String TARIFF_TEST_NAME = "test tariff name";
 

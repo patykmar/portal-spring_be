@@ -1,7 +1,11 @@
 package cz.patyk.invoicesystem_be.entities;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +21,10 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class ServiceCatalog implements Serializable {
 
     @Id
@@ -49,13 +55,20 @@ public class ServiceCatalog implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         ServiceCatalog that = (ServiceCatalog) o;
-        return Objects.equals(id, that.id);
+        return estimateTimeDelivery == that.estimateTimeDelivery &&
+                estimateTimeReaction == that.estimateTimeReaction &&
+                isDisable == that.isDisable &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(vat, that.vat);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, name, description, price, vat, estimateTimeDelivery, estimateTimeReaction, isDisable);
     }
 }

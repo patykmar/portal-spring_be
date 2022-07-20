@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -35,13 +33,17 @@ public class UserController {
             @PageableDefault final Pageable pageable
     ) {
         List<UserDtoOut> userDtoOutList = userService.getAll(pageable);
-        userDtoOutList.forEach(paymentTypeDto -> paymentTypeDto.add(linkTo(UserController.class)
-                .slash(paymentTypeDto.getId())
-                .withSelfRel()
+        userDtoOutList.forEach(paymentTypeDto -> paymentTypeDto.add(
+                WebMvcLinkBuilder.linkTo(UserController.class)
+                        .slash(paymentTypeDto.getId())
+                        .withSelfRel()
         ));
 
         return ResponseEntity.ok(CollectionModel.of(userDtoOutList).add(
-                linkTo(methodOn(UserController.class).getAll(pageable))
+                WebMvcLinkBuilder.linkTo(
+                                WebMvcLinkBuilder.methodOn(UserController.class)
+                                        .getAll(pageable)
+                        )
                         .withSelfRel()
         ));
     }
