@@ -2,6 +2,7 @@ package cz.patyk.invoicesystem_be.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,13 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @Builder
 @ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceCatalog implements Serializable {
@@ -51,24 +52,4 @@ public class ServiceCatalog implements Serializable {
 
     @Column(columnDefinition = "boolean default false")
     private boolean isDisable;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ServiceCatalog that = (ServiceCatalog) o;
-        return estimateTimeDelivery == that.estimateTimeDelivery &&
-                estimateTimeReaction == that.estimateTimeReaction &&
-                isDisable == that.isDisable &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(price, that.price) &&
-                Objects.equals(vat, that.vat);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, price, vat, estimateTimeDelivery, estimateTimeReaction, isDisable);
-    }
 }
