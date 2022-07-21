@@ -1,16 +1,12 @@
 package cz.patyk.invoicesystem_be.dto.in;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
-@SuperBuilder
+@Data
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserDtoIn {
     private Long id;
     private Long employeeOfCompanyId;
