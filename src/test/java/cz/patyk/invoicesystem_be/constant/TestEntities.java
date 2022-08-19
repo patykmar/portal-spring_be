@@ -1,9 +1,14 @@
 package cz.patyk.invoicesystem_be.constant;
 
+import cz.patyk.invoicesystem_be.dto.TicketTypeDto;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.Country;
+import cz.patyk.invoicesystem_be.entities.InfluencingTicket;
 import cz.patyk.invoicesystem_be.entities.PaymentType;
+import cz.patyk.invoicesystem_be.entities.Sla;
+import cz.patyk.invoicesystem_be.entities.Tariff;
+import cz.patyk.invoicesystem_be.entities.TicketType;
 import cz.patyk.invoicesystem_be.entities.User;
 import cz.patyk.invoicesystem_be.entities.Vat;
 import lombok.AccessLevel;
@@ -33,6 +38,25 @@ public class TestEntities {
     public static final PaymentType PAYMENT_TYPE_EDIT = PaymentType.builder()
             .name(Common.PAYMENT_TYPE_TEST_NAME + " edited").isDefault(true).build();
 
+    public static final InfluencingTicket PRIORITY = InfluencingTicket.builder()
+            .id(Long.MIN_VALUE).name(Common.INFLUENCING_TICKET_TEST_NAME)
+            .isForPriority(true).isForImpact(false).coefficientPrice(Float.MIN_VALUE)
+            .coefficientTime(Float.MIN_VALUE).build();
+
+    public static final Sla SLA = Sla.builder().id(NumberUtils.LONG_ONE)
+            .tariff(TestEntities.TARIFF).ticketType(TestEntities.TICKET_TYPE)
+            .priority(TestEntities.PRIORITY).reactionTime(4321).resolvedTime(12345)
+            .priceMultiplier(150).build();
+
+    public static final Tariff TARIFF = Tariff.builder().id(NumberUtils.LONG_ONE)
+            .name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_TEST_ENTITY)
+            .price(Long.MAX_VALUE).build();
+
+    public static final TicketType TICKET_TYPE = TicketType.builder().id(Long.MIN_VALUE)
+            .name(Common.TICKET_TYPE_TEST_NAME)
+            .abbreviation(Common.TICKET_TYPE_TEST_ABBREVIATION)
+            .isDisable(true).coefficientPrice(Float.MIN_VALUE)
+            .coefficientTime(Float.MIN_VALUE).build();
     public static final User USER = User.builder()
             .id(NumberUtils.LONG_ONE).firstName(Common.USER_TEST_FIRST_NAME)
             .lastName(Common.USER_TEST_LAST_NAME).email(Common.USER_TEST_EMAIL)
