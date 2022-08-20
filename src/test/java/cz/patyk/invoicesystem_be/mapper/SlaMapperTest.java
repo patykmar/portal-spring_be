@@ -8,11 +8,11 @@ import cz.patyk.invoicesystem_be.entities.Sla;
 import cz.patyk.invoicesystem_be.entities.Tariff;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mapstruct.factory.Mappers;
+import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.stream.Stream;
@@ -36,6 +36,17 @@ class SlaMapperTest {
     @ParameterizedTest
     @MethodSource("dtoProviders")
     void toEntity(SlaDtoIn slaDtoIn) {
+        Mockito
+                .when(SLA_MAPPER.tariffService.getOneEntity(slaDtoIn.getTariffId()))
+                .thenReturn(TestEntities.TARIFF);
+        Mockito
+                .when(SLA_MAPPER.influencingTicketService.getOneEntity(slaDtoIn.getPriorityId()))
+                .thenReturn(TestEntities.PRIORITY);
+        Mockito
+                .when(SLA_MAPPER.ticketTypeService.getOneEntity(slaDtoIn.getTicketTypeId()))
+                .thenReturn(TestEntities.TICKET_TYPE);
+
+
         assertThat(SLA_MAPPER.toEntity(slaDtoIn))
                 .returns(slaDtoIn.getId(), Sla::getId)
                 .returns(slaDtoIn.getReactionTime(), Sla::getReactionTime)
