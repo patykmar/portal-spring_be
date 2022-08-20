@@ -15,11 +15,12 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.TARIFF_NOT_FOUN
 
 @Service
 @RequiredArgsConstructor
-public class TariffService {
+public class TariffService implements CommonDtoService<TariffDtoOut, TariffDtoIn>, CommonEntityService<Tariff> {
     private final TariffMapper tariffMapper;
     private final TariffRepository tariffRepository;
     private final ErrorHandleService errorHandleService;
 
+    @Override
     public List<TariffDtoOut> getAll(Pageable pageable) {
         return tariffRepository.findAll(pageable)
                 .stream()
@@ -27,31 +28,39 @@ public class TariffService {
                 .toList();
     }
 
+    @Override
     public TariffDtoOut getOne(Long id) {
-        return tariffMapper.toDtoOut(
-                tariffRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, TARIFF_NOT_FOUND_MESSAGE))
-        );
+        return tariffMapper.toDtoOut(getOneEntity(id));
     }
 
-    public TariffDtoOut newOne(TariffDtoIn tariffDtoIn) {
-        Tariff tariff = tariffMapper.toEntity(tariffDtoIn);
+    @Override
+    public TariffDtoOut newItem(TariffDtoIn dtoIn) {
+        Tariff tariff = tariffMapper.toEntity(dtoIn);
         return tariffMapper.toDtoOut(tariffRepository.save(tariff));
     }
 
-    public TariffDtoOut edit(TariffDtoIn tariffDtoIn, Long id) {
+    @Override
+    public TariffDtoOut editItem(TariffDtoIn dtoIn, Long id) {
         if (!tariffRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, TARIFF_NOT_FOUND_MESSAGE);
         }
-        Tariff tariff = tariffMapper.toEntity(tariffDtoIn);
+        Tariff tariff = tariffMapper.toEntity(dtoIn);
         tariff.setId(id);
         return tariffMapper.toDtoOut(tariffRepository.save(tariff));
     }
 
-    public void delete(Long id) {
+    @Override
+    public void deleteItem(Long id) {
         if (!tariffRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, TARIFF_NOT_FOUND_MESSAGE);
         }
         tariffRepository.deleteById(id);
     }
+
+    @Override
+    public Tariff getOneEntity(Long id) {
+        return tariffRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, TARIFF_NOT_FOUND_MESSAGE));
+    }
+
 }

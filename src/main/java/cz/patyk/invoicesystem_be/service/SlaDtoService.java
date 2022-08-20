@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SlaService implements CommonService<SlaDtoOut, SlaDtoIn> {
+public class SlaDtoService implements CommonDtoService<SlaDtoOut, SlaDtoIn>, CommonEntityService<Sla> {
     private final SlaMapper slaMapper;
     private final SlaRepository slaRepository;
     private final ErrorHandleService errorHandleService;
@@ -30,18 +30,11 @@ public class SlaService implements CommonService<SlaDtoOut, SlaDtoIn> {
 
     @Override
     public SlaDtoOut getOne(Long id) {
-        return slaMapper.toDtoOut(slaRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.SLA_NOT_FOUND))
-        );
-    }
-
-    public Sla getEntityById(Long id) {
-        return slaRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.SLA_NOT_FOUND));
+        return slaMapper.toDtoOut(getOneEntity(id));
     }
 
     @Override
-    public SlaDtoOut newOne(SlaDtoIn dtoIn) {
+    public SlaDtoOut newItem(SlaDtoIn dtoIn) {
         Sla sla = slaMapper.toEntity(dtoIn);
         return slaMapper.toDtoOut(slaRepository.save(sla));
     }
@@ -64,5 +57,11 @@ public class SlaService implements CommonService<SlaDtoOut, SlaDtoIn> {
         if (!slaRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, ServiceConstants.SLA_NOT_FOUND);
         }
+    }
+
+    @Override
+    public Sla getOneEntity(Long id) {
+        return slaRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.SLA_NOT_FOUND));
     }
 }

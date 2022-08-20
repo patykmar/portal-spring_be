@@ -14,11 +14,12 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.INFLUENCING_TIC
 
 @Service
 @RequiredArgsConstructor
-public class InfluencingTicketService {
+public class InfluencingTicketService implements CommonDtoService<InfluencingTicketDto, InfluencingTicketDto>, CommonEntityService<InfluencingTicket> {
     private final InfluencingTicketRepository influencingTicketRepository;
     private final InfluencingTicketMapper influencingTicketMapper;
     private final ErrorHandleService errorHandleService;
 
+    @Override
     public List<InfluencingTicketDto> getAll(Pageable pageable) {
         return influencingTicketRepository.findAll(pageable)
                 .stream()
@@ -40,18 +41,18 @@ public class InfluencingTicketService {
                 .toList();
     }
 
+    @Override
     public InfluencingTicketDto getOne(Long id) {
-        return influencingTicketMapper.toDto(
-                influencingTicketRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, INFLUENCING_TICKET_NOT_FOUND_MESSAGE))
-        );
+        return influencingTicketMapper.toDto(getOneEntity(id));
     }
 
-    public InfluencingTicketDto newItem(InfluencingTicketDto influencingTicketDto) {
-        InfluencingTicket influencingTicket = influencingTicketMapper.toEntity(influencingTicketDto);
+    @Override
+    public InfluencingTicketDto newItem(InfluencingTicketDto dtoIn) {
+        InfluencingTicket influencingTicket = influencingTicketMapper.toEntity(dtoIn);
         return influencingTicketMapper.toDto(influencingTicketRepository.save(influencingTicket));
     }
 
+    @Override
     public InfluencingTicketDto editItem(InfluencingTicketDto influencingTicketDto, Long id) {
         if (!influencingTicketRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, INFLUENCING_TICKET_NOT_FOUND_MESSAGE);
@@ -61,10 +62,17 @@ public class InfluencingTicketService {
         return influencingTicketMapper.toDto(influencingTicketRepository.save(influencingTicket));
     }
 
+    @Override
     public void deleteItem(Long id) {
         if (!influencingTicketRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, INFLUENCING_TICKET_NOT_FOUND_MESSAGE);
         }
         influencingTicketRepository.deleteById(id);
+    }
+
+    @Override
+    public InfluencingTicket getOneEntity(Long id) {
+        return influencingTicketRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, INFLUENCING_TICKET_NOT_FOUND_MESSAGE));
     }
 }
