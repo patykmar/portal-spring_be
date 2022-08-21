@@ -6,6 +6,9 @@ import cz.patyk.invoicesystem_be.dto.in.SlaDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.SlaDtoOut;
 import cz.patyk.invoicesystem_be.entities.Sla;
 import cz.patyk.invoicesystem_be.entities.Tariff;
+import cz.patyk.invoicesystem_be.service.InfluencingTicketService;
+import cz.patyk.invoicesystem_be.service.TariffService;
+import cz.patyk.invoicesystem_be.service.TicketTypeService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,13 +27,21 @@ class SlaMapperTest {
 
     @BeforeAll
     static void init() {
-        TicketTypeMapper ticketTypeMapper = Mappers.getMapper(TicketTypeMapper.class);
-        TariffMapper tariffMapper = Mappers.getMapper(TariffMapper.class);
-        InfluencingTicketMapper influencingTicketMapper = Mappers.getMapper(InfluencingTicketMapper.class);
-
+//        TicketTypeMapper ticketTypeMapper = Mappers.getMapper(TicketTypeMapper.class);
+//        TariffMapper tariffMapper = Mappers.getMapper(TariffMapper.class);
+//        InfluencingTicketMapper influencingTicketMapper = Mappers.getMapper(InfluencingTicketMapper.class);
+//
 //        ReflectionTestUtils.setField(SLA_MAPPER, "ticketTypeMapper", ticketTypeMapper);
-        ReflectionTestUtils.setField(SLA_MAPPER, "tariffMapper", tariffMapper);
+//        ReflectionTestUtils.setField(SLA_MAPPER, "tariffMapper", tariffMapper);
 //        ReflectionTestUtils.setField(SLA_MAPPER, "influencingTicketMapper", influencingTicketMapper);
+
+        TariffService tariffService = Mockito.mock(TariffService.class);
+        InfluencingTicketService influencingTicketService = Mockito.mock(InfluencingTicketService.class);
+        TicketTypeService ticketTypeService = Mockito.mock(TicketTypeService.class);
+
+        ReflectionTestUtils.setField(SLA_MAPPER, "tariffService", tariffService);
+        ReflectionTestUtils.setField(SLA_MAPPER, "influencingTicketService", influencingTicketService);
+        ReflectionTestUtils.setField(SLA_MAPPER, "ticketTypeService", ticketTypeService);
     }
 
     @ParameterizedTest
@@ -56,7 +67,8 @@ class SlaMapperTest {
         //TODO: fix the rest of test
         assertThat(SLA_MAPPER.toEntity(slaDtoIn).getTariff())
                 .returns(NumberUtils.LONG_ONE, Tariff::getId)
-                .returns(Common.TARIFF_TEST_NAME, Tariff::getName);
+                .returns(Common.TARIFF_TEST_NAME, Tariff::getName)
+                .returns(TestEntities.TARIFF.getPrice(), Tariff::getPrice);
     }
 
     @ParameterizedTest
