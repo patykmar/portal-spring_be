@@ -4,8 +4,11 @@ import cz.patyk.invoicesystem_be.constant.Common;
 import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.in.SlaDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.SlaDtoOut;
+import cz.patyk.invoicesystem_be.entities.InfluencingTicket;
 import cz.patyk.invoicesystem_be.entities.Sla;
 import cz.patyk.invoicesystem_be.entities.Tariff;
+import cz.patyk.invoicesystem_be.entities.TicketType;
+import cz.patyk.invoicesystem_be.entities.Vat;
 import cz.patyk.invoicesystem_be.service.InfluencingTicketService;
 import cz.patyk.invoicesystem_be.service.TariffService;
 import cz.patyk.invoicesystem_be.service.TicketTypeService;
@@ -27,14 +30,6 @@ class SlaMapperTest {
 
     @BeforeAll
     static void init() {
-//        TicketTypeMapper ticketTypeMapper = Mappers.getMapper(TicketTypeMapper.class);
-//        TariffMapper tariffMapper = Mappers.getMapper(TariffMapper.class);
-//        InfluencingTicketMapper influencingTicketMapper = Mappers.getMapper(InfluencingTicketMapper.class);
-//
-//        ReflectionTestUtils.setField(SLA_MAPPER, "ticketTypeMapper", ticketTypeMapper);
-//        ReflectionTestUtils.setField(SLA_MAPPER, "tariffMapper", tariffMapper);
-//        ReflectionTestUtils.setField(SLA_MAPPER, "influencingTicketMapper", influencingTicketMapper);
-
         TariffService tariffService = Mockito.mock(TariffService.class);
         InfluencingTicketService influencingTicketService = Mockito.mock(InfluencingTicketService.class);
         TicketTypeService ticketTypeService = Mockito.mock(TicketTypeService.class);
@@ -57,18 +52,38 @@ class SlaMapperTest {
                 .when(SLA_MAPPER.ticketTypeService.getOneEntity(slaDtoIn.getTicketTypeId()))
                 .thenReturn(TestEntities.TICKET_TYPE);
 
-
-        assertThat(SLA_MAPPER.toEntity(slaDtoIn))
+        Sla sla = SLA_MAPPER.toEntity(slaDtoIn);
+        assertThat(sla)
                 .returns(slaDtoIn.getId(), Sla::getId)
                 .returns(slaDtoIn.getReactionTime(), Sla::getReactionTime)
                 .returns(slaDtoIn.getResolvedTime(), Sla::getResolvedTime)
                 .returns(slaDtoIn.getPriceMultiplier(), Sla::getPriceMultiplier);
 
-        //TODO: fix the rest of test
-        assertThat(SLA_MAPPER.toEntity(slaDtoIn).getTariff())
+        assertThat(sla.getTariff())
                 .returns(NumberUtils.LONG_ONE, Tariff::getId)
                 .returns(Common.TARIFF_TEST_NAME, Tariff::getName)
                 .returns(TestEntities.TARIFF.getPrice(), Tariff::getPrice);
+        assertThat(sla.getTariff().getVat())
+                .returns(TestEntities.TARIFF.getVat().getId(), Vat::getId)
+                .returns(TestEntities.TARIFF.getVat().getName(), Vat::getName)
+                .returns(TestEntities.TARIFF.getVat().getMultiplier(), Vat::getMultiplier)
+                .returns(TestEntities.TARIFF.getVat().getPercent(), Vat::getPercent);
+        InfluencingTicket priority = sla.getPriority();
+        assertThat(priority)
+                .returns(TestEntities.PRIORITY.getId(), InfluencingTicket::getId)
+                .returns(TestEntities.PRIORITY.getName(), InfluencingTicket::getName)
+                .returns(TestEntities.PRIORITY.isForPriority(), InfluencingTicket::isForPriority)
+                .returns(TestEntities.PRIORITY.isForImpact(), InfluencingTicket::isForImpact)
+                .returns(TestEntities.PRIORITY.getCoefficientPrice(), InfluencingTicket::getCoefficientPrice)
+                .returns(TestEntities.PRIORITY.getCoefficientTime(), InfluencingTicket::getCoefficientTime);
+        TicketType ticketType = sla.getTicketType();
+        assertThat(ticketType)
+                .returns(TestEntities.TICKET_TYPE.getId(), TicketType::getId)
+                .returns(TestEntities.TICKET_TYPE.getName(), TicketType::getName)
+                .returns(TestEntities.TICKET_TYPE.getAbbreviation(), TicketType::getAbbreviation)
+                .returns(TestEntities.TICKET_TYPE.getCoefficientPrice(), TicketType::getCoefficientPrice)
+                .returns(TestEntities.TICKET_TYPE.getCoefficientTime(), TicketType::getCoefficientTime)
+                .returns(TestEntities.TICKET_TYPE.isDisable(), TicketType::isDisable);
     }
 
     @ParameterizedTest
