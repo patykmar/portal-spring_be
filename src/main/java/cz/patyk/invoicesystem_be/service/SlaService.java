@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SlaDtoService implements CommonDtoService<SlaDtoOut, SlaDtoIn>, CommonEntityService<Sla> {
+public class SlaService implements CommonDtoService<SlaDtoOut, SlaDtoIn>, CommonEntityService<Sla> {
     private final SlaMapper slaMapper;
     private final SlaRepository slaRepository;
     private final ErrorHandleService errorHandleService;
