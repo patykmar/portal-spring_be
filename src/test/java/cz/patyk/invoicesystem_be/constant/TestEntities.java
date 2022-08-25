@@ -1,6 +1,5 @@
 package cz.patyk.invoicesystem_be.constant;
 
-import cz.patyk.invoicesystem_be.dto.TicketTypeDto;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.Country;
@@ -48,6 +47,10 @@ public class TestEntities {
             .priority(TestEntities.PRIORITY).reactionTime(4321).resolvedTime(12345)
             .priceMultiplier(150).build();
 
+    public static final Vat VAT_TEST_ENTITY = Vat.builder().id(NumberUtils.LONG_ONE)
+            .name(Common.VAT_TEST_NAME).isDefault(true).percent(Common.VAT_TEST_PERCENT)
+            .multiplier(Common.VAT_TEST_MULTIPLIER).build();
+
     public static final Tariff TARIFF = Tariff.builder().id(NumberUtils.LONG_ONE)
             .name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_TEST_ENTITY)
             .price(Long.MAX_VALUE).build();
@@ -64,10 +67,6 @@ public class TestEntities {
             .roles(User.Role.USER).password(Common.USER_TEST_PASSWORD_ENCODE)
             .lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED)
             .passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).build();
-
-    public static final Vat VAT_TEST_ENTITY = Vat.builder().id(NumberUtils.LONG_ONE)
-            .name(Common.VAT_TEST_NAME).isDefault(true).percent(Common.VAT_TEST_PERCENT)
-            .multiplier(Common.VAT_TEST_MULTIPLIER).build();
 
 
 }
