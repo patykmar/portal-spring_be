@@ -2,6 +2,7 @@ package cz.patyk.invoicesystem_be.constant;
 
 import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
+import cz.patyk.invoicesystem_be.dto.in.SlaDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoInTwoPassword;
 import cz.patyk.invoicesystem_be.dto.in.UserPasswordChangeIn;
@@ -29,6 +30,22 @@ public class TestDtos {
             .id(Long.MAX_VALUE).street(Common.ADDRESS_TEST_STREET)
             .city(Common.ADDRESS_TEST_CITY).zipCode(Common.ADDRESS_TEST_ZIP_CODE)
             .countryDto(COUNTRY_DTO).build();
+
+    public static final SlaDtoIn SLA_DTO_IN = SlaDtoIn.builder()
+            .id(NumberUtils.LONG_ONE)
+            .tariffId(NumberUtils.LONG_ONE)
+            .priorityId(NumberUtils.LONG_ONE)
+            .ticketTypeId(NumberUtils.LONG_ONE)
+            .reactionTime(Common.SLA_REACTION_TIME)
+            .resolvedTime(Common.SLA_RESOLVED_TIME)
+            .priceMultiplier(Common.SLA_PRICE_MULTIPLIER)
+            .build();
+    public static final SlaDtoIn SLA_DTO_IN_EDIT = SlaDtoIn.builder()
+            .tariffId(2L).priorityId(2L).ticketTypeId(2L)
+            .reactionTime(Common.SLA_REACTION_TIME)
+            .resolvedTime(Common.SLA_RESOLVED_TIME)
+            .priceMultiplier(Common.SLA_PRICE_MULTIPLIER)
+            .build();
 
     public static final UserDtoIn USER_DTO_IN_ROLE_ADMIN = UserDtoIn.builder()
             .email(Common.USER_TEST_EMAIL_EDIT).firstName(Common.USER_TEST_FIRST_NAME_EDIT)

@@ -1,11 +1,17 @@
 package cz.patyk.invoicesystem_be.dto.out;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.hateoas.RepresentationModel;
 
-@Data
+
+@Getter
+@Setter
 @Builder
-public class SlaDtoOut {
+@EqualsAndHashCode(callSuper = true)
+public class SlaDtoOut extends RepresentationModel<SlaDtoOut> {
     private long id;
     private long tariffId;
     private long priorityId;

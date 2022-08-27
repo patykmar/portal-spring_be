@@ -44,13 +44,13 @@ class SlaMapperTest {
     void toEntity(SlaDtoIn slaDtoIn) {
         Mockito
                 .when(SLA_MAPPER.tariffService.getOneEntity(slaDtoIn.getTariffId()))
-                .thenReturn(TestEntities.TARIFF);
+                .thenReturn(TestEntities.TARIFF_01);
         Mockito
                 .when(SLA_MAPPER.influencingTicketService.getOneEntity(slaDtoIn.getPriorityId()))
-                .thenReturn(TestEntities.PRIORITY);
+                .thenReturn(TestEntities.PRIORITY_01);
         Mockito
                 .when(SLA_MAPPER.ticketTypeService.getOneEntity(slaDtoIn.getTicketTypeId()))
-                .thenReturn(TestEntities.TICKET_TYPE);
+                .thenReturn(TestEntities.TICKET_TYPE_01);
 
         Sla sla = SLA_MAPPER.toEntity(slaDtoIn);
         assertThat(sla)
@@ -62,28 +62,28 @@ class SlaMapperTest {
         assertThat(sla.getTariff())
                 .returns(NumberUtils.LONG_ONE, Tariff::getId)
                 .returns(Common.TARIFF_TEST_NAME, Tariff::getName)
-                .returns(TestEntities.TARIFF.getPrice(), Tariff::getPrice);
+                .returns(TestEntities.TARIFF_01.getPrice(), Tariff::getPrice);
         assertThat(sla.getTariff().getVat())
-                .returns(TestEntities.TARIFF.getVat().getId(), Vat::getId)
-                .returns(TestEntities.TARIFF.getVat().getName(), Vat::getName)
-                .returns(TestEntities.TARIFF.getVat().getMultiplier(), Vat::getMultiplier)
-                .returns(TestEntities.TARIFF.getVat().getPercent(), Vat::getPercent);
+                .returns(TestEntities.TARIFF_01.getVat().getId(), Vat::getId)
+                .returns(TestEntities.TARIFF_01.getVat().getName(), Vat::getName)
+                .returns(TestEntities.TARIFF_01.getVat().getMultiplier(), Vat::getMultiplier)
+                .returns(TestEntities.TARIFF_01.getVat().getPercent(), Vat::getPercent);
         InfluencingTicket priority = sla.getPriority();
         assertThat(priority)
-                .returns(TestEntities.PRIORITY.getId(), InfluencingTicket::getId)
-                .returns(TestEntities.PRIORITY.getName(), InfluencingTicket::getName)
-                .returns(TestEntities.PRIORITY.isForPriority(), InfluencingTicket::isForPriority)
-                .returns(TestEntities.PRIORITY.isForImpact(), InfluencingTicket::isForImpact)
-                .returns(TestEntities.PRIORITY.getCoefficientPrice(), InfluencingTicket::getCoefficientPrice)
-                .returns(TestEntities.PRIORITY.getCoefficientTime(), InfluencingTicket::getCoefficientTime);
+                .returns(TestEntities.PRIORITY_01.getId(), InfluencingTicket::getId)
+                .returns(TestEntities.PRIORITY_01.getName(), InfluencingTicket::getName)
+                .returns(TestEntities.PRIORITY_01.isForPriority(), InfluencingTicket::isForPriority)
+                .returns(TestEntities.PRIORITY_01.isForImpact(), InfluencingTicket::isForImpact)
+                .returns(TestEntities.PRIORITY_01.getCoefficientPrice(), InfluencingTicket::getCoefficientPrice)
+                .returns(TestEntities.PRIORITY_01.getCoefficientTime(), InfluencingTicket::getCoefficientTime);
         TicketType ticketType = sla.getTicketType();
         assertThat(ticketType)
-                .returns(TestEntities.TICKET_TYPE.getId(), TicketType::getId)
-                .returns(TestEntities.TICKET_TYPE.getName(), TicketType::getName)
-                .returns(TestEntities.TICKET_TYPE.getAbbreviation(), TicketType::getAbbreviation)
-                .returns(TestEntities.TICKET_TYPE.getCoefficientPrice(), TicketType::getCoefficientPrice)
-                .returns(TestEntities.TICKET_TYPE.getCoefficientTime(), TicketType::getCoefficientTime)
-                .returns(TestEntities.TICKET_TYPE.isDisable(), TicketType::isDisable);
+                .returns(TestEntities.TICKET_TYPE_01.getId(), TicketType::getId)
+                .returns(TestEntities.TICKET_TYPE_01.getName(), TicketType::getName)
+                .returns(TestEntities.TICKET_TYPE_01.getAbbreviation(), TicketType::getAbbreviation)
+                .returns(TestEntities.TICKET_TYPE_01.getCoefficientPrice(), TicketType::getCoefficientPrice)
+                .returns(TestEntities.TICKET_TYPE_01.getCoefficientTime(), TicketType::getCoefficientTime)
+                .returns(TestEntities.TICKET_TYPE_01.isDisable(), TicketType::isDisable);
     }
 
     @ParameterizedTest
@@ -101,11 +101,11 @@ class SlaMapperTest {
 
     private static Stream<Arguments> entityProvider() {
         return Stream.of(
-                Arguments.of(Sla.builder().id(Long.MIN_VALUE).tariff(TestEntities.TARIFF).ticketType(TestEntities.TICKET_TYPE).priority(TestEntities.PRIORITY).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
-                Arguments.of(Sla.builder().id(NumberUtils.LONG_MINUS_ONE).tariff(TestEntities.TARIFF).ticketType(TestEntities.TICKET_TYPE).priority(TestEntities.PRIORITY).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
-                Arguments.of(Sla.builder().id(NumberUtils.LONG_ZERO).tariff(TestEntities.TARIFF).ticketType(TestEntities.TICKET_TYPE).priority(TestEntities.PRIORITY).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
-                Arguments.of(Sla.builder().id(NumberUtils.LONG_ONE).tariff(TestEntities.TARIFF).ticketType(TestEntities.TICKET_TYPE).priority(TestEntities.PRIORITY).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
-                Arguments.of(Sla.builder().id(Long.MAX_VALUE).tariff(TestEntities.TARIFF).ticketType(TestEntities.TICKET_TYPE).priority(TestEntities.PRIORITY).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build())
+                Arguments.of(Sla.builder().id(Long.MIN_VALUE).tariff(TestEntities.TARIFF_01).ticketType(TestEntities.TICKET_TYPE_01).priority(TestEntities.PRIORITY_01).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
+                Arguments.of(Sla.builder().id(NumberUtils.LONG_MINUS_ONE).tariff(TestEntities.TARIFF_01).ticketType(TestEntities.TICKET_TYPE_01).priority(TestEntities.PRIORITY_01).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
+                Arguments.of(Sla.builder().id(NumberUtils.LONG_ZERO).tariff(TestEntities.TARIFF_01).ticketType(TestEntities.TICKET_TYPE_01).priority(TestEntities.PRIORITY_01).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
+                Arguments.of(Sla.builder().id(NumberUtils.LONG_ONE).tariff(TestEntities.TARIFF_01).ticketType(TestEntities.TICKET_TYPE_01).priority(TestEntities.PRIORITY_01).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build()),
+                Arguments.of(Sla.builder().id(Long.MAX_VALUE).tariff(TestEntities.TARIFF_01).ticketType(TestEntities.TICKET_TYPE_01).priority(TestEntities.PRIORITY_01).reactionTime(4321).resolvedTime(12345).priceMultiplier(150).build())
         );
     }
 
