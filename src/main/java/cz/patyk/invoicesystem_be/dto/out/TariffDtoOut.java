@@ -1,22 +1,18 @@
 package cz.patyk.invoicesystem_be.dto.out;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
 
-@Getter
-@Setter
+@Data
 @Builder
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class TariffDtoOut extends RepresentationModel<TariffDtoOut> {
-    private Long id;
-    private VatDtoOut vatDto;
-    private Long vat;
-    private String name;
-    private Long price;
+    private final Long id;
+    private final VatDtoOut vatDto;
+    private final Long vat;
+    private final String name;
+    private final Long price;
 }
