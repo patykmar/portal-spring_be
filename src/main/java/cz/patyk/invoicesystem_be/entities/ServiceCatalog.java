@@ -2,10 +2,8 @@ package cz.patyk.invoicesystem_be.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -18,12 +16,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import java.io.Serializable;
 
+
+@Data
 @Entity
-@Getter
-@Setter
 @Builder
-@ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceCatalog implements Serializable {
