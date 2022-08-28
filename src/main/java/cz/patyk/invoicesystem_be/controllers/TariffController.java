@@ -57,7 +57,7 @@ public class TariffController {
     public ResponseEntity<TariffDtoOut> newItem(
             @RequestBody TariffDtoIn tariffDtoIn
     ) {
-        return ResponseEntity.ok(tariffService.newOne(tariffDtoIn));
+        return ResponseEntity.ok(tariffService.newItem(tariffDtoIn));
     }
 
     @PutMapping("/{id}")
@@ -65,14 +65,14 @@ public class TariffController {
             @RequestBody TariffDtoIn tariffDtoIn,
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(tariffService.edit(tariffDtoIn, id));
+        return ResponseEntity.ok(tariffService.editItem(tariffDtoIn, id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable Long id
     ) {
-        tariffService.delete(id);
+        tariffService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }
 }

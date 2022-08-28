@@ -12,6 +12,7 @@ public class ServiceConstants {
     public static final String PAYMENT_TYPE_NOT_FOUND_MESSAGE = "Payment type not found";
     public static final String QUEUE_NOT_FOUND_MESSAGE = "Queue not found";
     public static final String INFLUENCING_TICKET_NOT_FOUND_MESSAGE = "Influencing ticket not found";
+    public static final String SLA_NOT_FOUND = "SLA not found";
     public static final String TARIFF_NOT_FOUND_MESSAGE = "Tariff not found";
     public static final String TICKET_TYPE_NOT_FOUND_MESSAGE = "TicketType not found";
     public static final String USER_NOT_FOUND_MESSAGE = "User not found";

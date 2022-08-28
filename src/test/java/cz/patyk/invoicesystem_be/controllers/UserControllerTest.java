@@ -3,6 +3,7 @@ package cz.patyk.invoicesystem_be.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.patyk.invoicesystem_be.constant.TestDtos;
 import cz.patyk.invoicesystem_be.dto.out.UserDtoOut;
+import cz.patyk.invoicesystem_be.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -10,11 +11,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,12 +26,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 class UserControllerTest {
 
     private static final String URL = "/users";
+    private final UserService userService = Mockito.mock(UserService.class);
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,6 +46,19 @@ class UserControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(URL).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaTypes.HAL_JSON_VALUE));
+    }
+
+    @Test
+    void newUser() {
+        UserController userController = new UserController(userService);
+        ResponseEntity<UserDtoOut> userDtoOutResponseEntity = userController.newItem(TestDtos.USER_DTO_IN_ROLE_USER_WITH_PASSWORD);
+
+        assertThat(userDtoOutResponseEntity)
+                .returns(HttpStatus.OK, ResponseEntity::getStatusCode);
+
+//        assertThat()
+        //TODO rewrite userPostMethodTest, there is some problem
+
     }
 
     @Test
