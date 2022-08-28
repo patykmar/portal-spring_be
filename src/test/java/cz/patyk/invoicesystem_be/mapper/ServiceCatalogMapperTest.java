@@ -26,8 +26,6 @@ class ServiceCatalogMapperTest {
 
     @BeforeAll
     static void init() {
-//        VatMapper vatMapper = Mappers.getMapper(VatMapper.class);
-//        ReflectionTestUtils.setField(SERVICE_CATALOG_MAPPER, "vatMapper", vatMapper);
         VatService vatService = Mockito.mock(VatService.class);
         ReflectionTestUtils.setField(SERVICE_CATALOG_MAPPER, "vatService", vatService);
     }
@@ -37,7 +35,7 @@ class ServiceCatalogMapperTest {
     void toEntity(ServiceCatalogDtoIn serviceCatalogDtoIn) {
         Mockito
                 .when(SERVICE_CATALOG_MAPPER.vatService.getEntityById(serviceCatalogDtoIn.getVat()))
-                .thenReturn(TestEntities.VAT_ENTITY);
+                .thenReturn(TestEntities.VAT_ENTITY_01);
 
         assertThat(SERVICE_CATALOG_MAPPER.toEntity(serviceCatalogDtoIn))
                 .returns(serviceCatalogDtoIn.getId(), ServiceCatalog::getId)
@@ -49,11 +47,11 @@ class ServiceCatalogMapperTest {
         ;
 
         assertThat(SERVICE_CATALOG_MAPPER.toEntity(serviceCatalogDtoIn).getVat())
-                .returns(TestEntities.VAT_ENTITY.getId(), Vat::getId)
-                .returns(TestEntities.VAT_ENTITY.getName(), Vat::getName)
-                .returns(TestEntities.VAT_ENTITY.isDefault(), Vat::isDefault)
-                .returns(TestEntities.VAT_ENTITY.getPercent(), Vat::getPercent)
-                .returns(TestEntities.VAT_ENTITY.getMultiplier(), Vat::getMultiplier)
+                .returns(TestEntities.VAT_ENTITY_01.getId(), Vat::getId)
+                .returns(TestEntities.VAT_ENTITY_01.getName(), Vat::getName)
+                .returns(TestEntities.VAT_ENTITY_01.isDefault(), Vat::isDefault)
+                .returns(TestEntities.VAT_ENTITY_01.getPercent(), Vat::getPercent)
+                .returns(TestEntities.VAT_ENTITY_01.getMultiplier(), Vat::getMultiplier)
         ;
     }
 
@@ -74,11 +72,11 @@ class ServiceCatalogMapperTest {
 
     private static Stream<Arguments> entityProvider() {
         return Stream.of(
-                Arguments.of(ServiceCatalog.builder().id(Long.MIN_VALUE).vat(TestEntities.VAT_ENTITY).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
-                Arguments.of(ServiceCatalog.builder().id(NumberUtils.LONG_MINUS_ONE).vat(TestEntities.VAT_ENTITY).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
-                Arguments.of(ServiceCatalog.builder().id(NumberUtils.LONG_ZERO).vat(TestEntities.VAT_ENTITY).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
-                Arguments.of(ServiceCatalog.builder().id(NumberUtils.LONG_ONE).vat(TestEntities.VAT_ENTITY).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
-                Arguments.of(ServiceCatalog.builder().id(Long.MAX_VALUE).vat(TestEntities.VAT_ENTITY).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build())
+                Arguments.of(ServiceCatalog.builder().id(Long.MIN_VALUE).vat(TestEntities.VAT_ENTITY_01).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
+                Arguments.of(ServiceCatalog.builder().id(NumberUtils.LONG_MINUS_ONE).vat(TestEntities.VAT_ENTITY_01).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
+                Arguments.of(ServiceCatalog.builder().id(NumberUtils.LONG_ZERO).vat(TestEntities.VAT_ENTITY_01).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
+                Arguments.of(ServiceCatalog.builder().id(NumberUtils.LONG_ONE).vat(TestEntities.VAT_ENTITY_01).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build()),
+                Arguments.of(ServiceCatalog.builder().id(Long.MAX_VALUE).vat(TestEntities.VAT_ENTITY_01).name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION).price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY).estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).isDisable(false).build())
         );
     }
 
