@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+/**
+ * Specify methods for basic CRUD operations
+ * @param <I> input DTO object
+ * @param <R> return DTO object
+ */
 public interface CrudController<I, R> {
     @GetMapping("")
     ResponseEntity<CollectionModel<R>> getAll(@PageableDefault final Pageable pageable);

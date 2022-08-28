@@ -15,7 +15,7 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.TICKET_TYPE_NOT
 
 @Service
 @RequiredArgsConstructor
-public class TicketTypeService implements CommonDtoService<TicketTypeDto, TicketTypeDto>, CommonEntityService<TicketType> {
+public class TicketTypeService implements CrudService<TicketTypeDto, TicketTypeDto, TicketType> {
     private final TicketTypeRepository ticketTypeRepository;
     private final TicketTypeMapper ticketTypeMapper;
     private final ErrorHandleService errorHandleService;

@@ -14,7 +14,7 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.INFLUENCING_TIC
 
 @Service
 @RequiredArgsConstructor
-public class InfluencingTicketService implements CommonDtoService<InfluencingTicketDto, InfluencingTicketDto>, CommonEntityService<InfluencingTicket> {
+public class InfluencingTicketService implements CrudService<InfluencingTicketDto, InfluencingTicketDto, InfluencingTicket> {
     private final InfluencingTicketRepository influencingTicketRepository;
     private final InfluencingTicketMapper influencingTicketMapper;
     private final ErrorHandleService errorHandleService;

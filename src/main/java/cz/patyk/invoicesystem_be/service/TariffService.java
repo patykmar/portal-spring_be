@@ -15,7 +15,7 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.TARIFF_NOT_FOUN
 
 @Service
 @RequiredArgsConstructor
-public class TariffService implements CommonDtoService<TariffDtoOut, TariffDtoIn>, CommonEntityService<Tariff> {
+public class TariffService implements CrudService<TariffDtoIn, TariffDtoOut, Tariff> {
     private final TariffMapper tariffMapper;
     private final TariffRepository tariffRepository;
     private final ErrorHandleService errorHandleService;
