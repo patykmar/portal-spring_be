@@ -13,11 +13,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ServiceCatalogService {
+public class ServiceCatalogService implements CrudService<ServiceCatalogDtoIn, ServiceCatalogDtoOut, ServiceCatalog> {
     private final ServiceCatalogRepository serviceCatalogRepository;
     private final ServiceCatalogMapper serviceCatalogMapper;
     private final ErrorHandleService errorHandleService;
 
+    @Override
     public List<ServiceCatalogDtoOut> getAll(Pageable pageable) {
         return serviceCatalogRepository.findAll(pageable)
                 .stream()
@@ -25,16 +26,24 @@ public class ServiceCatalogService {
                 .toList();
     }
 
+    @Override
     public ServiceCatalogDtoOut getOne(Long id) {
-        return serviceCatalogMapper.toDtoOut(serviceCatalogRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.SERVICE_CATALOG_NOT_FOUND_MESSAGE)));
+        return serviceCatalogMapper.toDtoOut(getOneEntity(id));
     }
 
+    @Override
+    public ServiceCatalog getOneEntity(Long id) {
+        return serviceCatalogRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.SERVICE_CATALOG_NOT_FOUND_MESSAGE));
+    }
+
+    @Override
     public ServiceCatalogDtoOut newItem(ServiceCatalogDtoIn serviceCatalogDtoIn) {
         ServiceCatalog serviceCatalog = serviceCatalogMapper.toEntity(serviceCatalogDtoIn);
         return serviceCatalogMapper.toDtoOut(serviceCatalogRepository.save(serviceCatalog));
     }
 
+    @Override
     public ServiceCatalogDtoOut editItem(ServiceCatalogDtoIn serviceCatalogDtoIn, Long id) {
         if (!serviceCatalogRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, ServiceConstants.SERVICE_CATALOG_NOT_FOUND_MESSAGE);
@@ -44,6 +53,7 @@ public class ServiceCatalogService {
         return serviceCatalogMapper.toDtoOut(serviceCatalogRepository.save(serviceCatalog));
     }
 
+    @Override
     public void deleteItem(Long id) {
         if (!serviceCatalogRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, ServiceConstants.SERVICE_CATALOG_NOT_FOUND_MESSAGE);
