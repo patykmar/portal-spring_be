@@ -9,7 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Builder
 @EqualsAndHashCode(callSuper = true)
 public class PaymentTypeDtoOut extends RepresentationModel<PaymentTypeDtoOut> {
-    private Long id;
-    private String name;
-    private boolean isDefault;
+    private final Long id;
+    private final String name;
+    private final boolean isDefault;
 }

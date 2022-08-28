@@ -9,15 +9,15 @@ import org.springframework.hateoas.RepresentationModel;
 @Builder
 @EqualsAndHashCode(callSuper = true)
 public class ServiceCatalogDtoOut extends RepresentationModel<ServiceCatalogDtoOut> {
-    private Long id;
-    private String name;
-    private String description;
-    private Long price;
-    private Long vat;
-    private VatDtoOut vatDtoOut;
-    private int estimateTimeDelivery;
-    private int estimateTimeReaction;
-    private boolean isDisable;
+    private final Long id;
+    private final String name;
+    private final String description;
+    private final Long price;
+    private final Long vat;
+    private final VatDtoOut vatDtoOut;
+    private final int estimateTimeDelivery;
+    private final int estimateTimeReaction;
+    private final boolean isDisable;
 }
 
 
