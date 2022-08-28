@@ -15,7 +15,7 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.COMPANY_NOT_FOU
 
 @Service
 @RequiredArgsConstructor
-public class CompanyService {
+public class CompanyService implements CrudService<CompanyDtoIn, CompanyDtoOut, Company> {
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
     private final ErrorHandleService errorHandleService;
@@ -28,10 +28,13 @@ public class CompanyService {
     }
 
     public CompanyDtoOut getOne(Long id) {
-        return companyMapper.toDto(
-                companyRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE))
-        );
+        return companyMapper.toDto(getOneEntity(id));
+    }
+
+    @Override
+    public Company getOneEntity(Long id) {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE));
     }
 
     public CompanyDtoOut newItem(CompanyDtoIn companyDtoIn) {

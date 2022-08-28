@@ -14,7 +14,7 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.GENERAL_STATE_N
 
 @Service
 @RequiredArgsConstructor
-public class GeneralStateService {
+public class GeneralStateService implements CrudService<GeneralStateDto, GeneralStateDto, GeneralState> {
     private final GeneralStateMapper generalStateMapper;
     private final GeneralStateRepository generalStateRepository;
     private final ErrorHandleService errorHandleService;
@@ -48,9 +48,13 @@ public class GeneralStateService {
     }
 
     public GeneralStateDto getOne(Long id) {
-        return generalStateMapper.toDto(generalStateRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, GENERAL_STATE_NOT_FOUND_MESSAGE))
-        );
+        return generalStateMapper.toDto(getOneEntity(id));
+    }
+
+    @Override
+    public GeneralState getOneEntity(Long id) {
+        return generalStateRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, GENERAL_STATE_NOT_FOUND_MESSAGE));
     }
 
     public GeneralStateDto newItem(GeneralStateDto generalStateDto) {

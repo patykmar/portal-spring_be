@@ -8,6 +8,7 @@ import cz.patyk.invoicesystem_be.entities.User;
 import cz.patyk.invoicesystem_be.mapper.UserMapper;
 import cz.patyk.invoicesystem_be.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements CrudService<UserDtoIn, UserDtoOut, User> {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ErrorHandleService errorHandleService;
 
+    @Override
     public List<UserDtoOut> getAll(Pageable pageable) {
         return userRepository.findAll(pageable)
                 .stream()
@@ -30,10 +32,20 @@ public class UserService {
                 .toList();
     }
 
+    @Override
     public UserDtoOut getOne(Long id) {
-        return userMapper.toDto(userRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.USER_NOT_FOUND_MESSAGE))
-        );
+        return userMapper.toDto(getOneEntity(id));
+    }
+
+    @Override
+    public User getOneEntity(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.USER_NOT_FOUND_MESSAGE));
+    }
+
+    @Override
+    public UserDtoOut newItem(UserDtoIn dtoIn) {
+        throw new NotImplementedException("Not implement with UserDtoIn as a parameter");
     }
 
     public UserDtoOut newItem(UserDtoInTwoPassword userDtoInTwoPassword) {
@@ -46,6 +58,7 @@ public class UserService {
         return userMapper.toDto(userRepository.save(user));
     }
 
+    @Override
     public UserDtoOut editItem(UserDtoIn userDtoIn, Long id) {
         User userFromDb = userRepository.findById(id)
                 .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.USER_NOT_FOUND_MESSAGE));
@@ -79,6 +92,7 @@ public class UserService {
         return bCryptPasswordEncoder.encode(clearPassword);
     }
 
+    @Override
     public void deleteItem(Long id) {
         isIdExist(id);
         userRepository.deleteById(id);
