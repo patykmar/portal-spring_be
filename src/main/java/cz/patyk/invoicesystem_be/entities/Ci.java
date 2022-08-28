@@ -1,10 +1,10 @@
 package cz.patyk.invoicesystem_be.entities;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -18,12 +18,11 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 @Entity
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@RequiredArgsConstructor
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ci implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
