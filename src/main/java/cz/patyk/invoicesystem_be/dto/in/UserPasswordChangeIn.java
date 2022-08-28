@@ -1,12 +1,10 @@
 package cz.patyk.invoicesystem_be.dto.in;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Builder
 public class UserPasswordChangeIn {
     @NonNull

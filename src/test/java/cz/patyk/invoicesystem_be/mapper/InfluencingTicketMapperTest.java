@@ -42,21 +42,21 @@ class InfluencingTicketMapperTest {
 
     private static Stream<Arguments> entityProvider() {
         return Stream.of(
-                Arguments.of(InfluencingTicket.builder().id(Long.MIN_VALUE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(true).isForImpact(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
-                Arguments.of(InfluencingTicket.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_MINUS_ONE).coefficientTime(NumberUtils.FLOAT_MINUS_ONE).build()),
-                Arguments.of(InfluencingTicket.builder().id(NumberUtils.LONG_ZERO).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(false).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_ZERO).coefficientTime(NumberUtils.FLOAT_ZERO).build()),
-                Arguments.of(InfluencingTicket.builder().id(NumberUtils.LONG_ONE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(false).isForImpact(true).coefficientPrice(NumberUtils.FLOAT_ONE).coefficientTime(NumberUtils.FLOAT_ONE).build()),
-                Arguments.of(InfluencingTicket.builder().id(Long.MAX_VALUE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
+                Arguments.of(InfluencingTicket.builder().id(Long.MIN_VALUE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(true).isForImpact(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
+                Arguments.of(InfluencingTicket.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_MINUS_ONE).coefficientTime(NumberUtils.FLOAT_MINUS_ONE).build()),
+                Arguments.of(InfluencingTicket.builder().id(NumberUtils.LONG_ZERO).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(false).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_ZERO).coefficientTime(NumberUtils.FLOAT_ZERO).build()),
+                Arguments.of(InfluencingTicket.builder().id(NumberUtils.LONG_ONE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(false).isForImpact(true).coefficientPrice(NumberUtils.FLOAT_ONE).coefficientTime(NumberUtils.FLOAT_ONE).build()),
+                Arguments.of(InfluencingTicket.builder().id(Long.MAX_VALUE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
         );
     }
 
     private static Stream<Arguments> dtosProvider() {
         return Stream.of(
-                Arguments.of(InfluencingTicketDto.builder().id(Long.MIN_VALUE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(true).isForImpact(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
-                Arguments.of(InfluencingTicketDto.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_MINUS_ONE).coefficientTime(NumberUtils.FLOAT_MINUS_ONE).build()),
-                Arguments.of(InfluencingTicketDto.builder().id(NumberUtils.LONG_ZERO).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(false).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_ZERO).coefficientTime(NumberUtils.FLOAT_ZERO).build()),
-                Arguments.of(InfluencingTicketDto.builder().id(NumberUtils.LONG_ONE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(false).isForImpact(true).coefficientPrice(NumberUtils.FLOAT_ONE).coefficientTime(NumberUtils.FLOAT_ONE).build()),
-                Arguments.of(InfluencingTicketDto.builder().id(Long.MAX_VALUE).name(Common.INFLUENCING_TICKET_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
+                Arguments.of(InfluencingTicketDto.builder().id(Long.MIN_VALUE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(true).isForImpact(true).coefficientPrice(Float.MIN_VALUE).coefficientTime(Float.MIN_VALUE).build()),
+                Arguments.of(InfluencingTicketDto.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_MINUS_ONE).coefficientTime(NumberUtils.FLOAT_MINUS_ONE).build()),
+                Arguments.of(InfluencingTicketDto.builder().id(NumberUtils.LONG_ZERO).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(false).isForImpact(false).coefficientPrice(NumberUtils.FLOAT_ZERO).coefficientTime(NumberUtils.FLOAT_ZERO).build()),
+                Arguments.of(InfluencingTicketDto.builder().id(NumberUtils.LONG_ONE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(false).isForImpact(true).coefficientPrice(NumberUtils.FLOAT_ONE).coefficientTime(NumberUtils.FLOAT_ONE).build()),
+                Arguments.of(InfluencingTicketDto.builder().id(Long.MAX_VALUE).name(Common.INFLUENCING_TICKET_PRIORITY_TEST_NAME).isForPriority(true).isForImpact(false).coefficientPrice(Float.MAX_VALUE).coefficientTime(Float.MAX_VALUE).build())
         );
     }
 }

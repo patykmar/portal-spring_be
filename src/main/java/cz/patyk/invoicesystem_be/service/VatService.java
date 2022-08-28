@@ -33,10 +33,12 @@ public class VatService {
     }
 
     public VatDtoOut getVat(Long id) {
-        return vatMapper.toDto(
-                vatRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, VAT_NOT_FOUND_MESSAGE))
-        );
+        return vatMapper.toDto(getEntityById(id));
+    }
+
+    public Vat getEntityById(Long id) {
+        return vatRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, VAT_NOT_FOUND_MESSAGE));
     }
 
     public VatDtoOut newVat(VatDtoIn vatDtoIn) {
@@ -54,7 +56,7 @@ public class VatService {
     }
 
     public void delete(Long id) {
-        if(!vatRepository.existsById(id)) {
+        if (!vatRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, VAT_NOT_FOUND_MESSAGE);
         }
         vatRepository.deleteById(id);

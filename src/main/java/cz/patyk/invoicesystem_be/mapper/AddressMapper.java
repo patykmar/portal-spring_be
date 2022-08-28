@@ -4,16 +4,15 @@ import cz.patyk.invoicesystem_be.dto.in.AddressDtoIn;
 import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
 import cz.patyk.invoicesystem_be.entities.Address;
 import cz.patyk.invoicesystem_be.entities.Country;
-import cz.patyk.invoicesystem_be.repositories.CountryRepository;
+import cz.patyk.invoicesystem_be.service.CountryService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring", uses = {CountryMapper.class})
 public abstract class AddressMapper {
-
     @Autowired
-    protected CountryRepository countryRepository;
+    protected CountryService countryService;
 
     @Mapping(target = "country", source = "country.id")
     @Mapping(target = "countryDto", source = "address.country")
@@ -23,6 +22,6 @@ public abstract class AddressMapper {
     public abstract Address toEntity(AddressDtoIn addressDto);
 
     public Country getCountry(Long country) {
-        return countryRepository.getById(country);
+        return countryService.getEntityById(country);
     }
 }

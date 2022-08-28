@@ -7,7 +7,7 @@ import cz.patyk.invoicesystem_be.dto.out.TariffDtoOut;
 import cz.patyk.invoicesystem_be.dto.out.VatDtoOut;
 import cz.patyk.invoicesystem_be.entities.Tariff;
 import cz.patyk.invoicesystem_be.entities.Vat;
-import cz.patyk.invoicesystem_be.repositories.VatRepository;
+import cz.patyk.invoicesystem_be.service.VatService;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,17 +28,17 @@ class TariffMapperTest {
     @BeforeAll
     static void init() {
         VatMapper vatMapper = Mappers.getMapper(VatMapper.class);
-        VatRepository vatRepository = Mockito.mock(VatRepository.class);
+        VatService vatService = Mockito.mock(VatService.class);
         ReflectionTestUtils.setField(TARIFF_MAPPER, "vatMapper", vatMapper);
-        ReflectionTestUtils.setField(TARIFF_MAPPER, "vatRepository", vatRepository);
+        ReflectionTestUtils.setField(TARIFF_MAPPER, "vatService", vatService);
     }
 
     @ParameterizedTest
     @MethodSource("providerDtos")
     void toEntity(TariffDtoIn tariffDtoIn, Long expectedLong) {
         Mockito
-                .when(TARIFF_MAPPER.vatRepository.getById(tariffDtoIn.getVat()))
-                .thenReturn(TestEntities.VAT_TEST_ENTITY);
+                .when(TARIFF_MAPPER.vatService.getEntityById(tariffDtoIn.getVat()))
+                .thenReturn(TestEntities.VAT_01);
 
         assertThat(TARIFF_MAPPER.toEntity(tariffDtoIn))
                 .returns(expectedLong, Tariff::getId)
@@ -49,8 +49,8 @@ class TariffMapperTest {
                 .returns(NumberUtils.LONG_ONE, Vat::getId)
                 .returns(Common.VAT_TEST_NAME, Vat::getName)
                 .returns(true, Vat::isDefault)
-                .returns(Common.VAT_TEST_PERCENT, Vat::getPercent)
-                .returns(Common.VAT_TEST_MULTIPLIER, Vat::getMultiplier);
+                .returns(Common.VAT_TEST_PERCENT_20, Vat::getPercent)
+                .returns(Common.VAT_TEST_MULTIPLIER_120, Vat::getMultiplier);
     }
 
     @ParameterizedTest
@@ -66,17 +66,17 @@ class TariffMapperTest {
                 .returns(NumberUtils.LONG_ONE, VatDtoOut::getId)
                 .returns(Common.VAT_TEST_NAME, VatDtoOut::getName)
                 .returns(true, VatDtoOut::isDefault)
-                .returns(Common.VAT_TEST_PERCENT, VatDtoOut::getPercent)
-                .returns(Common.VAT_TEST_MULTIPLIER, VatDtoOut::getMultiplier);
+                .returns(Common.VAT_TEST_PERCENT_20, VatDtoOut::getPercent)
+                .returns(Common.VAT_TEST_MULTIPLIER_120, VatDtoOut::getMultiplier);
     }
 
     private static Stream<Arguments> providerEntities() {
         return Stream.of(
-                Arguments.of(Tariff.builder().id(Long.MIN_VALUE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_TEST_ENTITY).price(Long.MIN_VALUE).build(), Long.MIN_VALUE),
-                Arguments.of(Tariff.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_TEST_ENTITY).price(NumberUtils.LONG_MINUS_ONE).build(), NumberUtils.LONG_MINUS_ONE),
-                Arguments.of(Tariff.builder().id(NumberUtils.LONG_ZERO).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_TEST_ENTITY).price(NumberUtils.LONG_ZERO).build(), NumberUtils.LONG_ZERO),
-                Arguments.of(Tariff.builder().id(NumberUtils.LONG_ONE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_TEST_ENTITY).price(NumberUtils.LONG_ONE).build(), NumberUtils.LONG_ONE),
-                Arguments.of(Tariff.builder().id(Long.MAX_VALUE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_TEST_ENTITY).price(Long.MAX_VALUE).build(), Long.MAX_VALUE)
+                Arguments.of(Tariff.builder().id(Long.MIN_VALUE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_01).price(Long.MIN_VALUE).build(), Long.MIN_VALUE),
+                Arguments.of(Tariff.builder().id(NumberUtils.LONG_MINUS_ONE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_01).price(NumberUtils.LONG_MINUS_ONE).build(), NumberUtils.LONG_MINUS_ONE),
+                Arguments.of(Tariff.builder().id(NumberUtils.LONG_ZERO).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_01).price(NumberUtils.LONG_ZERO).build(), NumberUtils.LONG_ZERO),
+                Arguments.of(Tariff.builder().id(NumberUtils.LONG_ONE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_01).price(NumberUtils.LONG_ONE).build(), NumberUtils.LONG_ONE),
+                Arguments.of(Tariff.builder().id(Long.MAX_VALUE).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_01).price(Long.MAX_VALUE).build(), Long.MAX_VALUE)
         );
     }
 

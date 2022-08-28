@@ -1,7 +1,7 @@
 package cz.patyk.invoicesystem_be.controllers;
 
 import cz.patyk.invoicesystem_be.dto.TicketTypeDto;
-import cz.patyk.invoicesystem_be.service.TicketTypeSerice;
+import cz.patyk.invoicesystem_be.service.TicketTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -25,13 +25,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequiredArgsConstructor
 @RequestMapping("/ticket-types")
 public class TicketTypeController {
-    private final TicketTypeSerice ticketTypeSerice;
+    private final TicketTypeService ticketTypeService;
 
     @GetMapping("")
     public ResponseEntity<CollectionModel<TicketTypeDto>> getAll(
             @PageableDefault() final Pageable pageable
     ) {
-        List<TicketTypeDto> ticketTypeDtos = ticketTypeSerice.getAll(pageable);
+        List<TicketTypeDto> ticketTypeDtos = ticketTypeService.getAll(pageable);
 
         ticketTypeDtos.forEach(ticketTypeDto -> ticketTypeDto.add(
                 linkTo(CompanyController.class)
@@ -48,7 +48,7 @@ public class TicketTypeController {
     public ResponseEntity<TicketTypeDto> getOne(
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(ticketTypeSerice.getOne(id));
+        return ResponseEntity.ok(ticketTypeService.getOne(id));
     }
 
     @PostMapping("")
@@ -56,7 +56,7 @@ public class TicketTypeController {
             @RequestBody TicketTypeDto ticketTypeDto
     ) {
         return ResponseEntity.ok(
-                ticketTypeSerice.newItem(ticketTypeDto)
+                ticketTypeService.newItem(ticketTypeDto)
         );
     }
 
@@ -66,7 +66,7 @@ public class TicketTypeController {
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(
-                ticketTypeSerice.editItem(ticketTypeDto, id)
+                ticketTypeService.editItem(ticketTypeDto, id)
         );
     }
 
@@ -74,7 +74,7 @@ public class TicketTypeController {
     public ResponseEntity<Void> delete(
             @PathVariable Long id
     ) {
-        ticketTypeSerice.deleteItem(id);
+        ticketTypeService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }
 }

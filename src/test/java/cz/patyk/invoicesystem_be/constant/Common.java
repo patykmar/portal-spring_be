@@ -1,14 +1,9 @@
 package cz.patyk.invoicesystem_be.constant;
 
-import cz.patyk.invoicesystem_be.dto.CountryDto;
-import cz.patyk.invoicesystem_be.dto.out.AddressDtoOut;
-import cz.patyk.invoicesystem_be.entities.Address;
-import cz.patyk.invoicesystem_be.entities.Country;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.List;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -26,23 +21,21 @@ public class Common {
 
     public static final String COUNTRY_TEST_NAME = "Val Verde";
     public static final String COUNTRY_TEST_ISO_3166_ALPHA_3 = "VV";
-    public static final Country COUNTRY_TEST_ENTITY = new Country(Long.MAX_VALUE, COUNTRY_TEST_NAME, COUNTRY_TEST_ISO_3166_ALPHA_3, List.of());
-    public static final CountryDto COUNTRY_TEST_DTO = CountryDto.builder()
-            .id(Long.MAX_VALUE).name(COUNTRY_TEST_NAME).iso3166alpha3(COUNTRY_TEST_ISO_3166_ALPHA_3).build();
 
     public static final String ADDRESS_TEST_STREET = "Fake street 123";
     public static final String ADDRESS_TEST_CITY = "Springfield";
     public static final String ADDRESS_TEST_ZIP_CODE = "12345";
-    public static final Address ADDRESS_TEST_ENTITY = new Address(Long.MAX_VALUE, ADDRESS_TEST_STREET, ADDRESS_TEST_CITY, ADDRESS_TEST_ZIP_CODE, COUNTRY_TEST_ENTITY);
-    public static final AddressDtoOut ADDRESS_TEST_DTO_OUT = AddressDtoOut.builder()
-            .id(Long.MAX_VALUE).street(ADDRESS_TEST_STREET).city(ADDRESS_TEST_CITY)
-            .zipCode(ADDRESS_TEST_ZIP_CODE).countryDto(COUNTRY_TEST_DTO).build();
 
-    public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
+    public static final String INFLUENCING_TICKET_PRIORITY_TEST_NAME = "Influencing ticket priority name";
+    public static final String INFLUENCING_TICKET_IMPACT_TEST_NAME = "Influencing ticket impact name";
 
     public static final String PAYMENT_TYPE_TEST_NAME = "test Payment Type name";
 
     public static final String QUEUE_TEST_NAME = "test Queue name";
+
+    public static final int SLA_REACTION_TIME = 4321;
+    public static final int SLA_RESOLVED_TIME = 12345;
+    public static final int SLA_PRICE_MULTIPLIER = 150;
 
     public static final String USER_TEST_EMAIL = "test@example.com";
     public static final String USER_TEST_EMAIL_EDIT = "test-edited@example.com";
@@ -59,9 +52,16 @@ public class Common {
     public static final Long USER_TEST_PASSWORD_CHANGED = 325532800L;
 
     public static final String VAT_TEST_NAME = "test vat name";
-    public static final int VAT_TEST_PERCENT = 20;
-    public static final int VAT_TEST_MULTIPLIER = 120;
+    public static final int VAT_TEST_PERCENT_20 = 20;
+    public static final int VAT_TEST_PERCENT_21 = 21;
+    public static final int VAT_TEST_MULTIPLIER_120 = 120;
+    public static final int VAT_TEST_MULTIPLIER_121 = 121;
 
+    public static final String SERVICE_CATALOG_NAME = "Service catalog test name";
+    public static final String SERVICE_CATALOG_DESCRIPTION = "Service catalog test description";
+    public static final Long SERVICE_CATALOG_PRICE = 100L;
+    public static final int SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY = 10000;
+    public static final int SERVICE_CATALOG_ESTIMATION_TIME_REACTION = 100000;
 
     public static final String TARIFF_TEST_NAME = "test tariff name";
 

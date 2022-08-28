@@ -1,25 +1,21 @@
 package cz.patyk.invoicesystem_be.dto.out;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
-@Getter
-@Setter
+@Data
 @Builder
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserDtoOut extends RepresentationModel<UserDtoOut> {
-    private Long id;
-    private Long employeeOfCompanyId;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private Long lastLogin;
-    private Long createdDate;
-    private Long passwordChanged;
-    private String roles;
+    private final Long id;
+    private final Long employeeOfCompanyId;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
+    private final Long lastLogin;
+    private final Long createdDate;
+    private final Long passwordChanged;
+    private final String roles;
 }
