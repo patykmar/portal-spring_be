@@ -15,11 +15,12 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.TICKET_TYPE_NOT
 
 @Service
 @RequiredArgsConstructor
-public class TicketTypeSerice {
+public class TicketTypeService implements CrudService<TicketTypeDto, TicketTypeDto, TicketType> {
     private final TicketTypeRepository ticketTypeRepository;
     private final TicketTypeMapper ticketTypeMapper;
     private final ErrorHandleService errorHandleService;
 
+    @Override
     public List<TicketTypeDto> getAll(Pageable pageable) {
         return ticketTypeRepository.findAll(pageable)
                 .stream()
@@ -27,18 +28,18 @@ public class TicketTypeSerice {
                 .toList();
     }
 
+    @Override
     public TicketTypeDto getOne(Long id) {
-        return ticketTypeMapper.toDto(
-                ticketTypeRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, TICKET_TYPE_NOT_FOUND_MESSAGE))
-        );
+        return ticketTypeMapper.toDto(getOneEntity(id));
     }
 
+    @Override
     public TicketTypeDto newItem(TicketTypeDto ticketTypeDto) {
         TicketType ticketType = ticketTypeMapper.toEntity(ticketTypeDto);
         return ticketTypeMapper.toDto(ticketTypeRepository.save(ticketType));
     }
 
+    @Override
     public TicketTypeDto editItem(TicketTypeDto ticketTypeDto, Long id) {
         if (!ticketTypeRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, TICKET_TYPE_NOT_FOUND_MESSAGE);
@@ -48,10 +49,17 @@ public class TicketTypeSerice {
         return ticketTypeMapper.toDto(ticketTypeRepository.save(ticketType));
     }
 
+    @Override
     public void deleteItem(Long id) {
         if (!ticketTypeRepository.existsById(id)) {
             throw errorHandleService.handleNotFoundError(id, COMPANY_NOT_FOUND_MESSAGE);
         }
         ticketTypeRepository.deleteById(id);
+    }
+
+    @Override
+    public TicketType getOneEntity(Long id) {
+        return ticketTypeRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, TICKET_TYPE_NOT_FOUND_MESSAGE));
     }
 }

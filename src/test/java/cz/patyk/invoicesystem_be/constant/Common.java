@@ -26,11 +26,16 @@ public class Common {
     public static final String ADDRESS_TEST_CITY = "Springfield";
     public static final String ADDRESS_TEST_ZIP_CODE = "12345";
 
-    public static final String INFLUENCING_TICKET_TEST_NAME = "test Influencing ticket name";
+    public static final String INFLUENCING_TICKET_PRIORITY_TEST_NAME = "Influencing ticket priority name";
+    public static final String INFLUENCING_TICKET_IMPACT_TEST_NAME = "Influencing ticket impact name";
 
     public static final String PAYMENT_TYPE_TEST_NAME = "test Payment Type name";
 
     public static final String QUEUE_TEST_NAME = "test Queue name";
+
+    public static final int SLA_REACTION_TIME = 4321;
+    public static final int SLA_RESOLVED_TIME = 12345;
+    public static final int SLA_PRICE_MULTIPLIER = 150;
 
     public static final String USER_TEST_EMAIL = "test@example.com";
     public static final String USER_TEST_EMAIL_EDIT = "test-edited@example.com";
@@ -47,8 +52,10 @@ public class Common {
     public static final Long USER_TEST_PASSWORD_CHANGED = 325532800L;
 
     public static final String VAT_TEST_NAME = "test vat name";
-    public static final int VAT_TEST_PERCENT = 20;
-    public static final int VAT_TEST_MULTIPLIER = 120;
+    public static final int VAT_TEST_PERCENT_20 = 20;
+    public static final int VAT_TEST_PERCENT_21 = 21;
+    public static final int VAT_TEST_MULTIPLIER_120 = 120;
+    public static final int VAT_TEST_MULTIPLIER_121 = 121;
 
     public static final String SERVICE_CATALOG_NAME = "Service catalog test name";
     public static final String SERVICE_CATALOG_DESCRIPTION = "Service catalog test description";
