@@ -3,13 +3,11 @@ package cz.patyk.invoicesystem_be.dto.out;
 import cz.patyk.invoicesystem_be.dto.CountryDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
