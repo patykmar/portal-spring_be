@@ -9,10 +9,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class PaymentTypeDtoIn {
     private Long id;
-
     @NotNull(message = "Name is mandatory")
     private String name;
-
     @NotNull
     private boolean isDefault;
 }

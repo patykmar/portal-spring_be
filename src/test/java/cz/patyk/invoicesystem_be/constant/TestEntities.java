@@ -8,6 +8,7 @@ import cz.patyk.invoicesystem_be.entities.PaymentType;
 import cz.patyk.invoicesystem_be.entities.Sla;
 import cz.patyk.invoicesystem_be.entities.Tariff;
 import cz.patyk.invoicesystem_be.entities.TicketType;
+import cz.patyk.invoicesystem_be.entities.ServiceCatalog;
 import cz.patyk.invoicesystem_be.entities.User;
 import cz.patyk.invoicesystem_be.entities.Vat;
 import lombok.AccessLevel;
@@ -101,5 +102,24 @@ public class TestEntities {
             .lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED)
             .passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).build();
 
+    public static final Vat VAT_ENTITY_01 = Vat.builder().id(NumberUtils.LONG_ONE)
+            .name(Common.VAT_TEST_NAME).isDefault(true).percent(Common.VAT_TEST_PERCENT_20)
+            .multiplier(Common.VAT_TEST_MULTIPLIER_120).build();
+    public static final Vat VAT_ENTITY_02 = Vat.builder().id(2L)
+            .name(Common.VAT_TEST_NAME + " 2").isDefault(false).percent(Common.VAT_TEST_PERCENT_21)
+            .multiplier(Common.VAT_TEST_MULTIPLIER_121).build();
 
+    public static final ServiceCatalog SERVICE_CATALOG_01 = ServiceCatalog.builder().id(NumberUtils.LONG_ONE)
+            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
+            .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
+            .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY_01).build();
+    public static final ServiceCatalog SERVICE_CATALOG_02 = ServiceCatalog.builder().id(2L)
+            .name(Common.SERVICE_CATALOG_NAME + " 2").description(Common.SERVICE_CATALOG_DESCRIPTION + " 2")
+            .price(Common.SERVICE_CATALOG_PRICE + 2L).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY + 2)
+            .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION + 2).vat(VAT_ENTITY_02).build();
+    public static final ServiceCatalog SERVICE_CATALOG_03 = ServiceCatalog.builder().id(3L)
+            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
+            .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
+            .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY_01).build();
+    public static final List<ServiceCatalog> SERVICE_CATALOG_LIST = List.of(SERVICE_CATALOG_01, SERVICE_CATALOG_02, SERVICE_CATALOG_03);
 }
