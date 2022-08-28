@@ -2,14 +2,12 @@ package cz.patyk.invoicesystem_be.dto.out;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.hateoas.RepresentationModel;
 
+@Data
 @Builder
-@Getter
-@Setter
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class CompanyDtoOut extends RepresentationModel<CompanyDtoOut> {
