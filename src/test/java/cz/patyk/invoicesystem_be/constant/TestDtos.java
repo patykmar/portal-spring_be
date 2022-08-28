@@ -1,6 +1,7 @@
 package cz.patyk.invoicesystem_be.constant;
 
 import cz.patyk.invoicesystem_be.dto.CountryDto;
+import cz.patyk.invoicesystem_be.dto.in.CiDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.SlaDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.ServiceCatalogDtoIn;
@@ -91,4 +92,10 @@ public class TestDtos {
     public static final UserPasswordChangeIn USER_PASSWORD_CHANGE_CORRECT = UserPasswordChangeIn.builder()
             .oldPassword(Common.USER_TEST_PASSWORD_1).newPassword(Common.USER_TEST_PASSWORD_2)
             .reTypedPassword(Common.USER_TEST_PASSWORD_2).build();
+
+    public static final CiDtoIn CI_DTO_IN = CiDtoIn.builder().id(NumberUtils.LONG_ONE).parentCiId(null)
+            .createdUserId(NumberUtils.LONG_ONE).stateId(NumberUtils.LONG_ONE).tariffId(NumberUtils.LONG_ONE)
+            .companyId(NumberUtils.LONG_ONE).queueTier1(NumberUtils.LONG_ONE).queueTier2(2L).queueTier3(3L)
+            .name(Common.CI_TEST_NAME).description(Common.CI_TEST_DESCRIPTION)
+            .createdDateTime(Common.COMPANY_TEST_CREATED).build();
 }
