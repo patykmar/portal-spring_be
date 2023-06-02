@@ -1,10 +1,13 @@
 package cz.patyk.invoicesystem_be.constant;
 
 import cz.patyk.invoicesystem_be.entities.Address;
+import cz.patyk.invoicesystem_be.entities.Ci;
 import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.Country;
+import cz.patyk.invoicesystem_be.entities.GeneralState;
 import cz.patyk.invoicesystem_be.entities.InfluencingTicket;
 import cz.patyk.invoicesystem_be.entities.PaymentType;
+import cz.patyk.invoicesystem_be.entities.Queue;
 import cz.patyk.invoicesystem_be.entities.Sla;
 import cz.patyk.invoicesystem_be.entities.Tariff;
 import cz.patyk.invoicesystem_be.entities.TicketType;
@@ -15,6 +18,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,8 +32,8 @@ public class TestEntities {
     public static final Address ADDRESS_TEST = Address.builder().id(Long.MAX_VALUE).street(Common.ADDRESS_TEST_STREET)
             .city(Common.ADDRESS_TEST_CITY).zipCode(Common.ADDRESS_TEST_ZIP_CODE).country(COUNTRY_TEST).build();
 
-    public static final Company COMPANY_TEST = Company.builder().id(NumberUtils.LONG_ONE)
-            .name(Common.COMPANY_TEST_NAME).description(Common.COMPANY_TEST_DESCRIPTION)
+    public static final Company COMPANY_01 = Company.builder().id(NumberUtils.LONG_ONE)
+            .name(Common.COMPANY_TEST_NAME + " 01").description(Common.COMPANY_TEST_DESCRIPTION + " 01")
             .companyId(Common.COMPANY_TEST_COMPANY_ID).vatNumber(Common.COMPANY_TEST_VAT_NUMBER)
             .created(Common.COMPANY_TEST_CREATED).modify(Common.COMPANY_TEST_MODIFY)
             .accountNumber(Common.COMPANY_TEST_ACCOUNT_NUMBER).iban(Common.COMPANY_TEST_IBAN).build();
@@ -65,8 +70,7 @@ public class TestEntities {
             .name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_01)
             .price(Long.MAX_VALUE).build();
     public static final Tariff TARIFF_02 = Tariff.builder()
-            .id(2L).name(Common.TARIFF_TEST_NAME)
-            .vat(TestEntities.VAT_02)
+            .id(2L).name(Common.TARIFF_TEST_NAME).vat(TestEntities.VAT_02)
             .price(Long.MAX_VALUE).build();
 
     public static final TicketType TICKET_TYPE_01 = makeTicketType(NumberUtils.LONG_ONE, true, Long.MIN_VALUE);
@@ -97,7 +101,7 @@ public class TestEntities {
     public static final User USER = User.builder()
             .id(NumberUtils.LONG_ONE).firstName(Common.USER_TEST_FIRST_NAME)
             .lastName(Common.USER_TEST_LAST_NAME).email(Common.USER_TEST_EMAIL)
-            .employeeOfCompanyId(TestEntities.COMPANY_TEST)
+            .employeeOfCompanyId(TestEntities.COMPANY_01)
             .roles(User.Role.USER).password(Common.USER_TEST_PASSWORD_ENCODE)
             .lastLogin(Common.USER_TEST_LAST_LOGIN).createdDate(Common.USER_TEST_CREATED)
             .passwordChanged(Common.USER_TEST_PASSWORD_CHANGED).build();
@@ -110,7 +114,7 @@ public class TestEntities {
             .multiplier(Common.VAT_TEST_MULTIPLIER_121).build();
 
     public static final ServiceCatalog SERVICE_CATALOG_01 = ServiceCatalog.builder().id(NumberUtils.LONG_ONE)
-            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
+            .name(Common.SERVICE_CATALOG_NAME + " 1").description(Common.SERVICE_CATALOG_DESCRIPTION + " 1")
             .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
             .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY_01).build();
     public static final ServiceCatalog SERVICE_CATALOG_02 = ServiceCatalog.builder().id(2L)
@@ -118,8 +122,39 @@ public class TestEntities {
             .price(Common.SERVICE_CATALOG_PRICE + 2L).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY + 2)
             .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION + 2).vat(VAT_ENTITY_02).build();
     public static final ServiceCatalog SERVICE_CATALOG_03 = ServiceCatalog.builder().id(3L)
-            .name(Common.SERVICE_CATALOG_NAME).description(Common.SERVICE_CATALOG_DESCRIPTION)
-            .price(Common.SERVICE_CATALOG_PRICE).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY)
+            .name(Common.SERVICE_CATALOG_NAME + " 3").description(Common.SERVICE_CATALOG_DESCRIPTION + " 3")
+            .price(Common.SERVICE_CATALOG_PRICE + 3L).estimateTimeDelivery(Common.SERVICE_CATALOG_ESTIMATION_TIME_DELIVERY + 3)
             .estimateTimeReaction(Common.SERVICE_CATALOG_ESTIMATION_TIME_REACTION).vat(VAT_ENTITY_01).build();
     public static final List<ServiceCatalog> SERVICE_CATALOG_LIST = List.of(SERVICE_CATALOG_01, SERVICE_CATALOG_02, SERVICE_CATALOG_03);
+
+    public static final GeneralState GENERAL_STATE_01 = GeneralState.builder().id(NumberUtils.LONG_ONE)
+            .name(Common.GENERAL_STATE_TEST_NAME + " 01").isForCi(true).isForCi(false).isForCloseState(false)
+            .coefficientPrice(NumberUtils.FLOAT_ONE).build();
+    public static final GeneralState GENERAL_STATE_02 = GeneralState.builder().id(2L)
+            .name(Common.GENERAL_STATE_TEST_NAME + " 02").isForCi(false).isForCi(true).isForCloseState(false)
+            .coefficientPrice(NumberUtils.FLOAT_ONE).build();
+    public static final GeneralState GENERAL_STATE_03 = GeneralState.builder().id(3L)
+            .name(Common.GENERAL_STATE_TEST_NAME + " 03").isForCi(false).isForCi(false).isForCloseState(true)
+            .coefficientPrice(NumberUtils.FLOAT_ONE).build();
+
+    public static final Queue QUEUE_01 = Queue.builder().id(NumberUtils.LONG_ONE).name(Common.QUEUE_TEST_NAME + " 01").build();
+    public static final Queue QUEUE_02 = Queue.builder().id(2L).name(Common.QUEUE_TEST_NAME + " 02").build();
+    public static final Queue QUEUE_03 = Queue.builder().id(3L).name(Common.QUEUE_TEST_NAME + " 03").build();
+
+    public static final Ci CI_01 = Ci.builder().id(NumberUtils.LONG_ONE).parentCi(null)
+            .name(Common.GENERAL_STATE_TEST_NAME + " 01").createdUser(USER).state(GENERAL_STATE_01)
+            .tariff(TARIFF_01).company(COMPANY_01).description(Common.GENERAL_STATE_TEST_DESCRIPTION + " 01")
+            .queueTier1(QUEUE_01).queueTier2(QUEUE_02).queueTier3(QUEUE_03).createdDateTime(Date.from(Instant.now()))
+            .build();
+    public static final Ci CI_02 = Ci.builder().id(2L).parentCi(CI_01).createdUser(USER)
+            .name(Common.GENERAL_STATE_TEST_NAME + " 02").state(GENERAL_STATE_01)
+            .tariff(TARIFF_01).company(COMPANY_01).description(Common.GENERAL_STATE_TEST_DESCRIPTION + " 02")
+            .queueTier1(QUEUE_01).queueTier2(QUEUE_02).queueTier3(QUEUE_03).createdDateTime(Date.from(Instant.now()))
+            .build();
+    public static final Ci CI_03 = Ci.builder().id(3L).parentCi(CI_01).createdUser(USER)
+            .name(Common.GENERAL_STATE_TEST_NAME + " 03").state(GENERAL_STATE_01)
+            .tariff(TARIFF_01).company(COMPANY_01).description(Common.GENERAL_STATE_TEST_DESCRIPTION + " 03")
+            .queueTier1(QUEUE_01).queueTier2(QUEUE_02).queueTier3(QUEUE_03).createdDateTime(Date.from(Instant.now()))
+            .build();
+    public static final List<Ci> CI_LIST = List.of(CI_01, CI_02, CI_03);
 }

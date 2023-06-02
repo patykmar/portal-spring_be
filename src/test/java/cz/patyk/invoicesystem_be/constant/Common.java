@@ -17,7 +17,11 @@ public class Common {
     public static final String COMPANY_TEST_ACCOUNT_NUMBER = "12345-123456789/0123";
     public static final String COMPANY_TEST_IBAN = "CZ1234567890123456789012";
 
+    public static final String CI_TEST_NAME = "CI TEST NAME";
+    public static final String CI_TEST_DESCRIPTION = "CI TEST description";
+
     public static final String GENERAL_STATE_TEST_NAME = "test general state name";
+    public static final String GENERAL_STATE_TEST_DESCRIPTION = "test general state description";
 
     public static final String COUNTRY_TEST_NAME = "Val Verde";
     public static final String COUNTRY_TEST_ISO_3166_ALPHA_3 = "VV";

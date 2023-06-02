@@ -39,6 +39,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -131,7 +132,7 @@ class ServiceCatalogControllerTest {
 
         Mockito.when(vatService.getEntityById(NumberUtils.LONG_ONE))
                 .thenReturn(TestEntities.VAT_ENTITY_01);
-        Mockito.when(serviceCatalogRepository.save(serviceCatalog1Local))
+        Mockito.when(serviceCatalogRepository.save(any(ServiceCatalog.class)))
                 .thenReturn(TestEntities.SERVICE_CATALOG_01);
 
         ResponseEntity<ServiceCatalogDtoOut> serviceCatalogDtoOutResponseEntity = serviceCatalogController.newItem(
@@ -146,6 +147,7 @@ class ServiceCatalogControllerTest {
 
         assertThat(serviceCatalogDtoOutResponseEntity.getBody())
                 .isNotNull()
+                .hasNoNullFieldsOrPropertiesExcept("id", "vatDtoOut")
                 .returns(TestEntities.SERVICE_CATALOG_01.getId(), ServiceCatalogDtoOut::getId)
                 .returns(TestEntities.SERVICE_CATALOG_01.getName(), ServiceCatalogDtoOut::getName)
                 .returns(TestEntities.SERVICE_CATALOG_01.getDescription(), ServiceCatalogDtoOut::getDescription)
