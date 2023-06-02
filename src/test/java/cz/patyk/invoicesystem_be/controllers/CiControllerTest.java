@@ -3,6 +3,7 @@ package cz.patyk.invoicesystem_be.controllers;
 import cz.patyk.invoicesystem_be.constant.TestDtos;
 import cz.patyk.invoicesystem_be.constant.TestEntities;
 import cz.patyk.invoicesystem_be.dto.out.CiDtoOut;
+import cz.patyk.invoicesystem_be.entities.Ci;
 import cz.patyk.invoicesystem_be.mapper.CiMapper;
 import cz.patyk.invoicesystem_be.repositories.CiRepository;
 import cz.patyk.invoicesystem_be.service.CiService;
@@ -12,6 +13,7 @@ import cz.patyk.invoicesystem_be.service.GeneralStateService;
 import cz.patyk.invoicesystem_be.service.QueueServices;
 import cz.patyk.invoicesystem_be.service.TariffService;
 import cz.patyk.invoicesystem_be.service.UserService;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -23,7 +25,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 class CiControllerTest {
     private static final CiRepository CI_REPOSITORY = Mockito.mock(CiRepository.class);
@@ -87,36 +93,81 @@ class CiControllerTest {
 
         assertThat(ciControllerAll.getBody())
                 .isNotEmpty()
+                .hasSize(3)
                 .satisfies(ciDtoOuts -> assertThat(ciDtoOuts)
                         .first()
-                        .returns(TestEntities.CI_01.getId(), CiDtoOut::getId)
-//                        .returns(TestEntities.CI_01.getParentCi(), null)
-                        .returns(TestEntities.CI_01.getCreatedUser().getId(), CiDtoOut::getCreatedUserId)
-                        .returns(TestEntities.CI_01.getState().getId(), CiDtoOut::getStateId)
-                        .returns(TestEntities.CI_01.getTariff().getId(), CiDtoOut::getTariffId)
-                        .returns(TestEntities.CI_01.getCompany().getId(), CiDtoOut::getCompanyId)
-                        .returns(TestEntities.CI_01.getQueueTier1().getId(), CiDtoOut::getQueueTier1)
-                        .returns(TestEntities.CI_01.getQueueTier2().getId(), CiDtoOut::getQueueTier2)
-                        .returns(TestEntities.CI_01.getQueueTier3().getId(), CiDtoOut::getQueueTier3)
-                        .returns(TestEntities.CI_01.getName(), CiDtoOut::getName)
-                        .returns(TestEntities.CI_01.getDescription(), CiDtoOut::getDescription)
-                        .returns(TestEntities.CI_01.getCreatedDateTime(), CiDtoOut::getCreatedDateTime)
+                        .hasNoNullFieldsOrPropertiesExcept("parentCiId")
                 );
     }
 
     @Test
     void getOneTest() {
+        Mockito.when(CI_REPOSITORY.findById(anyLong()))
+                .thenReturn(Optional.of(TestEntities.CI_01));
+
+        ResponseEntity<CiDtoOut> ciDtoOutResponseEntity = ciController.getOne(NumberUtils.LONG_ONE);
+
+        assertThat(ciDtoOutResponseEntity)
+                .returns(HttpStatus.OK, ResponseEntity::getStatusCode);
+
+        assertThat(ciDtoOutResponseEntity.getHeaders())
+                .isEmpty();
+
+        assertThat(ciDtoOutResponseEntity.getBody())
+                .hasNoNullFieldsOrPropertiesExcept("parentCiId");
     }
 
     @Test
     void newItemTest() {
+        Mockito.when(CI_REPOSITORY.save(any(Ci.class)))
+                .thenReturn(TestEntities.CI_01);
+
+        ResponseEntity<CiDtoOut> ciDtoOutResponseEntity = ciController.newItem(TestDtos.CI_DTO_IN);
+
+        assertThat(ciDtoOutResponseEntity)
+                .returns(HttpStatus.OK, ResponseEntity::getStatusCode);
+
+        assertThat(ciDtoOutResponseEntity.getHeaders())
+                .isEmpty();
+
+        assertThat(ciDtoOutResponseEntity.getBody())
+                .hasNoNullFieldsOrPropertiesExcept("parentCiId");
+
     }
 
     @Test
     void editItemTest() {
+        Mockito.when(CI_REPOSITORY.existsById(anyLong()))
+                .thenReturn(true);
+        Mockito.when(CI_REPOSITORY.save(any(Ci.class)))
+                .thenReturn(TestEntities.CI_01);
+
+        ResponseEntity<CiDtoOut> ciDtoOutResponseEntity = ciController.editItem(TestDtos.CI_DTO_IN, NumberUtils.LONG_ONE);
+
+        assertThat(ciDtoOutResponseEntity)
+                .returns(HttpStatus.OK, ResponseEntity::getStatusCode);
+
+        assertThat(ciDtoOutResponseEntity.getHeaders())
+                .isEmpty();
+
+        assertThat(ciDtoOutResponseEntity.getBody())
+                .hasNoNullFieldsOrPropertiesExcept("parentCiId");
     }
 
     @Test
     void deleteItemTest() {
+        Mockito.when(CI_REPOSITORY.existsById(anyLong()))
+                .thenReturn(true);
+
+        ResponseEntity<Void> voidResponseEntity = ciController.deleteItem(NumberUtils.LONG_ONE);
+
+        assertThat(voidResponseEntity)
+                .returns(HttpStatus.NO_CONTENT, ResponseEntity::getStatusCode);
+
+        assertThat(voidResponseEntity.getHeaders())
+                .isEmpty();
+
+        assertThat(voidResponseEntity.getBody())
+                .isNull();
     }
 }

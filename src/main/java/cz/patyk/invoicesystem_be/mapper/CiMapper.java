@@ -20,7 +20,7 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RequiredArgsConstructor
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", imports = {java.util.Date.class, java.time.Instant.class})
 public abstract class CiMapper {
     @Autowired
     protected CiRepository ciRepository;
@@ -46,7 +46,7 @@ public abstract class CiMapper {
     @Mapping(target = "createdDateTime", expression = "java(ci.getCreatedDateTime().getTime())")
     public abstract CiDtoOut toDtoOut(Ci ci);
 
-    @Mapping(target = "createdDateTime", expression = "java(java.util.Date.from(java.time.Instant.ofEpochSecond(ciDtoIn.getCreatedDateTime())))")
+    @Mapping(target = "createdDateTime", expression = "java(Date.from(Instant.ofEpochSecond(ciDtoIn.getCreatedDateTime())))")
     @Mapping(target = "queueTier1", expression = "java(getQueue(ciDtoIn.getQueueTier1()))")
     @Mapping(target = "queueTier2", expression = "java(getQueue(ciDtoIn.getQueueTier2()))")
     @Mapping(target = "queueTier3", expression = "java(getQueue(ciDtoIn.getQueueTier3()))")
