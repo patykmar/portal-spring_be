@@ -202,7 +202,7 @@ class ServiceCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(serviceCatalogDtoInAsJson))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE));
     }
 
     @ParameterizedTest
@@ -214,7 +214,7 @@ class ServiceCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(serviceCatalogDtoInAsJson))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE));
     }
 
     private static Stream<Arguments> provideWrongParameters() {

@@ -3,6 +3,8 @@ package cz.patyk.invoicesystem_be.controllers;
 import cz.patyk.invoicesystem_be.dto.out.PaymentTypeDtoOut;
 import cz.patyk.invoicesystem_be.dto.in.PaymentTypeDtoIn;
 import cz.patyk.invoicesystem_be.service.PaymentTypeService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

@@ -138,7 +138,7 @@ class PaymentTypeControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(paymentTypeEntityEditString)
                 )
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
         ;
 
     }

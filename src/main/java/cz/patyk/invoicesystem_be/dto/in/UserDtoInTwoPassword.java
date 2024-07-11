@@ -1,11 +1,10 @@
 package cz.patyk.invoicesystem_be.dto.in;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.validation.constraints.NotBlank;
 
 @Data
 @SuperBuilder
