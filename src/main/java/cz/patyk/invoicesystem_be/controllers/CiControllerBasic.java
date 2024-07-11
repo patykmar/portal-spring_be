@@ -16,20 +16,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/ci")
 @RequiredArgsConstructor
-public class CiController implements CrudController<CiDtoIn, CiDtoOut> {
+public class CiControllerBasic implements BasicCrudController<CiDtoIn, CiDtoOut> {
     private final CiService ciService;
 
     @Override
     public ResponseEntity<CollectionModel<CiDtoOut>> getAll(Pageable pageable) {
         List<CiDtoOut> ciDtoOutList = ciService.getAll(pageable);
-        ciDtoOutList.forEach(ciDtoOut -> ciDtoOut.add(WebMvcLinkBuilder.linkTo(CiController.class)
+        ciDtoOutList.forEach(ciDtoOut -> ciDtoOut.add(WebMvcLinkBuilder.linkTo(CiControllerBasic.class)
                 .slash(ciDtoOut.getId())
                 .withSelfRel()
         ));
 
         return ResponseEntity.ok(CollectionModel.of(ciDtoOutList)
                 .add(WebMvcLinkBuilder.linkTo(
-                                WebMvcLinkBuilder.methodOn(CiController.class)
+                                WebMvcLinkBuilder.methodOn(CiControllerBasic.class)
                                         .getAll(pageable))
                         .withSelfRel()));
     }

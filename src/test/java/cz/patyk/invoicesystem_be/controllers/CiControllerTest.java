@@ -37,7 +37,7 @@ class CiControllerTest {
     private static final PageRequest PAGE_REQUEST = PageRequest.of(0, 10);
     private final ErrorHandleService errorHandleService = Mockito.mock(ErrorHandleService.class);
     private final CiService ciService = new CiService(CI_REPOSITORY, CI_MAPPER, errorHandleService);
-    private final CiController ciController = new CiController(ciService);
+    private final CiControllerBasic ciController = new CiControllerBasic(ciService);
 
     @BeforeAll
     static void setUp() {

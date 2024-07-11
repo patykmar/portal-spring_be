@@ -33,7 +33,7 @@ public class SlaControllerTest implements CrudControllerTest {
     private final SlaRepository slaRepository = Mockito.mock(SlaRepository.class);
     private final ErrorHandleService errorHandleService = Mockito.mock(ErrorHandleService.class);
     private final SlaService slaService = new SlaService(SLA_MAPPER, slaRepository, errorHandleService);
-    private final SlaController slaController = new SlaController(slaService);
+    private final SlaControllerBasic slaController = new SlaControllerBasic(slaService);
 
     @BeforeAll
     static void init() {

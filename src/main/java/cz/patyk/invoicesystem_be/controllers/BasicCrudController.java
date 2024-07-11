@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Specify methods for basic CRUD operations
+ *
  * @param <I> input DTO object
  * @param <R> return DTO object
  */
-public interface CrudController<I, R> {
-    @GetMapping("")
+public interface BasicCrudController<I, R> {
+    @GetMapping(value = "", produces = {"application/hal+json"})
     ResponseEntity<CollectionModel<R>> getAll(@PageableDefault final Pageable pageable);
 
     @GetMapping("/{id}")

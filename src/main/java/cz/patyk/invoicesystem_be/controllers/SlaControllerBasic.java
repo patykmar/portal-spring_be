@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sla")
 @RequiredArgsConstructor
-public class SlaController implements CrudController<SlaDtoIn, SlaDtoOut> {
+public class SlaControllerBasic implements BasicCrudController<SlaDtoIn, SlaDtoOut> {
     private final SlaService slaService;
 
     @Override
@@ -25,14 +25,14 @@ public class SlaController implements CrudController<SlaDtoIn, SlaDtoOut> {
 
         List<SlaDtoOut> slaDtoOuts = slaService.getAll(pageable);
 
-        slaDtoOuts.forEach(slaDtoOut -> slaDtoOut.add(WebMvcLinkBuilder.linkTo(SlaController.class)
+        slaDtoOuts.forEach(slaDtoOut -> slaDtoOut.add(WebMvcLinkBuilder.linkTo(SlaControllerBasic.class)
                 .slash(slaDtoOut.getId())
                 .withSelfRel()
         ));
 
         return ResponseEntity.ok(CollectionModel.of(slaDtoOuts).add(
                 WebMvcLinkBuilder.linkTo(
-                        WebMvcLinkBuilder.methodOn(SlaController.class)
+                        WebMvcLinkBuilder.methodOn(SlaControllerBasic.class)
                                 .getAll(pageable)
                 ).withSelfRel()
         ));
