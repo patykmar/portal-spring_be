@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", uses = {CountryMapper.class})
+@Mapper(uses = {CountryMapper.class})
 public abstract class AddressMapper {
     @Autowired
     protected CountryService countryService;

@@ -5,7 +5,7 @@ import cz.patyk.invoicesystem_be.entities.GeneralState;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface GeneralStateMapper {
     @Mapping(source = "forTicket", target = "isForTicket")
     @Mapping(source = "forCi", target = "isForCi")

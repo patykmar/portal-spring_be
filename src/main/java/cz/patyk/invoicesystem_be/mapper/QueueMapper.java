@@ -4,7 +4,7 @@ import cz.patyk.invoicesystem_be.dto.QueueDto;
 import cz.patyk.invoicesystem_be.entities.Queue;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface QueueMapper {
     Queue toEntity(QueueDto queueDto);
 

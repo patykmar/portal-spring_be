@@ -5,7 +5,7 @@ import cz.patyk.invoicesystem_be.entities.TicketType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface TicketTypeMapper {
     @Mapping(source = "disable", target = "isDisable")
     TicketType toEntity(TicketTypeDto ticketTypeDto);
