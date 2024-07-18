@@ -19,7 +19,6 @@
 
         <org.apache.maven-compiler-plugin.version>3.13.0</org.apache.maven-compiler-plugin.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <org.projectlombok.version>1.18.34</org.projectlombok.version>
         <org.springdoc.openapi-ui.version>1.6.8</org.springdoc.openapi-ui.version>
 
         <spring-cloud.version>2021.0.0</spring-cloud.version>
@@ -50,7 +49,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
-            <version>${org.projectlombok.version}</version>
+            <version>${lombok.version}</version>
         </dependency>
 
         <!-- Open API -->
@@ -71,7 +70,6 @@
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.mysql</groupId>
@@ -106,7 +104,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>${org.projectlombok.version}</version>
+                            <version>${lombok.version}</version>
                         </path>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -117,6 +115,7 @@
                     <compilerArgs>
                         <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
                         <arg>-Amapstruct.defaultComponentModel=spring</arg>
+                        <arg>-Amapstruct.unmappedTargetPolicy=ERROR</arg>
                     </compilerArgs>
                     <proc>full</proc>
                 </configuration>

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface VatMapper {
     @Mapping(source = "default", target = "isDefault")
     @Mapping(target = "multiplier", expression = "java(vatDtoIn.getPercent() + Vat.MULTIPLIER_CONST)")

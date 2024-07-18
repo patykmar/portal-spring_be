@@ -10,7 +10,7 @@ import cz.patyk.invoicesystem_be.entities.Company;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", uses = {AddressMapper.class, CountryMapper.class})
+@Mapper(uses = {AddressMapper.class, CountryMapper.class})
 public abstract class CompanyMapper {
 	@Autowired
 	protected AddressServices addressServices;
@@ -19,6 +19,9 @@ public abstract class CompanyMapper {
 	@Mapping(target = "addressDtoOut", source = "company.address")
 	public abstract CompanyDtoOut toDto(Company company);
 
+	@Mapping(target = "userList", ignore = true)
+	@Mapping(target = "modify", ignore = true)
+	@Mapping(target = "created", ignore = true)
 	@Mapping(target = "address", expression = "java(getAddress(companyDtoIn.getAddress()))")
 	public abstract Company toEntity(CompanyDtoIn companyDtoIn);
 

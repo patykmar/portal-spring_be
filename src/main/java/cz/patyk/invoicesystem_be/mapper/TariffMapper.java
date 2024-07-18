@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", uses = {VatMapper.class})
+@Mapper(uses = {VatMapper.class})
 public abstract class TariffMapper {
     @Autowired
     protected VatService vatService;

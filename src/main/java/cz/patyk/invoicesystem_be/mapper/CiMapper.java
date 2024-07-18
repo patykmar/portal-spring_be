@@ -20,7 +20,7 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RequiredArgsConstructor
-@Mapper(componentModel = "spring", imports = {java.util.Date.class, java.time.Instant.class})
+@Mapper(imports = {java.util.Date.class, java.time.Instant.class})
 public abstract class CiMapper {
     @Autowired
     protected CiRepository ciRepository;

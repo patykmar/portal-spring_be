@@ -13,7 +13,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", uses = {TicketTypeMapper.class, TariffMapper.class, InfluencingTicketMapper.class})
+@Mapper(uses = {TicketTypeMapper.class, TariffMapper.class, InfluencingTicketMapper.class})
 public abstract class SlaMapper {
     @Autowired
     protected TariffService tariffService;

@@ -5,7 +5,7 @@ import cz.patyk.invoicesystem_be.entities.InfluencingTicket;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface InfluencingTicketMapper {
     @Mapping(source = "forPriority", target = "isForPriority")
     @Mapping(source = "forImpact", target = "isForImpact")

@@ -6,7 +6,7 @@ import cz.patyk.invoicesystem_be.entities.PaymentType;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface PaymentTypeMapper {
     @Mapping(source = "default", target = "isDefault")
     PaymentTypeDtoOut toDto(PaymentType paymentType);
