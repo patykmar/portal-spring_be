@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/queues")
+@RequestMapping("/api/queues")
 public class QueueController {
     private final QueueServices queueServices;
 

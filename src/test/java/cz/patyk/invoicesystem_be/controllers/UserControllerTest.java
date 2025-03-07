@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureMockMvc
 class UserControllerTest {
 
-    private static final String URL = "/users";
+    private static final String URL = "/api/users";
     private final UserService userService = Mockito.mock(UserService.class);
 
     @Autowired

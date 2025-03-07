@@ -26,7 +26,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/payment-types")
+@RequestMapping("/api/payment-types")
 public class PaymentTypeController {
     private final PaymentTypeService paymentTypeService;
 

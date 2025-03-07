@@ -24,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/tariffs")
+@RequestMapping("/api/tariffs")
 public class TariffController {
     private final TariffService tariffService;
 
