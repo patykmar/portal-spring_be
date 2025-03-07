@@ -50,7 +50,7 @@ class ServiceCatalogControllerTest {
     private final static PageRequest pageRequest = PageRequest.of(0, 10);
     private ServiceCatalogController serviceCatalogController;
 
-    private static final String URL = "/service-catalog";
+    private static final String URL = "/api/service-catalog";
 
     @Autowired
     private MockMvc mockMvc;

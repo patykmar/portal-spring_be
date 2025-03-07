@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/addresses")
+@RequestMapping("/api/addresses")
 @RequiredArgsConstructor
 public class AddressController {
     private final AddressServices addressServices;

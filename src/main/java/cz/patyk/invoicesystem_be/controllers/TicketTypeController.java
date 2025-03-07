@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ticket-types")
+@RequestMapping("/api/ticket-types")
 public class TicketTypeController {
     private final TicketTypeService ticketTypeService;
 

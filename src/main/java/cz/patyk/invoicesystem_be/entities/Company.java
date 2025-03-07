@@ -18,7 +18,6 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,7 +44,7 @@ public class Company implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeOfCompanyId")
     @ToString.Exclude
-    private List<User> userList = new ArrayList<>();
+    private List<User> userList;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "address_id", nullable = false)

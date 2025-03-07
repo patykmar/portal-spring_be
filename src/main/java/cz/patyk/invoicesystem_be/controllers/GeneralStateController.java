@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/general-states")
+@RequestMapping("/api/general-states")
 public class GeneralStateController {
     private final GeneralStateService generalStateService;
 

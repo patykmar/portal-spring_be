@@ -24,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController
-@RequestMapping("/countries")
+@RequestMapping("/api/countries")
 @RequiredArgsConstructor
 public class CountryController {
     private final CountryService countryService;

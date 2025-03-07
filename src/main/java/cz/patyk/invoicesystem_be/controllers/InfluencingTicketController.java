@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/influencing-tickets")
+@RequestMapping("/api/influencing-tickets")
 public class InfluencingTicketController {
     private final InfluencingTicketService influencingTicketService;
 

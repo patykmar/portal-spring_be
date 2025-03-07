@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 @SpringBootTest
 @AutoConfigureMockMvc
 class PaymentTypeControllerTest {
-    private static final String URL = "/payment-types";
+    private static final String URL = "/api/payment-types";
 
     @Autowired
     private MockMvc mockMvc;

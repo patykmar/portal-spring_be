@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ci")
+@RequestMapping("/api/ci")
 @RequiredArgsConstructor
 public class CiController implements CrudController<CiDtoIn, CiDtoOut> {
     private final CiService ciService;
