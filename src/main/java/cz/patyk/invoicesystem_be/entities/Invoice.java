@@ -9,13 +9,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,16 +66,23 @@ public class Invoice implements Serializable {
 
     private String name;
     private int due;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date invoiceCreated;
+    @Temporal(TemporalType.DATE)
     private Date dueDate;
+    @Temporal(TemporalType.DATE)
     private Date paymentDate;
     private String vs;
     private String ks;
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
         Invoice invoice = (Invoice) o;
         return Objects.equals(id, invoice.id);
     }

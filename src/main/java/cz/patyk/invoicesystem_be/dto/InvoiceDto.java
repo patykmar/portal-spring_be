@@ -1,7 +1,7 @@
 package cz.patyk.invoicesystem_be.dto;
 
+import cz.patyk.invoicesystem_be.dto.out.CompanyDtoOut;
 import cz.patyk.invoicesystem_be.dto.out.PaymentTypeDtoOut;
-import cz.patyk.invoicesystem_be.entities.Company;
 import cz.patyk.invoicesystem_be.entities.InvoiceItem;
 import cz.patyk.invoicesystem_be.entities.User;
 import cz.patyk.invoicesystem_be.entities.WorkInventory;
@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class InvoiceDto {
     private int id;
-    private Company supplier;
-    private Company subscriber;
+    private CompanyDtoOut supplier;
+    private CompanyDtoOut subscriber;
     private PaymentTypeDtoOut paymentType;
     private User userCreated;
     private List<WorkInventory> workInventoryList = new ArrayList<>();

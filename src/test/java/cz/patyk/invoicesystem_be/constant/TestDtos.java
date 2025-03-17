@@ -3,6 +3,7 @@ package cz.patyk.invoicesystem_be.constant;
 import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.CiDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
+import cz.patyk.invoicesystem_be.dto.in.InvoiceDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.SlaDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.ServiceCatalogDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoIn;
@@ -98,4 +99,11 @@ public class TestDtos {
             .companyId(NumberUtils.LONG_ONE).queueTier1(NumberUtils.LONG_ONE).queueTier2(2L).queueTier3(3L)
             .name(Common.CI_TEST_NAME).description(Common.CI_TEST_DESCRIPTION)
             .createdDateTime(Common.COMPANY_TEST_CREATED).build();
+
+    public static final InvoiceDtoIn INVOICE_DTO_IN = InvoiceDtoIn.builder()
+        .supplier(NumberUtils.LONG_ONE)
+        .subscriber(2L)
+        .paymentType(NumberUtils.LONG_ONE)
+        .due(14)
+        .build();
 }
