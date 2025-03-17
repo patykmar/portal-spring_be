@@ -37,7 +37,7 @@ class TariffMapperTest {
     @MethodSource("providerDtos")
     void toEntity(TariffDtoIn tariffDtoIn, Long expectedLong) {
         Mockito
-                .when(TARIFF_MAPPER.vatService.getEntityById(tariffDtoIn.getVat()))
+                .when(TARIFF_MAPPER.vatService.getOneEntity(tariffDtoIn.getVat()))
                 .thenReturn(TestEntities.VAT_01);
 
         assertThat(TARIFF_MAPPER.toEntity(tariffDtoIn))

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
 
-
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = true)

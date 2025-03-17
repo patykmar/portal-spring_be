@@ -24,6 +24,6 @@ public abstract class ServiceCatalogMapper {
     public abstract ServiceCatalogDtoOut toDtoOut(ServiceCatalog serviceCatalog);
 
     public Vat getVat(Long vat){
-        return vatService.getEntityById(vat);
+        return vatService.getOneEntity(vat);
     }
 }

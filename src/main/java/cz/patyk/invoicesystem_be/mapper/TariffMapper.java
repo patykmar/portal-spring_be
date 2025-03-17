@@ -21,6 +21,6 @@ public abstract class TariffMapper {
     public abstract TariffDtoOut toDtoOut(Tariff tariff);
 
     public Vat getVat(Long vat) {
-        return vatService.getEntityById(vat);
+        return vatService.getOneEntity(vat);
     }
 }

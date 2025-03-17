@@ -31,7 +31,7 @@ public class Tariff implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "vat_id", nullable = false)
     @ToString.Exclude
     private Vat vat;

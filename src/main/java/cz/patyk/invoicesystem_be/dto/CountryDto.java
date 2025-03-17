@@ -3,15 +3,13 @@ package cz.patyk.invoicesystem_be.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.util.Objects;
-
+@Data
 @Builder
-@Getter
-@Setter
+@EqualsAndHashCode(callSuper = true)
 public class CountryDto extends RepresentationModel<CountryDto> {
     @Positive
     private Long id;
@@ -21,16 +19,7 @@ public class CountryDto extends RepresentationModel<CountryDto> {
     private String iso3166alpha3;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        CountryDto that = (CountryDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(iso3166alpha3, that.iso3166alpha3);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), id, name, iso3166alpha3);
+    public String toString() {
+        return String.format("%s %s", name, iso3166alpha3);
     }
 }

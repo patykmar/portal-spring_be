@@ -9,7 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -27,7 +34,7 @@ public class VatController {
     public ResponseEntity<CollectionModel<VatDtoOut>> getAll(
             @PageableDefault() final Pageable pageable
     ) {
-        List<VatDtoOut> vatDtoList = vatService.getAllVats(pageable);
+        List<VatDtoOut> vatDtoList = vatService.getAll(pageable);
 
         vatDtoList.forEach(vatDto -> vatDto.add(
                 linkTo(VatController.class)
@@ -42,17 +49,13 @@ public class VatController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VatDtoOut> getOne(
-            @PathVariable Long id
-    ) {
-        return ResponseEntity.ok(vatService.getVat(id));
+    public ResponseEntity<VatDtoOut> getOne(@PathVariable Long id) {
+        return ResponseEntity.ok(vatService.getOne(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<VatDtoOut> newItem(
-            @RequestBody VatDtoIn vatDtoIn
-    ) {
-        return ResponseEntity.ok(vatService.newVat(vatDtoIn));
+    public ResponseEntity<VatDtoOut> newItem(@RequestBody VatDtoIn vatDtoIn) {
+        return ResponseEntity.ok(vatService.newItem(vatDtoIn));
     }
 
     @PutMapping("/{id}")
@@ -60,14 +63,14 @@ public class VatController {
             @RequestBody VatDtoIn vatDtoIn,
             @PathVariable Long id
     ) {
-        return ResponseEntity.ok(vatService.edit(vatDtoIn, id));
+        return ResponseEntity.ok(vatService.editItem(vatDtoIn, id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItem(
             @PathVariable Long id
     ) {
-        vatService.delete(id);
+        vatService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }
 }

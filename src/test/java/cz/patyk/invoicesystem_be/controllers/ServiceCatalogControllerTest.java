@@ -130,7 +130,7 @@ class ServiceCatalogControllerTest {
         serviceCatalog1Local.setId(null);
 
 
-        Mockito.when(vatService.getEntityById(NumberUtils.LONG_ONE))
+        Mockito.when(vatService.getOneEntity(NumberUtils.LONG_ONE))
                 .thenReturn(TestEntities.VAT_ENTITY_01);
         Mockito.when(serviceCatalogRepository.save(any(ServiceCatalog.class)))
                 .thenReturn(TestEntities.SERVICE_CATALOG_01);
@@ -167,7 +167,7 @@ class ServiceCatalogControllerTest {
                 .thenReturn(Optional.of(TestEntities.SERVICE_CATALOG_01));
         Mockito.when(serviceCatalogRepository.existsById(NumberUtils.LONG_ONE))
                 .thenReturn(true);
-        Mockito.when(vatService.getEntityById(2L))
+        Mockito.when(vatService.getOneEntity(2L))
                 .thenReturn(TestEntities.VAT_ENTITY_02);
         Mockito.when(serviceCatalogRepository.save(serviceCatalogEdited))
                 .thenReturn(serviceCatalogEdited);

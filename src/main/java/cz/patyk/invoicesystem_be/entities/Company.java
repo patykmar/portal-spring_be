@@ -46,7 +46,7 @@ public class Company implements Serializable {
     @ToString.Exclude
     private List<User> userList;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
     @ToString.Exclude
     private Address address;

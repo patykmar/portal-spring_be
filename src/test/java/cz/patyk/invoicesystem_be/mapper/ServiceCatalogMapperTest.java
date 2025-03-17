@@ -34,7 +34,7 @@ class ServiceCatalogMapperTest {
     @MethodSource("dtoInProvider")
     void toEntity(ServiceCatalogDtoIn serviceCatalogDtoIn) {
         Mockito
-                .when(SERVICE_CATALOG_MAPPER.vatService.getEntityById(serviceCatalogDtoIn.getVat()))
+                .when(SERVICE_CATALOG_MAPPER.vatService.getOneEntity(serviceCatalogDtoIn.getVat()))
                 .thenReturn(TestEntities.VAT_ENTITY_01);
 
         assertThat(SERVICE_CATALOG_MAPPER.toEntity(serviceCatalogDtoIn))

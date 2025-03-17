@@ -1,7 +1,10 @@
 package cz.patyk.invoicesystem_be.dto;
 
 import cz.patyk.invoicesystem_be.dto.out.PaymentTypeDtoOut;
-import cz.patyk.invoicesystem_be.entities.*;
+import cz.patyk.invoicesystem_be.entities.Company;
+import cz.patyk.invoicesystem_be.entities.InvoiceItem;
+import cz.patyk.invoicesystem_be.entities.User;
+import cz.patyk.invoicesystem_be.entities.WorkInventory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

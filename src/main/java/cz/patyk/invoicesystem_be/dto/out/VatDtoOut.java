@@ -14,4 +14,9 @@ public class VatDtoOut extends RepresentationModel<VatDtoOut> {
     private final String name;
     private final int percent;
     private final int multiplier;
+
+    @Override
+    public String toString() {
+        return String.format("%s", name);
+    }
 }

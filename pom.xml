@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
+        <version>3.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cz.patyk</groupId>
@@ -15,13 +15,15 @@
     <description>invoice-system_be</description>
     <properties>
         <java.version>21</java.version>
-        <com.h2database.h2.version>2.2.224</com.h2database.h2.version>
 
-        <org.apache.maven-compiler-plugin.version>3.13.0</org.apache.maven-compiler-plugin.version>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <org.springdoc.openapi-ui.version>1.6.8</org.springdoc.openapi-ui.version>
+        <com.h2database.h2.version>2.3.232</com.h2database.h2.version>
+        <com.vaadin.version>24.1.2</com.vaadin.version>
 
-        <spring-cloud.version>2021.0.0</spring-cloud.version>
+        <org.apache.maven-compiler-plugin.version>3.14.0</org.apache.maven-compiler-plugin.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
+        <org.springdoc.openapi-ui.version>1.8.0</org.springdoc.openapi-ui.version>
+
+        <spring-cloud.version>2024.0</spring-cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -63,6 +65,13 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${com.h2database.h2.version}</version>
+        </dependency>
+
+        <!-- Vaadin Spring Boot Starter -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-spring-boot-starter</artifactId>
+            <version>${com.vaadin.version}</version> <!-- Replace with the latest version -->
         </dependency>
 
         <dependency>
@@ -123,6 +132,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${com.vaadin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-frontend</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

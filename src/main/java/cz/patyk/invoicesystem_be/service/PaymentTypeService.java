@@ -15,7 +15,7 @@ import static cz.patyk.invoicesystem_be.service.ServiceConstants.PAYMENT_TYPE_NO
 
 @Service
 @RequiredArgsConstructor
-public class PaymentTypeService {
+public class PaymentTypeService implements CrudService<PaymentTypeDtoIn, PaymentTypeDtoOut, PaymentType> {
     private final PaymentTypeRepository paymentTypeRepository;
     private final PaymentTypeMapper paymentTypeMapper;
     private final ErrorHandleService errorHandleService;
@@ -28,10 +28,13 @@ public class PaymentTypeService {
     }
 
     public PaymentTypeDtoOut getOne(Long id) {
-        return paymentTypeMapper.toDto(
-                paymentTypeRepository.findById(id)
-                        .orElseThrow(() -> errorHandleService.handleNotFoundError(id, PAYMENT_TYPE_NOT_FOUND_MESSAGE))
-        );
+        return paymentTypeMapper.toDto(getOneEntity(id));
+    }
+
+    @Override
+    public PaymentType getOneEntity(Long id) {
+        return paymentTypeRepository.findById(id)
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, PAYMENT_TYPE_NOT_FOUND_MESSAGE));
     }
 
     public PaymentTypeDtoOut newItem(PaymentTypeDtoIn ticketTypeDto) {
