@@ -13,6 +13,7 @@ import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import cz.patyk.invoicesystem_be.views.crud.AddressView;
+import cz.patyk.invoicesystem_be.views.crud.CiView;
 import cz.patyk.invoicesystem_be.views.crud.CompanyView;
 import cz.patyk.invoicesystem_be.views.crud.CountryView;
 import cz.patyk.invoicesystem_be.views.crud.GeneralStateView;
@@ -24,6 +25,7 @@ import cz.patyk.invoicesystem_be.views.crud.SlaView;
 import cz.patyk.invoicesystem_be.views.crud.TariffView;
 import cz.patyk.invoicesystem_be.views.crud.TicketTypeView;
 import cz.patyk.invoicesystem_be.views.crud.VatView;
+import cz.patyk.invoicesystem_be.views.crud.WorkInventoryView;
 
 public class MainLayout extends AppLayout {
     private H2 viewTitle;
@@ -64,6 +66,10 @@ public class MainLayout extends AppLayout {
         nav.addItem(new SideNavItem("Lobby", MainView.class, VaadinIcon.BUILDING.create()));
         nav.setLabel("CRUD");
 
+        SideNavItem sideNavUsersNav = new SideNavItem("Main");
+        sideNavUsersNav.setExpanded(true);
+        sideNavUsersNav.addItem(new SideNavItem("CI", CiView.class, VaadinIcon.USER.create()));
+
         SideNavItem sideNavAddressesNav = new SideNavItem("Addresses");
         sideNavAddressesNav.setExpanded(true);
         sideNavAddressesNav.addItem(new SideNavItem("Address", AddressView.class, VaadinIcon.MAP_MARKER.create()));
@@ -74,6 +80,7 @@ public class MainLayout extends AppLayout {
         sideNavPaymentCatalog.addItem(new SideNavItem("Company", CompanyView.class, VaadinIcon.BUILDING.create()));
         sideNavPaymentCatalog.addItem(new SideNavItem("Payment type", PaymentTypeView.class, VaadinIcon.WALLET.create()));
         sideNavPaymentCatalog.addItem(new SideNavItem("Vat", VatView.class, VaadinIcon.CASH.create()));
+        sideNavPaymentCatalog.addItem(new SideNavItem("Work inventory", WorkInventoryView.class, VaadinIcon.WORKPLACE.create()));
 
         SideNavItem sideNavItem = new SideNavItem("Ticket catalog");
         sideNavItem.setExpanded(true);
@@ -86,6 +93,7 @@ public class MainLayout extends AppLayout {
         sideNavItem.addItem(new SideNavItem("Queue", QueueView.class, VaadinIcon.EXCHANGE.create()));
 
 
+        nav.addItem(sideNavUsersNav);
         nav.addItem(sideNavAddressesNav);
         nav.addItem(sideNavPaymentCatalog);
         nav.addItem(sideNavItem);

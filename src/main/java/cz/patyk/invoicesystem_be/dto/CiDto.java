@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 @Builder
+@Deprecated
 @AllArgsConstructor
 public class CiDto {
     private Long id;

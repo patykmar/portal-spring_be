@@ -8,18 +8,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class ErrorHandleService {
-
     public ApplicationException handleNotFoundError(Long id, String message) {
-        log.error("ID: {} of {}", id, message);
-        return new ApplicationException(message, HttpStatus.NOT_FOUND);
+        return handleBadRequestError(id, message, HttpStatus.NOT_FOUND);
     }
 
     public ApplicationException handleBadRequestError(Long id, String message) {
-        log.error("ID: {} of {}", id, message);
-        return new ApplicationException(message, HttpStatus.BAD_REQUEST);
+        return handleBadRequestError(id, message, HttpStatus.BAD_REQUEST);
     }
+
     public ApplicationException handleBadRequestError(String message) {
         log.error("{}", message);
         return new ApplicationException(message, HttpStatus.BAD_REQUEST);
+    }
+
+    private ApplicationException handleBadRequestError(Long id, String message, HttpStatus httpStatus) {
+        log.error("ID: {} of {}", id, message);
+        return new ApplicationException(message, httpStatus);
     }
 }
