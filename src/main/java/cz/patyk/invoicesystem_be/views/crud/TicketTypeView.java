@@ -8,7 +8,7 @@ import cz.patyk.invoicesystem_be.service.TicketTypeService;
 import cz.patyk.invoicesystem_be.views.MainLayout;
 import org.springframework.data.domain.PageRequest;
 
-@Route(value = "ticketType", layout = MainLayout.class)
+@Route(value = "ticket-type", layout = MainLayout.class)
 public class TicketTypeView extends VerticalLayout {
     private final TicketTypeService ticketTypeService;
 
@@ -19,6 +19,7 @@ public class TicketTypeView extends VerticalLayout {
 
     Grid<TicketTypeDto> ticketTypeDtoGrid() {
         Grid<TicketTypeDto> grid = new Grid<>(TicketTypeDto.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(TicketTypeDto::getId).setHeader("ID");
         grid.addColumn(TicketTypeDto::getName).setHeader("Name");
         grid.addColumn(TicketTypeDto::getAbbreviation).setHeader("Abbreviation");

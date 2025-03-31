@@ -30,7 +30,7 @@ public class EmailNotificationCi implements Serializable {
     @Column(nullable = false)
     private String emailAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ci_id", nullable = false)
     @ToString.Exclude
     private Ci ci;

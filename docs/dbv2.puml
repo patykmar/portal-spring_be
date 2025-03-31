@@ -1,0 +1,271 @@
+@startuml DBv2
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, white) >>
+
+table( country ) {
+  primary_key( id ): INTEGER
+  column( name ): varchar(255)
+  column( iso3166Alpha3 ): varchar(255)
+}
+
+table( address ) {
+  primary_key( id ): INTEGER
+  foreign_key( country_id ): INTEGER <<FK>>
+  column( street ): varchar(255)
+  column( city ): varchar(250)
+  column( zip_code ): varchar(250)
+}
+
+country o--* address: 1:n
+
+table( company ) {
+  primary_key( id ): INTEGER
+  foreign_key( address_id ): INTEGER <<FK>>
+  column( name ): String
+  column( name ): String
+  column( description ): String
+  column( company_id ): String
+  column( vat_number ): String
+  column( created ): INTEGER
+  column( modify ): INTEGER
+  column( bank_account_number ): String
+  column( iban ): String
+  column( swift ): String
+}
+
+address o--* company: 1:n
+
+table( users ) {
+  primary_key( id ): INTEGER
+  foreign_key( employee_of_company_id ): INTEGER <<FK>>
+  column( email ): String
+  column( password ): String
+  column( first_name ): String
+  column( last_name ): String
+  column( last_login ): INTEGER
+  column( created ): INTEGER
+  column( password_changed ): INTEGER
+  column( roles ): String
+}
+
+users o--* company: 1:n
+
+table( payment_type ) {
+  primary_key( id ): INTEGER
+  column( name ): String
+  column( is_default ): BOOLEAN
+}
+
+table( invoice ) {
+  primary_key( id ): INTEGER
+  foreign_key( supplier_id ): company <<FK>>
+  foreign_key( subscriber_id ): company <<FK>>
+  foreign_key( payment_type_id ): payment_type <<FK>>
+  foreign_key( created_user_id ): users <<FK>>
+  column( name ) String
+  column( due ) INTEGER
+  column( due_date ) INTEGER
+  column( payment_date ) INTEGER
+  column( vs ) String
+  column( ks ) String
+}
+
+company o--* invoice: 1:n
+company o--* invoice: 1:n
+users o--* invoice: 1:n
+payment_type o--* invoice: 1:n
+
+table( vat ) {
+  primary_key( id ): INTEGER
+  column( name ) String
+  column( percent ) INTEGER
+  column( multiplier ) INTEGER
+  column( is_default ) BOOLEAN
+}
+
+table( tariff ) {
+  primary_key( id ): INTEGER
+  foreign_key( vat_id ): vat <<FK>>
+  column( name ) String
+  column( price ) INTEGER
+}
+
+vat o--* tariff: 1:n
+
+table( work_inventory ) {
+  primary_key( id ): INTEGER
+  foreign_key( tariff_id ): tariff <<FK>>
+  foreign_key( company_id ): company <<FK>>
+  foreign_key( user_id ): users <<FK>>
+  foreign_key( invoice_id ): invoice <<FK>>
+  column( description ) String
+  column( work_start ) INTEGER
+  column( work_end ) INTEGER
+  column( work_duration ) Float
+}
+
+tariff o--* work_inventory: 1:n
+invoice o--* work_inventory: 1:n
+company o--* work_inventory: 1:n
+users o--* work_inventory: 1:n
+
+table( service_catalog ) {
+  primary_key( id ): INTEGER
+  foreign_key( vat_id ): vat <<FK>>
+  column( name ) String
+  column( description ) String
+  column( price ) INTEGER
+  column( estimate_time_delivery ) INTEGER
+  column( estimate_time_reaction ) INTEGER
+    column( is_disable ) BOOLEAN
+}
+
+vat o--* service_catalog: 1:n
+
+table( invoice_item ) {
+  primary_key( id ): INTEGER
+  foreign_key( vat_id ): vat <<FK>>
+  column( name ) String
+  column( price ) INTEGER
+  column( margin ) INTEGER
+  column( margin_total ) INTEGER
+  column( price_inc_margin ) INTEGER
+  column( discount ) INTEGER
+  column( discount_total ) INTEGER
+  column( price_inc_margin_minus_discount ) INTEGER
+  column( price_inc_margin_discount_multi_vat ) INTEGER
+  column( price_inc_margin_multi_vat ) INTEGER
+  column( unit_count ) Float
+  column( total_price_inc_margin_discount_vat ) INTEGER
+  column( total_price_inc_margin_vat ) INTEGER
+  column( is_default ) BOOLEAN
+}
+
+vat o--* invoice_item: 1:n
+invoice o--* invoice_item: 1:n
+
+table( influencing_ticket ) {
+  primary_key( id ): INTEGER
+  column( name ) String
+  column( is_for_priority ) BOOLEAN
+  column( is_for_impact ) BOOLEAN
+  column( coefficient_price ) Float
+  column( coefficient_time ) Float
+}
+
+table( ticket_type ) {
+  primary_key( id ): INTEGER
+  column( name ) String
+  column( abbreviation ) String
+  column( coefficient_price ) Float
+  column( coefficient_time ) Float
+  column( is_disable ) BOOLEAN
+}
+
+table( sla ) {
+  primary_key( id ): INTEGER
+  foreign_key( tariff_id ): tariff <<FK>>
+  foreign_key( priority_id ): influencing_ticket <<FK>>
+  foreign_key( ticket_type_id ): ticket_type <<FK>>
+  column( reaction_time ) INTEGER
+  column( resolved_time ) INTEGER
+  column( price_multiplier ) INTEGER
+}
+
+influencing_ticket o--* sla: 1:n
+ticket_type o--* sla: 1:n
+tariff o--* sla: 1:n
+
+table( general_state ) {
+  primary_key( id ): INTEGER
+  column( name ) String
+  column( is_for_ticket ) BOOLEAN
+  column( is_for_ci ) BOOLEAN
+  column( is_for_close_state ) BOOLEAN
+  column( coefficient_price ) Float
+}
+
+table( email_notification_ci ) {
+  primary_key( id ): INTEGER
+  column( email_address ) String
+}
+
+table( queue ) {
+  primary_key( id ): INTEGER
+  column( name ): String
+}
+
+table( ci ) {
+  primary_key( id ): INTEGER
+  foreign_key( parent_ci_id ): ci <<FK>>
+  foreign_key( created_user_id ): users <<FK>>
+  foreign_key( state_id ): general_state <<FK>>
+  foreign_key( tariff_id ): tariff <<FK>>
+  foreign_key( company_id ): company <<FK>>
+  foreign_key( queue_tier_1 ): queue <<FK>>
+  foreign_key( queue_tier_2 ): queue <<FK>>
+  foreign_key( queue_tier_3 ): queue <<FK>>
+  column( name ) String
+  column( created_date_time ) INTEGER
+  column( description ) String
+}
+
+email_notification_ci o--* ci: 1:n
+ci o--* ci: 1:n
+users o--* ci: 1:n
+general_state o--* ci: 1:n
+tariff o--* ci: 1:n
+company o--* ci: 1:n
+queue o--* ci: 1:n
+queue o--* ci: 1:n
+queue o--* ci: 1:n
+
+table( queue_user ) {
+  primary_key( id ): INTEGER
+  foreign_key( queue_id ): queue <<FK>>
+  foreign_key( user_id ): users <<FK>>
+}
+
+queue o--* queue_user: 1:n
+users o--* queue_user: 1:n
+
+table( ticket ) {
+  primary_key( id ): INTEGER
+  foreign_key( service_catalog_id ): service_catalog <<FK>>
+  foreign_key( ci_id ): ci <<FK>>
+  foreign_key( queue_user_id ): queue_user <<FK>>
+  foreign_key( user_created ): users <<FK>>
+  foreign_key( user_resolved ): users <<FK>>
+  foreign_key( parent_ticket_id ): ticket <<FK>>
+  foreign_key( work_inventory_id ): work_inventory <<FK>>
+  foreign_key( ticket_close_state_id ): general_state <<FK>>
+  foreign_key( ticket_state_id ): general_state <<FK>>
+  foreign_key( ticket_type_id ): ticket_type <<FK>>
+  foreign_key( priority_id ): influencing_ticket <<FK>>
+  foreign_key( impact_id ): influencing_ticket <<FK>>
+  column( description_title ) String
+  column( description_body ) String
+  column( closed_notes ) String
+  column( closed_datetime ) INTEGER
+  column( reaction_datetime ) INTEGER
+  column( delivery_datetime ) INTEGER
+  column( created_datetime ) INTEGER
+  column( to_string ) String
+}
+
+service_catalog o--* ticket: 1:n
+ci o--* ticket: 1:n
+queue_user o--* ticket: 1:n
+users o--* ticket: 1:n
+users o--* ticket: 1:n
+ticket o--* ticket: 1:n
+work_inventory o--* ticket: 1:n
+general_state o--* ticket: 1:n
+general_state o--* ticket: 1:n
+ticket_type o--* ticket: 1:n
+influencing_ticket o--* ticket: 1:n
+influencing_ticket o--* ticket: 1:n
+
+@enduml

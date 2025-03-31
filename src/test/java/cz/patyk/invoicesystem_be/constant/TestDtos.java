@@ -4,6 +4,7 @@ import cz.patyk.invoicesystem_be.dto.CountryDto;
 import cz.patyk.invoicesystem_be.dto.in.CiDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.CompanyDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.InvoiceDtoIn;
+import cz.patyk.invoicesystem_be.dto.in.InvoiceItemDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.SlaDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.ServiceCatalogDtoIn;
 import cz.patyk.invoicesystem_be.dto.in.UserDtoIn;
@@ -15,6 +16,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.math.BigDecimal;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TestDtos {
@@ -100,10 +103,22 @@ public class TestDtos {
             .name(Common.CI_TEST_NAME).description(Common.CI_TEST_DESCRIPTION)
             .createdDateTime(Common.COMPANY_TEST_CREATED).build();
 
+    private static InvoiceItemDtoIn invoiceItemDtoIn() {
+        return InvoiceItemDtoIn.builder()
+                .vatId(NumberUtils.LONG_ONE)
+                .name("Some invoice item")
+                .price(new BigDecimal("6000"))
+                .margin(NumberUtils.INTEGER_ZERO)
+                .discount(NumberUtils.INTEGER_ZERO)
+                .unitCount(Float.valueOf("20.0"))
+                .build();
+    }
+
     public static final InvoiceDtoIn INVOICE_DTO_IN = InvoiceDtoIn.builder()
-        .supplier(NumberUtils.LONG_ONE)
-        .subscriber(2L)
-        .paymentType(NumberUtils.LONG_ONE)
-        .due(14)
-        .build();
+            .supplier(NumberUtils.LONG_ONE)
+            .subscriber(2L)
+            .paymentType(NumberUtils.LONG_ONE)
+            .due(14)
+            .invoiceItems(List.of(invoiceItemDtoIn()))
+            .build();
 }

@@ -19,6 +19,7 @@ public class SlaView extends VerticalLayout {
 
     Grid<SlaDtoOut> slaDtoGrid() {
         Grid<SlaDtoOut> grid = new Grid<>(SlaDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(SlaDtoOut::getId).setHeader("Id");
         grid.addColumn(SlaDtoOut::getTariffId).setHeader("Tariff Id");
         grid.addColumn(SlaDtoOut::getPriorityId).setHeader("Priority Id");

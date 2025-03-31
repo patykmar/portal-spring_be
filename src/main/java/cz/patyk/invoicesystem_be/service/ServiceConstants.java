@@ -9,10 +9,13 @@ public class ServiceConstants {
     public static final String CI_NOT_FOUND_MESSAGE = "CI not found";
     public static final String COMPANY_NOT_FOUND_MESSAGE = "Company not found";
     public static final String COUNTRY_NOT_FOUND_MESSAGE = "Country not found";
+    public static final String EMAIL_NOTIFICATION_CI_NOT_FOUND_MESSAGE = "Email notification ci not found";
     public static final String GENERAL_STATE_NOT_FOUND_MESSAGE = "General state not found";
     public static final String PAYMENT_TYPE_NOT_FOUND_MESSAGE = "Payment type not found";
     public static final String QUEUE_NOT_FOUND_MESSAGE = "Queue not found";
+    public static final String QUEUE_USER_NOT_FOUND_MESSAGE = "Queue user not found";
     public static final String INFLUENCING_TICKET_NOT_FOUND_MESSAGE = "Influencing ticket not found";
+    public static final String INVOICE_NOT_FOUND_MESSAGE = "Invoice not found";
     public static final String SERVICE_CATALOG_NOT_FOUND_MESSAGE = "Service catalog not found";
     public static final String SLA_NOT_FOUND = "SLA not found";
     public static final String TARIFF_NOT_FOUND_MESSAGE = "Tariff not found";

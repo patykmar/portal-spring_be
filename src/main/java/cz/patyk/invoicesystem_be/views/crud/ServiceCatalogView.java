@@ -8,7 +8,7 @@ import cz.patyk.invoicesystem_be.service.ServiceCatalogService;
 import cz.patyk.invoicesystem_be.views.MainLayout;
 import org.springframework.data.domain.PageRequest;
 
-@Route(value = "serviceCatalog", layout = MainLayout.class)
+@Route(value = "service-catalog", layout = MainLayout.class)
 public class ServiceCatalogView extends VerticalLayout {
     private final ServiceCatalogService serviceCatalogService;
 
@@ -19,6 +19,7 @@ public class ServiceCatalogView extends VerticalLayout {
 
     Grid<ServiceCatalogDtoOut> serviceCatalogGrid() {
         Grid<ServiceCatalogDtoOut> grid = new Grid<>(ServiceCatalogDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(ServiceCatalogDtoOut::getId).setHeader("ID");
         grid.addColumn(ServiceCatalogDtoOut::getName).setHeader("Name");
         grid.addColumn(ServiceCatalogDtoOut::getDescription).setHeader("Description");

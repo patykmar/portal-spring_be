@@ -21,6 +21,7 @@ public class AddressView extends VerticalLayout {
 
     Grid<AddressDtoOut> addressGrid() {
         Grid<AddressDtoOut> grid = new Grid<>(AddressDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(AddressDtoOut::getId).setHeader("ID");
         grid.addColumn(AddressDtoOut::getStreet).setHeader("Street");
         grid.addColumn(AddressDtoOut::getCity).setHeader("City");

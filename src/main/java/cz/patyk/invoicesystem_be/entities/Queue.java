@@ -7,20 +7,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 
-@Builder
+@Data
 @Entity
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Queue implements Serializable {

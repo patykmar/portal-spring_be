@@ -1,6 +1,7 @@
 package cz.patyk.invoicesystem_be.controllers;
 
-import cz.patyk.invoicesystem_be.dto.QueueDto;
+import cz.patyk.invoicesystem_be.dto.in.QueueDtoIn;
+import cz.patyk.invoicesystem_be.dto.out.QueueDtoOut;
 import cz.patyk.invoicesystem_be.service.QueueServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +29,10 @@ public class QueueController {
     private final QueueServices queueServices;
 
     @GetMapping("")
-    public ResponseEntity<CollectionModel<QueueDto>> getAll(
+    public ResponseEntity<CollectionModel<QueueDtoOut>> getAll(
             @PageableDefault final Pageable pageable
     ) {
-        List<QueueDto> queueDtos = queueServices.getAll(pageable);
+        List<QueueDtoOut> queueDtos = queueServices.getAll(pageable);
         queueDtos.forEach(queueDto -> queueDto.add(linkTo(QueueController.class)
                 .slash(queueDto.getId())
                 .withSelfRel()
@@ -44,22 +45,22 @@ public class QueueController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QueueDto> getOne(
+    public ResponseEntity<QueueDtoOut> getOne(
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(queueServices.getOne(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<QueueDto> newItem(
-            @RequestBody QueueDto queueDto
+    public ResponseEntity<QueueDtoOut> newItem(
+            @RequestBody QueueDtoIn queueDto
     ) {
         return ResponseEntity.ok(queueServices.newItem(queueDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<QueueDto> editItem(
-            @RequestBody QueueDto queueDto,
+    public ResponseEntity<QueueDtoOut> editItem(
+            @RequestBody QueueDtoIn queueDto,
             @PathVariable Long id
     ) {
         return ResponseEntity.ok(queueServices.editItem(queueDto, id));

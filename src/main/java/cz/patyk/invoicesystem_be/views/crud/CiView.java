@@ -19,6 +19,7 @@ public class CiView extends VerticalLayout {
 
     Grid<CiDtoOut> ciGrid() {
         Grid<CiDtoOut> grid = new Grid<>(CiDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(CiDtoOut::getId).setHeader("ID");
         grid.addColumn(CiDtoOut::getName).setHeader("Name");
         grid.setItems(ciService.getAll(PageRequest.of(0, 10)));

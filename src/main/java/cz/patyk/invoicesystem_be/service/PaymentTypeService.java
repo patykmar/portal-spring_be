@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static cz.patyk.invoicesystem_be.service.ServiceConstants.PAYMENT_TYPE_NOT_FOUND_MESSAGE;
-
 @Service
 @RequiredArgsConstructor
 public class PaymentTypeService implements CrudService<PaymentTypeDtoIn, PaymentTypeDtoOut, PaymentType> {
@@ -34,7 +32,7 @@ public class PaymentTypeService implements CrudService<PaymentTypeDtoIn, Payment
     @Override
     public PaymentType getOneEntity(Long id) {
         return paymentTypeRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, PAYMENT_TYPE_NOT_FOUND_MESSAGE));
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.PAYMENT_TYPE_NOT_FOUND_MESSAGE));
     }
 
     public PaymentTypeDtoOut newItem(PaymentTypeDtoIn ticketTypeDto) {
@@ -56,7 +54,7 @@ public class PaymentTypeService implements CrudService<PaymentTypeDtoIn, Payment
 
     private void isIdExist(Long id) {
         if (!paymentTypeRepository.existsById(id)) {
-            throw errorHandleService.handleNotFoundError(id, PAYMENT_TYPE_NOT_FOUND_MESSAGE);
+            throw errorHandleService.handleNotFoundError(id, ServiceConstants.PAYMENT_TYPE_NOT_FOUND_MESSAGE);
         }
     }
 }

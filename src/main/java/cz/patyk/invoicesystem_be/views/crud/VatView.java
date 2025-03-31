@@ -21,6 +21,7 @@ public class VatView extends VerticalLayout {
 
     Grid<VatDtoOut> vatGrid() {
         Grid<VatDtoOut> grid = new Grid<>(VatDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(VatDtoOut::getId).setHeader("ID");
         grid.addColumn(VatDtoOut::getName).setHeader("Name");
         grid.addColumn(VatDtoOut::isDefault).setHeader("is default");

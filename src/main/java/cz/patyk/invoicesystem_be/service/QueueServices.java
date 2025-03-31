@@ -1,6 +1,7 @@
 package cz.patyk.invoicesystem_be.service;
 
-import cz.patyk.invoicesystem_be.dto.QueueDto;
+import cz.patyk.invoicesystem_be.dto.in.QueueDtoIn;
+import cz.patyk.invoicesystem_be.dto.out.QueueDtoOut;
 import cz.patyk.invoicesystem_be.entities.Queue;
 import cz.patyk.invoicesystem_be.exceptions.ApplicationException;
 import cz.patyk.invoicesystem_be.mapper.QueueMapper;
@@ -11,17 +12,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static cz.patyk.invoicesystem_be.service.ServiceConstants.QUEUE_NOT_FOUND_MESSAGE;
-
 @Service
 @RequiredArgsConstructor
-public class QueueServices implements CrudService<QueueDto, QueueDto, Queue> {
+public class QueueServices implements CrudService<QueueDtoIn, QueueDtoOut, Queue> {
     private final QueueRepository queueRepository;
     private final QueueMapper queueMapper;
     private final ErrorHandleService errorHandleService;
 
     @Override
-    public List<QueueDto> getAll(Pageable pageable) {
+    public List<QueueDtoOut> getAll(Pageable pageable) {
         return queueRepository.findAll(pageable)
                 .stream()
                 .map(queueMapper::toDto)
@@ -29,24 +28,24 @@ public class QueueServices implements CrudService<QueueDto, QueueDto, Queue> {
     }
 
     @Override
-    public QueueDto getOne(Long id) {
+    public QueueDtoOut getOne(Long id) {
         return queueMapper.toDto(getOneEntity(id));
     }
 
     @Override
     public Queue getOneEntity(Long id) {
         return queueRepository.findById(id)
-                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, QUEUE_NOT_FOUND_MESSAGE));
+                .orElseThrow(() -> errorHandleService.handleNotFoundError(id, ServiceConstants.QUEUE_NOT_FOUND_MESSAGE));
     }
 
     @Override
-    public QueueDto newItem(QueueDto queueDto) {
+    public QueueDtoOut newItem(QueueDtoIn queueDto) {
         Queue queue = queueMapper.toEntity(queueDto);
         return queueMapper.toDto(queueRepository.save(queue));
     }
 
     @Override
-    public QueueDto editItem(QueueDto queueDto, Long id) {
+    public QueueDtoOut editItem(QueueDtoIn queueDto, Long id) {
         checkIfExist(id);
         Queue queue = queueMapper.toEntity(queueDto);
         queue.setId(id);

@@ -1,12 +1,13 @@
 package cz.patyk.invoicesystem_be.mapper;
 
-import cz.patyk.invoicesystem_be.dto.QueueDto;
+import cz.patyk.invoicesystem_be.dto.in.QueueDtoIn;
+import cz.patyk.invoicesystem_be.dto.out.QueueDtoOut;
 import cz.patyk.invoicesystem_be.entities.Queue;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface QueueMapper {
-    Queue toEntity(QueueDto queueDto);
+    Queue toEntity(QueueDtoIn queueDto);
 
-    QueueDto toDto(Queue queue);
+    QueueDtoOut toDto(Queue queue);
 }

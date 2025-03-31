@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 @Data
 @Builder
+@Deprecated
 @EqualsAndHashCode(callSuper = true)
 public class QueueDto extends RepresentationModel<QueueDto> {
     private Long id;

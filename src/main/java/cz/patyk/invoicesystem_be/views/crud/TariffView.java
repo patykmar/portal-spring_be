@@ -19,6 +19,7 @@ public class TariffView extends VerticalLayout {
 
     Grid<TariffDtoOut> tariffDtoOutGrid() {
         Grid<TariffDtoOut> grid = new Grid<>(TariffDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(TariffDtoOut::getId).setHeader("ID");
         grid.addColumn(TariffDtoOut::getVatDto).setHeader("VAT");
         grid.addColumn(TariffDtoOut::getName).setHeader("Name");

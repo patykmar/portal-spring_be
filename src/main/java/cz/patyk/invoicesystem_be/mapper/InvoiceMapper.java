@@ -1,13 +1,13 @@
 package cz.patyk.invoicesystem_be.mapper;
 
-import cz.patyk.invoicesystem_be.dto.InvoiceDto;
 import cz.patyk.invoicesystem_be.dto.in.InvoiceDtoIn;
+import cz.patyk.invoicesystem_be.dto.out.InvoiceDtoOut;
 import cz.patyk.invoicesystem_be.entities.Invoice;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(uses = {CompanyMapper.class, PaymentTypeMapper.class, UserMapper.class, WorkInventoryMapper.class, InvoiceItemMapper.class})
 public interface InvoiceMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "supplier", ignore = true)
@@ -22,6 +22,6 @@ public interface InvoiceMapper {
     @Mapping(target = "paymentDate", ignore = true)
     Invoice toEntity(InvoiceDtoIn invoiceDtoIn);
 
-//    @Mapping(target = "paymentType.isDefault", source = "paymentType.default")
-//    InvoiceDto toDto(Invoice invoice);
+    @Mapping(target = "links", ignore = true)
+    InvoiceDtoOut toDtoOut(Invoice invoice);
 }

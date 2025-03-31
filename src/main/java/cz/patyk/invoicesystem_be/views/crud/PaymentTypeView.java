@@ -8,7 +8,7 @@ import cz.patyk.invoicesystem_be.service.PaymentTypeService;
 import cz.patyk.invoicesystem_be.views.MainLayout;
 import org.springframework.data.domain.PageRequest;
 
-@Route(value = "paymentType", layout = MainLayout.class)
+@Route(value = "payment-type", layout = MainLayout.class)
 public class PaymentTypeView extends VerticalLayout {
     private final PaymentTypeService paymentTypeService;
 
@@ -19,6 +19,7 @@ public class PaymentTypeView extends VerticalLayout {
 
     Grid<PaymentTypeDtoOut> paymentTypeGrid() {
         Grid<PaymentTypeDtoOut> grid = new Grid<>(PaymentTypeDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(PaymentTypeDtoOut::getId).setHeader("ID");
         grid.addColumn(PaymentTypeDtoOut::getName).setHeader("Name");
         grid.addColumn(PaymentTypeDtoOut::isDefault).setHeader("is default?");

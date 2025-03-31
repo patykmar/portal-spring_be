@@ -1,4 +1,4 @@
-package cz.patyk.invoicesystem_be.dto;
+package cz.patyk.invoicesystem_be.dto.out;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,21 +9,20 @@ import java.math.BigInteger;
 @Data
 @Builder
 @AllArgsConstructor
-public class InvoiceItemDto {
+public class InvoiceItemDtoOut {
     private Long id;
-    private Long invoiceId;
-    private Long vatId;
+    private VatDtoOut vat;
     private String name;
-    private int price;
-    private int margin;
+    private String price;
+    private Integer margin;
+    private Integer discount;
+    private Float unitCount;
     private int marginTotal;
     private int priceIncMargin;
-    private int discount;
     private int discountTotal;
     private int priceIncMarginMinusDiscount;
     private int priceIncMarginDiscountMultiVat;
     private int priceIncMarginMultiVat;
-    private int unitCount;
     private BigInteger totalPriceIncMarginDiscountVat;
     private BigInteger totalPriceIncMarginVat;
 }

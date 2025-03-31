@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InvoiceController {
 
     @GetMapping("/invoice/{id}")
-    public Invoice getInvoiceDetail(@PathVariable int id ){
+    public Invoice getInvoiceDetail(@PathVariable int id){
         return new Invoice();
     }
 

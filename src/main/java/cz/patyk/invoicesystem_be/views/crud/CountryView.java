@@ -22,6 +22,7 @@ public class CountryView extends VerticalLayout {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
         Grid<CountryDto> grid = new Grid<>(CountryDto.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(CountryDto::getId).setHeader("ID");
         grid.addColumn(CountryDto::getName).setHeader("Country name");
         grid.addColumn(CountryDto::getIso3166alpha3).setHeader("Iso3166alpha3");

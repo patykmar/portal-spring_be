@@ -19,6 +19,7 @@ public class CompanyView extends VerticalLayout {
 
     Grid<CompanyDtoOut> companyDtoOutGrid() {
         Grid<CompanyDtoOut> grid = new Grid<>(CompanyDtoOut.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(CompanyDtoOut::getId).setHeader("ID");
         grid.addColumn(CompanyDtoOut::getName).setHeader("Name");
         grid.addColumn(CompanyDtoOut::getDescription).setHeader("Description");

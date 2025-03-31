@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 @Builder
+@Deprecated
 @AllArgsConstructor
 public class WorkInventoryDto {
     private Long id;

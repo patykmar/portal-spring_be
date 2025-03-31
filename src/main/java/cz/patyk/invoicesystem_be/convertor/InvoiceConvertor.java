@@ -1,14 +1,17 @@
 package cz.patyk.invoicesystem_be.convertor;
 
+import cz.patyk.invoicesystem_be.dto.out.InvoiceDtoOut;
+import cz.patyk.invoicesystem_be.entities.InvoiceItem;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
 
-import cz.patyk.invoicesystem_be.dto.InvoiceDto;
 import cz.patyk.invoicesystem_be.dto.in.InvoiceDtoIn;
 import cz.patyk.invoicesystem_be.entities.Invoice;
 import cz.patyk.invoicesystem_be.mapper.InvoiceMapper;
@@ -20,13 +23,15 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class InvoiceConvertor {
+public class InvoiceConvertor implements CrudConvertor<InvoiceDtoIn, InvoiceDtoOut, Invoice> {
     private final CompanyService companyService;
     private final InvoiceMapper invoiceMapper;
     private final PaymentTypeService paymentTypeService;
     private final UserService userService;
+    private final InvoiceItemConverter invoiceItemConvertor;
 
-    public Invoice convertToInvoice(InvoiceDtoIn invoiceDtoIn) {
+    @Override
+    public Invoice inputToEntity(InvoiceDtoIn invoiceDtoIn) {
         Invoice invoice = invoiceMapper.toEntity(invoiceDtoIn);
         var supplier = companyService.getOneEntity(invoiceDtoIn.getSupplier());
         var subscriber = companyService.getOneEntity(invoiceDtoIn.getSubscriber());
@@ -47,26 +52,34 @@ public class InvoiceConvertor {
         }
 
         var name = String.format("%s: %s (%s) -> %s (%s)", invoice.getVs(), supplier.getDescription(), supplier.getCompanyId(), subscriber.getDescription(),
-            subscriber.getCompanyId()
+                subscriber.getCompanyId()
         );
         invoice.setName(name);
 
         //TODO: move time zone and KS to application parameter
         var dueDate = ZonedDateTime.ofInstant(invoice.getInvoiceCreated().toInstant(), ZoneId.of("Europe/Prague"))
-            .plusDays(invoice.getDue()).toInstant();
+                .plusDays(invoice.getDue()).toInstant();
         invoice.setDueDate(Date.from(dueDate));
 
         if (Objects.isNull(invoiceDtoIn.getKs())) {
             invoice.setKs("0308");
         }
 
+        var listOfInvoiceItems = invoiceDtoIn.getInvoiceItems().stream()
+                .map(invoiceItemDtoIn -> invoiceItemConvertor.inputToEntity(invoiceItemDtoIn, invoice))
+                .toList();
+        invoice.setInvoiceItemList(listOfInvoiceItems);
+
         return invoice;
     }
 
     public String generateVs() {
         var year = ZonedDateTime.now().getYear();
-        Random random = new Random();
-        var value = random.nextInt(900000);
-        return String.format("%s%06d", year, value);
+        return String.format("%s%06d", year, RandomUtils.secure().randomInt(100, 999999));
+    }
+
+    @Override
+    public InvoiceDtoOut entityToDto(Invoice entity) {
+        return invoiceMapper.toDtoOut(entity);
     }
 }

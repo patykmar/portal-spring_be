@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import cz.patyk.invoicesystem_be.constant.TestDtos;
 import cz.patyk.invoicesystem_be.entities.Invoice;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class InvoiceConvertorTest {
 
@@ -18,16 +16,18 @@ class InvoiceConvertorTest {
 
     @Test
     void convertToInvoice() {
-        Invoice invoice = invoiceConvertor.convertToInvoice(TestDtos.INVOICE_DTO_IN);
+        Invoice invoice = invoiceConvertor.inputToEntity(TestDtos.INVOICE_DTO_IN);
         Assertions.assertThat(invoice)
-            .isNotNull();
+                .isNotNull()
+                .hasNoNullFieldsOrPropertiesExcept("paymentDate");
+
     }
 
     @Test
     void generateVsTest() {
         var generateVs = invoiceConvertor.generateVs();
         Assertions.assertThat(generateVs)
-            .isNotNull()
-            .hasSize(10);
+                .isNotNull()
+                .hasSize(10);
     }
 }

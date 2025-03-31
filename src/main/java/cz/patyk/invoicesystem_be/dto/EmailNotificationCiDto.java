@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
+@Deprecated
 @AllArgsConstructor
 public class EmailNotificationCiDto {
     private Long id;

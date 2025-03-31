@@ -1,29 +1,28 @@
-package cz.patyk.invoicesystem_be.dto;
+package cz.patyk.invoicesystem_be.dto.out;
 
-import cz.patyk.invoicesystem_be.dto.out.CompanyDtoOut;
-import cz.patyk.invoicesystem_be.dto.out.PaymentTypeDtoOut;
-import cz.patyk.invoicesystem_be.entities.InvoiceItem;
 import cz.patyk.invoicesystem_be.entities.User;
-import cz.patyk.invoicesystem_be.entities.WorkInventory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class InvoiceDto {
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class InvoiceDtoOut extends RepresentationModel<InvoiceDtoOut> {
     private int id;
     private CompanyDtoOut supplier;
     private CompanyDtoOut subscriber;
     private PaymentTypeDtoOut paymentType;
     private User userCreated;
-    private List<WorkInventory> workInventoryList = new ArrayList<>();
-    private List<InvoiceItem> invoiceItemList = new ArrayList<>();
+    private List<WorkInventoryDtoOut> workInventoryList = new ArrayList<>();
+    private List<InvoiceItemDtoOut> invoiceItemList = new ArrayList<>();
     private String name;
     private int due;
     private Date invoiceCreated;

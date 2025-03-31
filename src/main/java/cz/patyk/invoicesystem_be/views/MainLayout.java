@@ -16,14 +16,17 @@ import cz.patyk.invoicesystem_be.views.crud.AddressView;
 import cz.patyk.invoicesystem_be.views.crud.CiView;
 import cz.patyk.invoicesystem_be.views.crud.CompanyView;
 import cz.patyk.invoicesystem_be.views.crud.CountryView;
+import cz.patyk.invoicesystem_be.views.crud.EmailNotificationCiView;
 import cz.patyk.invoicesystem_be.views.crud.GeneralStateView;
 import cz.patyk.invoicesystem_be.views.crud.InfluencingTicketView;
 import cz.patyk.invoicesystem_be.views.crud.PaymentTypeView;
+import cz.patyk.invoicesystem_be.views.crud.QueueUserView;
 import cz.patyk.invoicesystem_be.views.crud.QueueView;
 import cz.patyk.invoicesystem_be.views.crud.ServiceCatalogView;
 import cz.patyk.invoicesystem_be.views.crud.SlaView;
 import cz.patyk.invoicesystem_be.views.crud.TariffView;
 import cz.patyk.invoicesystem_be.views.crud.TicketTypeView;
+import cz.patyk.invoicesystem_be.views.crud.UserView;
 import cz.patyk.invoicesystem_be.views.crud.VatView;
 import cz.patyk.invoicesystem_be.views.crud.WorkInventoryView;
 
@@ -52,7 +55,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void addDrawerContent() {
-        var appName = new Span("Vaadin Chat");
+        var appName = new Span("Invoices System");
         appName.addClassNames(LumoUtility.AlignItems.CENTER, LumoUtility.Display.FLEX,
                 LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD,
                 LumoUtility.Height.XLARGE, LumoUtility.Padding.Horizontal.MEDIUM);
@@ -63,12 +66,9 @@ public class MainLayout extends AppLayout {
     private SideNav createSideNav() {
         SideNav nav = new SideNav();
 
+        nav.setLabel("Main");
         nav.addItem(new SideNavItem("Lobby", MainView.class, VaadinIcon.BUILDING.create()));
-        nav.setLabel("CRUD");
-
-        SideNavItem sideNavUsersNav = new SideNavItem("Main");
-        sideNavUsersNav.setExpanded(true);
-        sideNavUsersNav.addItem(new SideNavItem("CI", CiView.class, VaadinIcon.USER.create()));
+        nav.addItem(new SideNavItem("CI", CiView.class, VaadinIcon.COGS.create()));
 
         SideNavItem sideNavAddressesNav = new SideNavItem("Addresses");
         sideNavAddressesNav.setExpanded(true);
@@ -84,16 +84,17 @@ public class MainLayout extends AppLayout {
 
         SideNavItem sideNavItem = new SideNavItem("Ticket catalog");
         sideNavItem.setExpanded(true);
+        sideNavItem.addItem(new SideNavItem("Email notification ci", EmailNotificationCiView.class, VaadinIcon.START_COG.create()));
         sideNavItem.addItem(new SideNavItem("General state", GeneralStateView.class, VaadinIcon.CONTROLLER.create()));
         sideNavItem.addItem(new SideNavItem("Influencing Ticket", InfluencingTicketView.class, VaadinIcon.ADJUST.create()));
         sideNavItem.addItem(new SideNavItem("Service catalog", ServiceCatalogView.class, VaadinIcon.LINES_LIST.create()));
         sideNavItem.addItem(new SideNavItem("SLA", SlaView.class, VaadinIcon.LIST_SELECT.create()));
         sideNavItem.addItem(new SideNavItem("Tariff", TariffView.class, VaadinIcon.BAR_CHART.create()));
         sideNavItem.addItem(new SideNavItem("Ticket type", TicketTypeView.class, VaadinIcon.CHEVRON_CIRCLE_UP_O.create()));
+        sideNavItem.addItem(new SideNavItem("Users", UserView.class, VaadinIcon.USERS.create()));
+        sideNavItem.addItem(new SideNavItem("User queue", QueueUserView.class, VaadinIcon.USER_CARD.create()));
         sideNavItem.addItem(new SideNavItem("Queue", QueueView.class, VaadinIcon.EXCHANGE.create()));
 
-
-        nav.addItem(sideNavUsersNav);
         nav.addItem(sideNavAddressesNav);
         nav.addItem(sideNavPaymentCatalog);
         nav.addItem(sideNavItem);

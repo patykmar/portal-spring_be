@@ -7,20 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Objects;
+import java.math.BigDecimal;
 
+@Data
 @Entity
-@Getter
-@Setter
-@ToString
 @RequiredArgsConstructor
 public class InvoiceItem implements Serializable {
     @Id
@@ -38,29 +33,8 @@ public class InvoiceItem implements Serializable {
     private Vat vat;
 
     private String name;
-    private int price;
-    private int margin;
-    private int marginTotal;
-    private int priceIncMargin;
-    private int discount;
-    private int discountTotal;
-    private int priceIncMarginMinusDiscount;
-    private int priceIncMarginDiscountMultiVat;
-    private int priceIncMarginMultiVat;
-    private int unitCount;
-    private BigInteger totalPriceIncMarginDiscountVat;
-    private BigInteger totalPriceIncMarginVat;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        InvoiceItem that = (InvoiceItem) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+    private BigDecimal price;
+    private Integer margin;
+    private Integer discount;
+    private Float unitCount;
 }

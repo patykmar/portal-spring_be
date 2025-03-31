@@ -8,7 +8,7 @@ import cz.patyk.invoicesystem_be.service.InfluencingTicketService;
 import cz.patyk.invoicesystem_be.views.MainLayout;
 import org.springframework.data.domain.PageRequest;
 
-@Route(value = "influencingTicket", layout = MainLayout.class)
+@Route(value = "influencing-ticket", layout = MainLayout.class)
 public class InfluencingTicketView extends VerticalLayout {
     private final InfluencingTicketService influencingTicketService;
 
@@ -19,6 +19,7 @@ public class InfluencingTicketView extends VerticalLayout {
 
     Grid<InfluencingTicketDto> influencingTicket() {
         Grid<InfluencingTicketDto> grid = new Grid<>(InfluencingTicketDto.class, false);
+        grid.setAllRowsVisible(true);
         grid.addColumn(InfluencingTicketDto::getId).setHeader("Id");
         grid.addColumn(InfluencingTicketDto::getName).setHeader("Name");
         grid.addColumn(InfluencingTicketDto::isForPriority).setHeader("is for Priority?");
