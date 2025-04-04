@@ -11,21 +11,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
+@Data
 @Entity
-@Getter
-@Setter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Company implements Serializable {
@@ -50,17 +45,4 @@ public class Company implements Serializable {
     @JoinColumn(name = "address_id", nullable = false)
     @ToString.Exclude
     private Address address;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Company company = (Company) o;
-        return Objects.equals(id, company.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return 0;
-    }
 }

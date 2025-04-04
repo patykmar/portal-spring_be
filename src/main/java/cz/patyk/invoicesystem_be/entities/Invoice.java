@@ -29,31 +29,31 @@ public class Invoice implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "supplier_id", nullable = false)
     @ToString.Exclude
     private Company supplier;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "subscriber_id", nullable = false)
     @ToString.Exclude
     private Company subscriber;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "payment_type_id", nullable = false)
     @ToString.Exclude
     private PaymentType paymentType;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @ToString.Exclude
     private User userCreated;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<WorkInventory> workInventoryList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "invoice")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "invoice", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<InvoiceItem> invoiceItemList = new ArrayList<>();
 

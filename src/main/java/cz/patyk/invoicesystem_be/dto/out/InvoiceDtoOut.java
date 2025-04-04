@@ -30,5 +30,4 @@ public class InvoiceDtoOut extends RepresentationModel<InvoiceDtoOut> {
     private Date paymentDate;
     private String vs;
     private String ks;
-
 }

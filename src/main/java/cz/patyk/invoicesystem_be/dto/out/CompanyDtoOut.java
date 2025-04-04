@@ -20,4 +20,9 @@ public class CompanyDtoOut extends RepresentationModel<CompanyDtoOut> {
     private final AddressDtoOut addressDtoOut;
     private final int created;
     private final int modify;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

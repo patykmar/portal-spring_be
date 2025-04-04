@@ -15,4 +15,9 @@ public class TariffDtoOut extends RepresentationModel<TariffDtoOut> {
     private final Long vat;
     private final String name;
     private final Long price;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

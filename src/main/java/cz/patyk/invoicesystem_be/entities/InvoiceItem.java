@@ -27,7 +27,7 @@ public class InvoiceItem implements Serializable {
     @ToString.Exclude
     private Invoice invoice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vat_id", nullable = false)
     @ToString.Exclude
     private Vat vat;

@@ -19,6 +19,7 @@ import cz.patyk.invoicesystem_be.views.crud.CountryView;
 import cz.patyk.invoicesystem_be.views.crud.EmailNotificationCiView;
 import cz.patyk.invoicesystem_be.views.crud.GeneralStateView;
 import cz.patyk.invoicesystem_be.views.crud.InfluencingTicketView;
+import cz.patyk.invoicesystem_be.views.crud.InvoiceView;
 import cz.patyk.invoicesystem_be.views.crud.PaymentTypeView;
 import cz.patyk.invoicesystem_be.views.crud.QueueUserView;
 import cz.patyk.invoicesystem_be.views.crud.QueueView;
@@ -68,6 +69,7 @@ public class MainLayout extends AppLayout {
 
         nav.setLabel("Main");
         nav.addItem(new SideNavItem("Lobby", MainView.class, VaadinIcon.BUILDING.create()));
+        nav.addItem(new SideNavItem("Invoice", InvoiceView.class, VaadinIcon.INVOICE.create()));
         nav.addItem(new SideNavItem("CI", CiView.class, VaadinIcon.COGS.create()));
 
         SideNavItem sideNavAddressesNav = new SideNavItem("Addresses");
